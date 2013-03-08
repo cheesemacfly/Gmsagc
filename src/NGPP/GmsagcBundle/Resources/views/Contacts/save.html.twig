@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+    <form
+        {% if form.vars.value.id %}
+            action="{{ path('ngpp_gmsagc_contacts_save', {'id': form.vars.value.id}) }}"
+        {% else %}
+            action="{{ path('ngpp_gmsagc_contacts_save') }}"
+        {% endif %}
+        method="post" {{ form_enctype(form) }}>
+        <fieldset>
+          <legend>{{ 'contacts.save'|trans }}</legend>
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
+            <a href="{{ path('ngpp_gmsagc_contacts') }}" class="btn">
+                {{ 'action.cancel'|trans }}
+            </a>
+            {% if form.vars.value.id %}
+                <a href="{{ path('ngpp_gmsagc_contacts_delete', {'id': form.vars.value.id}) }}"
+                   class="btn btn-danger"
+                   onclick="return confirm('{{ 'message.confirm.delete'|trans }}')">
+                    {{ 'action.delete'|trans }}
+                </a>
+        {% endif %}
+        </fieldset>
+    </form>
+{% endblock %}

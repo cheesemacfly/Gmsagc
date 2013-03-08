@@ -1,0 +1,59 @@
+// Get the div that holds the collection of address
+var collectionHolder = $('div#ngpp_gmsagcbundle_contactstype_addresses');
+// setup an "add a address" link
+var $addAddressLink = $('<a href="#" class="btn add_tag_link">Add an address</a>');
+var $newLinkDiv = $('<div></div>').append($addAddressLink);
+
+jQuery(document).ready(function() {
+    // add a delete link to all of the existing tag form div elements
+    $('div[id^="ngpp_gmsagcbundle_contactstype_addresses_"]').each(function() {
+        addAddressFormDeleteLink($(this));
+    });
+    // add the "add an address" anchor the address div
+    collectionHolder.append($newLinkDiv);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+
+    $addAddressLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new address form (see next code block)
+        addAddressForm(collectionHolder, $newLinkDiv);
+    });
+});
+function addAddressForm(collectionHolder, $newLinkDiv) {
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__label__/g, 'Address nb ' + (index + 1))
+            .replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormDiv = $('<div></div>').append(newForm);
+    $newLinkDiv.before($newFormDiv);
+    // add a delete link to the new form
+    addAddressFormDeleteLink($newFormDiv);
+}
+function addAddressFormDeleteLink($addressFormDiv) {
+    var $removeFormA = $('<a href="#" class="btn">Delete this address</a>');
+    $addressFormDiv.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // remove the div for the address form
+        $addressFormDiv.remove();
+    });
+}

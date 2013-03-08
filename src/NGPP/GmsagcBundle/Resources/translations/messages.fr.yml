@@ -1,0 +1,35 @@
+home: Accueil
+
+action:
+  add: Ajouter
+  save: Sauvegarder
+  delete: Supprimer
+  edit: Editer
+  cancel: Annuler
+
+message:
+  nothing: Rien à voir ici!
+  confirm:
+    delete: Voulez vous vraiment supprimer l'élément?
+
+orders:
+  menu: Commandes
+  add: Ajouter une commande
+  saved: La commande a été sauvegardée
+  deleted: La commande a été supprimée
+  nodeleted: La commande n'a pas été supprimée
+molds:
+  menu: Moules
+  add: Ajouter un moule
+  saved: Le moule a été sauvegardé
+  deleted: Le moule a été supprimé
+  nodeleted: Le moule n'a pas été supprimé
+contacts:
+  menu: Contacts
+  save: Sauvegarder un contact
+  add: Ajouter un contact
+  saved: Le contact a été sauvegardé
+  deleted: Le contact a été supprimé
+  nodeleted: Le contact n'a pas été supprimé
+press:
+  menu: Presses

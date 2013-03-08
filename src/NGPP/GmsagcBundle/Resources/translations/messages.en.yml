@@ -1,0 +1,6 @@
+action:
+  add: Add
+  save: Save
+  delete: Delete
+  edit: Edit
+  cancel: Cancel

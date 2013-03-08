@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        {% block meta %}{% endblock %}
+        <title>{% block title %}Gmsagc{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
+        <script src="{{ asset('js/jquery-1.9.1.min.js') }}" ></script>
+        <script src="{{ asset('js/jquery-ui-1.10.1.custom.min.js') }}" ></script>
+        <script src="{{ asset('js/modernizr.js') }}" ></script>
+        <link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui-1.10.1.custom.min.css') }}" type="text/css" />
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" ></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                
+                <!--{% set navigation = [['ngpp_gmsagc_home', 'Home Page'], 
+                                    ['ngpp_gmsagc_orders', 'Orders']] %}
+                <a class="brand" href="#">Gmsagc</a>
+                <ul class="nav">
+                {% for item in navigation %}
+                    <li{% if item[0] == app.request.get('_route') %} class="active"{% endif%}>
+                        <a href="{{ path(item[0]) }}">{{item[1]}}</a>
+                    </li>
+                {% endfor %}
+                </ul>-->
+                
+                <a class="brand" href="#">Gmsagc</a>
+                <ul class="nav">
+                    <li>
+                        <a href="{{ path('ngpp_gmsagc_home') }}">{{ 'home'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ngpp_gmsagc_orders') }}">
+                            {{ 'orders.menu'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ngpp_gmsagc_press') }}">
+                            {{ 'press.menu'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ngpp_gmsagc_molds') }}">
+                            {{ 'molds.menu'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('ngpp_gmsagc_contacts') }}">
+                            {{ 'contacts.menu'|trans }}
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Dropdown<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_orders_save') }}">Add order</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="content">
+            {% if app.session.flashbag.has('success') %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for flashMessage in app.session.flashbag.get('success') %}
+                        {{ flashMessage }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if app.session.flashbag.has('notice') %}
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for flashMessage in app.session.flashbag.get('notice') %}
+                        {{ flashMessage }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if app.session.flashbag.has('warning') %}
+                <div class="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for flashMessage in app.session.flashbag.get('warning') %}
+                            {{ flashMessage }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if app.session.flashbag.has('error') %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% for flashMessage in app.session.flashbag.get('error') %}
+                        {{ flashMessage }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+        <footer>
+            {% block footer %}{% endblock %}
+        </footer>
+        {% javascripts '@NGPPGmsagcBundle/Resources/public/js/*' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    </body>
+</html>

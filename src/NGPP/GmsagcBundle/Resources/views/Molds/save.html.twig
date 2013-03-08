@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+    <form
+        {% if form.vars.value.id %}
+            action="{{ path('ngpp_gmsagc_molds_save', {'id': form.vars.value.id}) }}"
+        {% else %}
+            action="{{ path('ngpp_gmsagc_molds_save') }}"
+        {% endif %}
+        method="post" {{ form_enctype(form) }}>
+        <fieldset>
+          <legend>Save mold</legend>
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-success" value="Save"/>
+            <a href="{{ path('ngpp_gmsagc_molds') }}" class="btn">
+                Cancel
+            </a>
+            {% if form.vars.value.id %}
+                <a href="{{ path('ngpp_gmsagc_molds_delete', {'id': form.vars.value.id}) }}"
+                   class="btn btn-danger"
+                   onclick="return confirm('Do you want to delete?')">
+                    Delete
+                </a>
+        {% endif %}
+        </fieldset>
+    </form>
+{% endblock %}

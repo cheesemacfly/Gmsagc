@@ -1,0 +1,59 @@
+ngpp_gmsagc_home:
+    pattern:  /
+    defaults: { _controller: NGPPGmsagcBundle:Default:index }
+
+ngpp_gmsagc_orders:
+    pattern:  /orders
+    defaults: { _controller: NGPPGmsagcBundle:Orders:index }
+ngpp_gmsagc_orders_save:
+    pattern:  /orders/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Orders:save, id: null }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_orders_delete:
+    pattern:  /orders/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Orders:delete }
+    requirements:
+        id:  \d+
+        
+ngpp_gmsagc_contacts:
+    pattern:  /contacts
+    defaults: { _controller: NGPPGmsagcBundle:Contacts:index }
+ngpp_gmsagc_contacts_save:
+    pattern:  /contacts/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Contacts:save, id: null }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_contacts_delete:
+    pattern:  /contacts/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Contacts:delete }
+    requirements:
+        id:  \d+
+
+ngpp_gmsagc_press:
+    pattern:  /press
+    defaults: { _controller: NGPPGmsagcBundle:Press:index }
+ngpp_gmsagc_press_save:
+    pattern:  /press/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Press:save, id: null }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_press_delete:
+    pattern:  /press/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Press:delete }
+    requirements:
+        id:  \d+
+
+ngpp_gmsagc_molds:
+    pattern:  /molds
+    defaults: { _controller: NGPPGmsagcBundle:Molds:index }
+ngpp_gmsagc_molds_save:
+    pattern:  /molds/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Molds:save, id: null }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_molds_delete:
+    pattern:  /molds/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Molds:delete }
+    requirements:
+        id:  \d+
