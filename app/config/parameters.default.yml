@@ -1,0 +1,15 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     srv
+    database_port:     ~
+    database_name:     dbname
+    database_user:     user
+    database_password: password
+
+    mailer_transport:  smtp
+    mailer_host:       srv
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            fr
+    secret:            ThisTokenIsNotSoSecretChangeIt
