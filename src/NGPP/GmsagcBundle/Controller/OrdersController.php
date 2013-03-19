@@ -28,6 +28,29 @@ class OrdersController extends Controller
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
             if ($form->isValid()) {
+                
+                $press = $em->getRepository('NGPPGmsagcBundle:Press')->findOneBy(
+                            array('name' => $order->getPress()->getName()));
+                if($press != null)
+                {
+                    $order->setPress($press);
+                }
+                else
+                {
+                    $em->persist($order->getPress());
+                }
+                
+                $material = $em->getRepository('NGPPGmsagcBundle:Materials')->findOneBy(
+                            array('name' => $order->getMaterial()->getName()));
+                if($material != null)
+                {
+                    $order->setMaterial($material);
+                }
+                else
+                {
+                    $em->persist($order->getMaterial());
+                }
+                
                 $em->persist($order);
                 $em->flush();
 

@@ -24,9 +24,9 @@ class Materials
     /**
      * @var string
      *
-     * @ORM\Column(name="Name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="Orders", mappedBy="material")
@@ -52,26 +52,26 @@ class Materials
     }
 
     /**
-     * Set Name
+     * Set name
      *
      * @param string $name
      * @return Materials
      */
     public function setName($name)
     {
-        $this->Name = $name;
+        $this->name = $name;
     
         return $this;
     }
 
     /**
-     * Get Name
+     * Get name
      *
      * @return string 
      */
     public function getName()
     {
-        return $this->Name;
+        return $this->name;
     }
 
     /**

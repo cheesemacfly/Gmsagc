@@ -99,12 +99,12 @@ class Orders
     private $mold_id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Press", inversedBy="orders", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Press", inversedBy="orders")
      */
     protected $press;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Materials", inversedBy="orders", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Materials", inversedBy="orders")
      */
     protected $material;
     
