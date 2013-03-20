@@ -29,7 +29,7 @@ class Materials
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Orders", mappedBy="material")
+     * @ORM\OneToMany(targetEntity="Orders", mappedBy="material", orphanRemoval=true)
      */
     protected $orders;
 

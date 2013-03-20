@@ -29,7 +29,7 @@ class Press
     private $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="Orders", mappedBy="press")
+     * @ORM\OneToMany(targetEntity="Orders", mappedBy="press", orphanRemoval=true)
      */
     protected $orders;
 
