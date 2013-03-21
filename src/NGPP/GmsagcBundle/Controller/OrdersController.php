@@ -34,6 +34,8 @@ class OrdersController extends Controller
                 
                 if($press != null)
                 {
+                    //prevent the old $order->getPress() to be updated
+                    $em->detach($order->getPress());
                     $order->setPress($press);
                 }
                 else
@@ -45,6 +47,8 @@ class OrdersController extends Controller
                                 ->findOneByName($order->getMaterial()->getName());
                 if($material != null)
                 {
+                    //prevent the old $order->getMaterial() to be updated
+                    $em->detach($order->getMaterial());
                     $order->setMaterial($material);
                 }
                 else

@@ -41,7 +41,7 @@ class Contacts
     protected $addresses;
 
     /**
-     * @ORM\OneToMany(targetEntity="Expenses", mappedBy="contacts")
+     * @ORM\OneToMany(targetEntity="Expenses", mappedBy="contact")
      */
     protected $expenses;
 

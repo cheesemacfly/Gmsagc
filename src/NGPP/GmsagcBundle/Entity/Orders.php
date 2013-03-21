@@ -119,12 +119,12 @@ class Orders
     protected $mold;
     
     /**
-     * @ORM\OneToMany(targetEntity="Comments", mappedBy="orders")
+     * @ORM\OneToMany(targetEntity="Comments", mappedBy="order")
      */
     protected $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Expenses", mappedBy="orders")
+     * @ORM\OneToMany(targetEntity="Expenses", mappedBy="order")
      */
     protected $expenses;
 
