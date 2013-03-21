@@ -30,9 +30,8 @@ class OrdersController extends Controller
             if ($form->isValid()) {
                 
                 $press = $em->getRepository('NGPPGmsagcBundle:Press')
-                            ->findOneByName($order->getPress()->getName());
-                
-                if($press != null)
+                            ->findOneByName($order->getPress()->getName());                
+                if($press != null && $press != $order->getPress())
                 {
                     //prevent the old $order->getPress() to be updated
                     $em->detach($order->getPress());
@@ -45,7 +44,7 @@ class OrdersController extends Controller
                 
                 $material = $em->getRepository('NGPPGmsagcBundle:Materials')
                                 ->findOneByName($order->getMaterial()->getName());
-                if($material != null)
+                if($material != null && $material != $order->getMaterial())
                 {
                     //prevent the old $order->getMaterial() to be updated
                     $em->detach($order->getMaterial());
