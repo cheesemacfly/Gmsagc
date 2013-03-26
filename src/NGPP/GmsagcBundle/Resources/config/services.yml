@@ -2,6 +2,13 @@ parameters:
 #    ngpp_gmsagc.example.class: NGPP\GmsagcBundle\Example
 
 services:
-#    ngpp_gmsagc.example:
-#        class: %ngpp_gmsagc.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    ngpp_gmsagc.type.press_selector:
+        class: NGPP\GmsagcBundle\Form\Type\PressSelectorType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: press_selector }
+    ngpp_gmsagc.type.material_selector:
+        class: NGPP\GmsagcBundle\Form\Type\MaterialSelectorType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: material_selector }

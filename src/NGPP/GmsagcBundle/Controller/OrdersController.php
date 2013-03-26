@@ -29,32 +29,6 @@ class OrdersController extends Controller
             $form->bind($this->getRequest());
             if ($form->isValid()) {
                 
-                $press = $em->getRepository('NGPPGmsagcBundle:Press')
-                            ->findOneByName($order->getPress()->getName());                
-                if($press != null && $press != $order->getPress())
-                {
-                    //prevent the old $order->getPress() to be updated
-                    $em->detach($order->getPress());
-                    $order->setPress($press);
-                }
-                else
-                {
-                    $em->persist($order->getPress());
-                }
-                
-                $material = $em->getRepository('NGPPGmsagcBundle:Materials')
-                                ->findOneByName($order->getMaterial()->getName());
-                if($material != null && $material != $order->getMaterial())
-                {
-                    //prevent the old $order->getMaterial() to be updated
-                    $em->detach($order->getMaterial());
-                    $order->setMaterial($material);
-                }
-                else
-                {
-                    $em->persist($order->getMaterial());
-                }
-                
                 $em->persist($order);
                 $em->flush();
 

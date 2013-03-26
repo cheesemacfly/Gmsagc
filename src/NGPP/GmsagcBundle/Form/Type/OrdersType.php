@@ -18,8 +18,8 @@ class OrdersType extends AbstractType
             ->add('quote')
             ->add('pieces')
             ->add('shrinkage')
-            ->add('press', new PressType())
-            ->add('material', new MaterialsType())
+            ->add('press', 'press_selector')
+            ->add('material', 'material_selector')
             ->add('action', 'entity',
                     array('property' => 'name',
                         'class' => 'NGPPGmsagcBundle:Actions'))
