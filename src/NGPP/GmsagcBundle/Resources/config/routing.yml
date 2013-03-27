@@ -30,20 +30,6 @@ ngpp_gmsagc_contacts_delete:
     requirements:
         id:  \d+
 
-ngpp_gmsagc_press:
-    pattern:  /press
-    defaults: { _controller: NGPPGmsagcBundle:Press:index }
-ngpp_gmsagc_press_save:
-    pattern:  /press/save/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Press:save, id: null }
-    requirements:
-        id:  \d+
-ngpp_gmsagc_press_delete:
-    pattern:  /press/delete/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Press:delete }
-    requirements:
-        id:  \d+
-
 ngpp_gmsagc_molds:
     pattern:  /molds
     defaults: { _controller: NGPPGmsagcBundle:Molds:index }
@@ -55,5 +41,11 @@ ngpp_gmsagc_molds_save:
 ngpp_gmsagc_molds_delete:
     pattern:  /molds/delete/{id}
     defaults: { _controller: NGPPGmsagcBundle:Molds:delete }
+    requirements:
+        id:  \d+
+
+ngpp_gmsagc_press_list:
+    pattern:  /press/list/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Press:list, id: 10 }
     requirements:
         id:  \d+
