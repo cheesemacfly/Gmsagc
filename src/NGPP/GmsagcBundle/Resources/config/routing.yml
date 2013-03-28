@@ -45,7 +45,12 @@ ngpp_gmsagc_molds_delete:
         id:  \d+
 
 ngpp_gmsagc_press_list:
-    pattern:  /press/list/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Press:list, id: 10 }
+    pattern:  /press/list/{name}/{limit}
+    defaults: { _controller: NGPPGmsagcBundle:Press:list, name : null, limit: 10 }
     requirements:
-        id:  \d+
+        limit:  \d+
+ngpp_gmsagc_materials_list:
+    pattern:  /materials/list/{name}/{limit}
+    defaults: { _controller: NGPPGmsagcBundle:Materials:list, name : null, limit: 10 }
+    requirements:
+        limit:  \d+

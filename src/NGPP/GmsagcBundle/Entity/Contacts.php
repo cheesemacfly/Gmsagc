@@ -189,4 +189,27 @@ class Contacts
     {
         return $this->expenses;
     }
+
+    /**
+     * Add addresses
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Addresses $addresses
+     * @return Contacts
+     */
+    public function addAddress(\NGPP\GmsagcBundle\Entity\Addresses $addresses)
+    {
+        $this->addresses[] = $addresses;
+
+        return $this;
+    }
+
+    /**
+     * Remove addresses
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Addresses $addresses
+     */
+    public function removeAddress(\NGPP\GmsagcBundle\Entity\Addresses $addresses)
+    {
+        $this->addresses->removeElement($addresses);
+    }
 }

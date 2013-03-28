@@ -12,11 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class MoldsRepository extends EntityRepository
 {
+    /**
+     * Return last id+1 or null if not find
+     * 
+     * @return integer
+     */
     public function getNewId()
     {
-        $result = $this->getEntityManager()
-                ->createQuery('SELECT MAX(m.id) FROM NGPPGmsagcBundle:Molds m')
-                ->getOneOrNullResult();
+        $result = $this->createQueryBuilder('m')
+                ->select('MAX(m.id)')
+                ->getQuery()->getOneOrNullResult();
+        
         return is_array($result) ? $result[1] + 1 : null;
     }
 }
