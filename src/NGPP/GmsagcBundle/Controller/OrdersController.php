@@ -17,11 +17,10 @@ class OrdersController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        $order = new Orders();
         
-        //Edit mode
-        if(!is_null($id))
-            $order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id);
+        //Determine if editing or creating
+        $order = !is_null($id) && !is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)) ? 
+                $order : new Orders();
         
         $form = $this->createForm(new OrdersType(), $order);
 

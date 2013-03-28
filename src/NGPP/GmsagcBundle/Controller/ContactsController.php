@@ -17,11 +17,10 @@ class ContactsController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        $contact = new Contacts();
         
-        //Edit mode
-        if(!is_null($id))
-            $contact = $em->getRepository('NGPPGmsagcBundle:Contacts')->find($id);
+        //Determine if editing or creating
+        $contact = !is_null($id) && !is_null($contact = $em->getRepository('NGPPGmsagcBundle:Contacts')->find($id)) ? 
+                $contact : new Contacts();
         
         $form = $this->createForm(new ContactsType(), $contact);
 
@@ -29,7 +28,7 @@ class ContactsController extends Controller
             
             //Hanldes delete of address
             $originalAddresses = array();
-            // Create an array of the current Tag objects in the database
+            // Create an array of the current Addresses objects in the database
             foreach ($contact->getAddresses() as $address) {
                 $originalAddresses[] = $address;
             }
@@ -37,7 +36,7 @@ class ContactsController extends Controller
             $form->bind($this->getRequest());
             if ($form->isValid()) {
                 
-                // filter $originalTags to contain tags no longer present
+                // filter $originalAddresses to contain Addresses no longer present
                 foreach ($contact->getAddresses() as $address) {
                     foreach ($originalAddresses as $key => $toDel) {
                         if ($toDel->getId() === $address->getId()) {
@@ -46,11 +45,11 @@ class ContactsController extends Controller
                     }
                 }
 
-                // remove the relationship between the tag and the Task
+                // remove the relationship between the Addresses and the Contact
                 foreach ($originalAddresses as $address) {
-                    // remove the Task from the Tag
+                    // remove the Address from the Contact
                     $contact->getAddresses()->removeElement($address);
-                    // if you wanted to delete the Tag entirely, you can also do that
+                    // delete the Address entirely
                     $em->remove($address);
                 }
                 
@@ -75,9 +74,9 @@ class ContactsController extends Controller
 
         if ($contact)
         {
-            // remove the relationship between the tag and the Task
+            // remove the relationship between the Address and the Contact
             foreach ($contact->getAddresses() as $address) {
-                // if you wanted to delete the Tag entirely, you can also do that
+                // delete the Address entirely
                 $em->remove($address);
             }
             

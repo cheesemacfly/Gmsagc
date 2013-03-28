@@ -18,10 +18,10 @@ class MoldsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $mold = is_null($id) ?
-                new Molds($em->getRepository('NGPPGmsagcBundle:Molds')->getNewId())
-                : $em->getRepository('NGPPGmsagcBundle:Molds')->find($id);
-                
+        //Determine if editing or creating
+        $mold = !is_null($id) && !is_null($mold = $em->getRepository('NGPPGmsagcBundle:Molds')->find($id)) ? 
+                $mold : new Molds($em->getRepository('NGPPGmsagcBundle:Molds')->getNewId());
+                        
         $form = $this->createForm(new MoldsType(), $mold);
 
         if ($this->getRequest()->isMethod('POST')) {
