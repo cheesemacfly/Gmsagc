@@ -10,8 +10,14 @@ class PressController extends Controller
     public function listAction($name = null, $limit = 10)
     {
         $repo = $this->getDoctrine()->getEntityManager()->getRepository('NGPPGmsagcBundle:Press');
-        $press = $repo->getList($name, $limit);
+        $pressList = $repo->getList($name, $limit);
         
-        return new JsonResponse($press);
+        $pressJSON = array();
+        foreach ($pressList as $press)
+        {
+            $pressJSON[] = $press->getName();
+        }
+        
+        return new JsonResponse($pressJSON);
     }
 }

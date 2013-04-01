@@ -25,7 +25,7 @@ class PressRepository extends EntityRepository
                         ->where('p.name LIKE :name')
                         ->setParameter('name', '%' . $name . '%')
                         ->setMaxResults($limit)
-                        ->getQuery()->getArrayResult();
+                        ->getQuery()->execute();
         
         return $result;
     }
