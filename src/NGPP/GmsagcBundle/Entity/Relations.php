@@ -11,12 +11,32 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Relations
-{    
-    /** @ORM\Id @ORM\ManyToOne(targetEntity="Contacts") */
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="contact_id", type="integer")
+     * @ORM\Id
+     */
     private $contact_id;
     
-    /** @ORM\Id @ORM\ManyToOne(targetEntity="Orders") */
+    /**
+     * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="relations")
+     */
+    protected $contact;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order_id", type="integer")
+     * @ORM\Id
+     */
     private $order_id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="relations")
+     */
+    protected $order;
     
     /**
      * @var integer
@@ -118,10 +138,10 @@ class Relations
     /**
      * Set contact_id
      *
-     * @param \NGPP\GmsagcBundle\Entity\Contacts $contactId
+     * @param integer $contactId
      * @return Relations
      */
-    public function setContactId(\NGPP\GmsagcBundle\Entity\Contacts $contactId)
+    public function setContactId($contactId)
     {
         $this->contact_id = $contactId;
     
@@ -139,12 +159,35 @@ class Relations
     }
 
     /**
-     * Set order_id
+     * Set contact
      *
-     * @param \NGPP\GmsagcBundle\Entity\Orders $orderId
+     * @param \NGPP\GmsagcBundle\Entity\Contacts $contact
      * @return Relations
      */
-    public function setOrderId(\NGPP\GmsagcBundle\Entity\Orders $orderId)
+    public function setContact(\NGPP\GmsagcBundle\Entity\Contacts $contact = null)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \NGPP\GmsagcBundle\Entity\Contacts 
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * Set order_id
+     *
+     * @param integer $orderId
+     * @return Relations
+     */
+    public function setOrderId($orderId)
     {
         $this->order_id = $orderId;
     
@@ -159,6 +202,29 @@ class Relations
     public function getOrderId()
     {
         return $this->order_id;
+    }
+
+    /**
+     * Set order
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Orders $order
+     * @return Relations
+     */
+    public function setOrder(\NGPP\GmsagcBundle\Entity\Orders $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \NGPP\GmsagcBundle\Entity\Orders 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 
     /**

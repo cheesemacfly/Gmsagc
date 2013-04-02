@@ -10,6 +10,11 @@ class OrdersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('relations', 'collection', array(
+            'type' => new RelationsType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,));
         $builder
             ->add('oral', null, array('widget' => 'single_text'))
             ->add('written', null, array('widget' => 'single_text'))

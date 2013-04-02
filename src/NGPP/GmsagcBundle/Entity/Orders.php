@@ -127,6 +127,11 @@ class Orders
      * @ORM\OneToMany(targetEntity="Expenses", mappedBy="order")
      */
     protected $expenses;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Relations", mappedBy="order", cascade={"persist"})
+     */
+    protected $relations;
 
     /**
      * Constructor
@@ -135,6 +140,7 @@ class Orders
     {
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->expenses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->relations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -556,5 +562,38 @@ class Orders
     public function getExpenses()
     {
         return $this->expenses;
+    }
+
+    /**
+     * Add relations
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Relations $relations
+     * @return Orders
+     */
+    public function addRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    {
+        $this->relations[] = $relations;
+
+        return $this;
+    }
+
+    /**
+     * Remove relations
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Relations $relations
+     */
+    public function removeRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    {
+        $this->relations->removeElement($relations);
+    }
+
+    /**
+     * Get relations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRelations()
+    {
+        return $this->relations;
     }
 }

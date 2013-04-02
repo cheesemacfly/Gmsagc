@@ -26,7 +26,7 @@ class ContactsController extends Controller
 
         if ($this->getRequest()->isMethod('POST')) {
             
-            //Hanldes delete of address
+            //Hanldes delete of addresses
             $originalAddresses = array();
             // Create an array of the current Addresses objects in the database
             foreach ($contact->getAddresses() as $address) {

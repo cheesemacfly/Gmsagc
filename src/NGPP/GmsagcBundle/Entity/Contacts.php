@@ -44,6 +44,11 @@ class Contacts
      * @ORM\OneToMany(targetEntity="Expenses", mappedBy="contact")
      */
     protected $expenses;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Relations", mappedBy="contact")
+     */
+    protected $relations;
 
     /**
      * Constructor
@@ -52,6 +57,7 @@ class Contacts
     {
         $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->expenses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->relations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -211,5 +217,38 @@ class Contacts
     public function removeAddress(\NGPP\GmsagcBundle\Entity\Addresses $addresses)
     {
         $this->addresses->removeElement($addresses);
+    }
+
+    /**
+     * Add relations
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Relations $relations
+     * @return Contacts
+     */
+    public function addRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    {
+        $this->relations[] = $relations;
+
+        return $this;
+    }
+
+    /**
+     * Remove relations
+     *
+     * @param \NGPP\GmsagcBundle\Entity\Relations $relations
+     */
+    public function removeRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    {
+        $this->relations->removeElement($relations);
+    }
+
+    /**
+     * Get relations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRelations()
+    {
+        return $this->relations;
     }
 }

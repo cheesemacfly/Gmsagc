@@ -29,7 +29,7 @@ class Types
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Relations", mappedBy="types")
+     * @ORM\OneToMany(targetEntity="Relations", mappedBy="type")
      */
     protected $relations;
     /**
