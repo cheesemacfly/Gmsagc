@@ -12,6 +12,12 @@ class MaterialsController extends Controller
         $repo = $this->getDoctrine()->getEntityManager()->getRepository('NGPPGmsagcBundle:Materials');
         $materials = $repo->getList($name, $limit);
         
-        return new JsonResponse($materials);
+        $materialsJSON = array();
+        foreach ($materials as $material)
+        {
+            $materialsJSON[] = $material->getName();
+        }
+        
+        return new JsonResponse($materialsJSON);
     }
 }

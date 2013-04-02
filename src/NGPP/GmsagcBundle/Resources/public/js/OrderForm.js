@@ -2,8 +2,18 @@ if (!Modernizr.inputtypes.date) {
     $("input[type='date']").datepicker({ dateFormat: 'yy-mm-dd' });
 }
 
-jQuery(document).ready(function() {
-    $('#ngpp_gmsagcbundle_orderstype_press').typeahead({
-        local: ["aaaaaaaaaaaaa","ert","ert5","ert57","ertt","Press test","wret","wwwwwwww"]
-    });
+$('#ngpp_gmsagcbundle_orderstype_press').typeahead({
+    source: function (query, process) {
+        $.get(Routing.generate('ngpp_gmsagc_press_list', { name: query }), function (data) {
+            process(data);
+        });
+    }
+});
+
+$('#ngpp_gmsagcbundle_orderstype_material').typeahead({
+    source: function (query, process) {
+        $.get(Routing.generate('ngpp_gmsagc_materials_list', { name: query }), function (data) {
+            process(data);
+        });
+    }
 });

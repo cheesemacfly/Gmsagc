@@ -49,8 +49,12 @@ ngpp_gmsagc_press_list:
     defaults: { _controller: NGPPGmsagcBundle:Press:list, name : null, limit: 10 }
     requirements:
         limit:  \d+
+    options:
+        expose: true
 ngpp_gmsagc_materials_list:
     pattern:  /materials/list/{name}/{limit}
     defaults: { _controller: NGPPGmsagcBundle:Materials:list, name : null, limit: 10 }
     requirements:
         limit:  \d+
+    options:
+        expose: true

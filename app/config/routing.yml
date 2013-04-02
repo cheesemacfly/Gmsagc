@@ -2,6 +2,9 @@ ngpp_gmsagc:
     resource: "@NGPPGmsagcBundle/Resources/config/routing.yml"
     prefix:   /
 
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
 # This route should be enabled with caution as it can open a security vulnerability

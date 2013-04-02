@@ -25,7 +25,7 @@ class MaterialsRepository extends EntityRepository
                         ->where('m.name LIKE :name')
                         ->setParameter('name', '%' . $name . '%')
                         ->setMaxResults($limit)
-                        ->getQuery()->getArrayResult();
+                        ->getQuery()->execute();
         
         return $result;
     }
