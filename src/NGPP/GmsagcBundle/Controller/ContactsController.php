@@ -17,7 +17,7 @@ class ContactsController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        
+                
         //Determine if editing or creating
         $contact = !is_null($id) && !is_null($contact = $em->getRepository('NGPPGmsagcBundle:Contacts')->find($id)) ? 
                 $contact : new Contacts();
