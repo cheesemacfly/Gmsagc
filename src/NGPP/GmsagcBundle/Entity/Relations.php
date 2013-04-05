@@ -11,30 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Relations
-{
+{    
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="contact_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Contacts")
      * @ORM\Id
-     */
-    private $contact_id;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="relations")
      */
     protected $contact;
-    
+        
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="order_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Orders")
      * @ORM\Id
-     */
-    private $order_id;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="relations")
      */
     protected $order;
     
@@ -134,30 +120,7 @@ class Relations
     {
         return $this->type_id;
     }
-
-    /**
-     * Set contact_id
-     *
-     * @param integer $contactId
-     * @return Relations
-     */
-    public function setContactId($contactId)
-    {
-        $this->contact_id = $contactId;
     
-        return $this;
-    }
-
-    /**
-     * Get contact_id
-     *
-     * @return \NGPP\GmsagcBundle\Entity\Contacts 
-     */
-    public function getContactId()
-    {
-        return $this->contact_id;
-    }
-
     /**
      * Set contact
      *
@@ -179,29 +142,6 @@ class Relations
     public function getContact()
     {
         return $this->contact;
-    }
-
-    /**
-     * Set order_id
-     *
-     * @param integer $orderId
-     * @return Relations
-     */
-    public function setOrderId($orderId)
-    {
-        $this->order_id = $orderId;
-    
-        return $this;
-    }
-
-    /**
-     * Get order_id
-     *
-     * @return \NGPP\GmsagcBundle\Entity\Orders 
-     */
-    public function getOrderId()
-    {
-        return $this->order_id;
     }
 
     /**

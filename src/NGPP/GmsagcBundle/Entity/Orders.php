@@ -128,9 +128,6 @@ class Orders
      */
     protected $expenses;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Relations", mappedBy="order", cascade={"persist"})
-     */
     protected $relations;
 
     /**
