@@ -27,36 +27,35 @@ class OrdersController extends Controller
         if ($this->getRequest()->isMethod('POST')) {
                         
             //Hanldes delete of relations
-            $originalRelations = array();
-            // Create an array of the current Relations objects in the database
-            foreach ($order->getRelations() as $relation) {
-                $originalRelations[] = $relation;
-            }
+//            $originalRelations = array();
+//            // Create an array of the current Relations objects in the database
+//            foreach ($order->getRelations() as $relation) {
+//                $originalRelations[] = $relation;
+//            }
             
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
+            if ($form->bind($this->getRequest())->isValid()) {
                 
                 // filter $originalRelations to contain Relations no longer present
-                foreach ($order->getRelations() as $relation) {
-                    foreach ($originalRelations as $key => $toDel) {
-                        if (($toDel->getOrderId() === $relation->getOrderId()) && ($toDel->getContactId() === $relation->getContactId())) {
-                            unset($originalRelations[$key]);
-                        }
-                    }
-                }
-
-                // remove the relationship between the Relations and the Order
-                foreach ($originalRelations as $relation) {
-                    // remove the Relation from the Order
-                    $order->getRelations()->removeElement($relation);
-                    // delete the Relation entirely
-                    $em->remove($relation);
-                }
+//                foreach ($order->getRelations() as $relation) {
+//                    foreach ($originalRelations as $key => $toDel) {
+//                        if (($toDel->getOrderId() === $relation->getOrderId()) && ($toDel->getContactId() === $relation->getContactId())) {
+//                            unset($originalRelations[$key]);
+//                        }
+//                    }
+//                }
+//
+//                // remove the relationship between the Relations and the Order
+//                foreach ($originalRelations as $relation) {
+//                    // remove the Relation from the Order
+//                    $order->getRelations()->removeElement($relation);
+//                    // delete the Relation entirely
+//                    $em->remove($relation);
+//                }
                 
                 $em->persist($order);
                 $em->flush();
                 
-                foreach($form->getData()->getRelations() as $relation)
+                foreach($order->getRelations() as $relation)
                 {
                     $relation->setOrder($order);
                     $em->persist($relation);

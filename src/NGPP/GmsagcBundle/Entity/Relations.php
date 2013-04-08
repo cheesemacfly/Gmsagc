@@ -13,13 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Relations
 {    
     /**
-     * @ORM\ManyToOne(targetEntity="Contacts")
+     * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="relations")
      * @ORM\Id
      */
     protected $contact;
         
     /**
-     * @ORM\ManyToOne(targetEntity="Orders")
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="relations")
      * @ORM\Id
      */
     protected $order;
@@ -47,7 +47,6 @@ class Relations
     
     /**
      * @ORM\ManyToOne(targetEntity="Types", inversedBy="relations")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      */
     protected $type;
 

@@ -128,6 +128,9 @@ class Orders
      */
     protected $expenses;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Relations", mappedBy="order")
+     */
     protected $relations;
 
     /**
@@ -567,7 +570,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      * @return Orders
      */
-    public function addRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function addRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
     {
         $this->relations[] = $relations;
 
@@ -579,9 +582,23 @@ class Orders
      *
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      */
-    public function removeRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function removeRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
     {
         $this->relations->removeElement($relations);
+    }
+    
+    /**
+     * Set relations
+     * 
+     * @param \Doctrine\Common\Collections\ArrayCollection $relations
+     */
+    public function setRelations($relations)
+    {
+        foreach ($relations as $relation) {
+            $relation->setOrder($this);
+        }
+
+        $this->relations = $relations;
     }
 
     /**
