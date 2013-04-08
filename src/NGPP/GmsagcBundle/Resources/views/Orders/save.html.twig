@@ -18,7 +18,7 @@
             {% if form.vars.value.id %}
                 <a href="{{ path('ngpp_gmsagc_orders_delete', {'id': form.vars.value.id}) }}"
                    class="btn btn-danger"
-                   onclick="return confirm('{{ 'message.confirm.delete'|trans }}')">
+                   onclick="return confirm('{{ 'message.confirm.delete'|trans|e('js') }}')">
                     {{ 'action.delete'|trans }}
                 </a>
         {% endif %}
