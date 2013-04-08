@@ -19,6 +19,7 @@
                 <a href="{{ path('ngpp_gmsagc_contacts_delete', {'id': form.vars.value.id}) }}"
                    class="btn btn-danger"
                    onclick="return confirm('{{ 'message.confirm.delete'|trans }}')">
+                    <i class="icon-remove icon-white"></i>
                     {{ 'action.delete'|trans }}
                 </a>
         {% endif %}

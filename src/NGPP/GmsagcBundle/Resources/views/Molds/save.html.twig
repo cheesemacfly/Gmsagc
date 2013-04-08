@@ -9,17 +9,18 @@
         {% endif %}
         method="post" {{ form_enctype(form) }}>
         <fieldset>
-          <legend>Save mold</legend>
+          <legend>{{ 'molds.save'|trans }}</legend>
             {{ form_widget(form) }}
-            <input type="submit" class="btn btn-success" value="Save"/>
+            <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
             <a href="{{ path('ngpp_gmsagc_molds') }}" class="btn">
-                Cancel
+                {{ 'action.cancel'|trans }}
             </a>
             {% if form.vars.value.id %}
                 <a href="{{ path('ngpp_gmsagc_molds_delete', {'id': form.vars.value.id}) }}"
                    class="btn btn-danger"
-                   onclick="return confirm('Do you want to delete?')">
-                    Delete
+                   onclick="return confirm('{{ 'message.confirm.delete'|trans }}')">
+                    <i class="icon-remove icon-white"></i>
+                    {{ 'action.delete'|trans }}
                 </a>
         {% endif %}
         </fieldset>

@@ -1,7 +1,7 @@
 // Get the div that holds the collection of addresses
 var collectionAddressesHolder = $('div#ngpp_gmsagcbundle_contactstype_addresses');
 // setup an "add an address" link
-var $addAddressLink = $('<a href="#" class="btn add_tag_link">Add an address</a>');
+var $addAddressLink = $('<a href="#" class="btn btn-success add_tag_link"><i class="icon-plus icon-white"></i> Add an address</a>');
 var $newAddressLinkDiv = $('<div></div>').append($addAddressLink);
 
 jQuery(document).ready(function() {
@@ -46,7 +46,7 @@ function addAddressForm(collectionAddressesHolder, $newLinkDiv) {
     addAddressFormDeleteLink($newFormDiv);
 }
 function addAddressFormDeleteLink($addressFormDiv) {
-    var $removeFormA = $('<a href="#" class="btn">Delete this address</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-danger"><i class="icon-remove icon-white"></i> Delete this address</a>');
     $addressFormDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

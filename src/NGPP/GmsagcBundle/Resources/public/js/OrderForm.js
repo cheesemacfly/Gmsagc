@@ -23,7 +23,7 @@ $('#ngpp_gmsagcbundle_orderstype_material').typeahead({
 // Get the div that holds the collection of relations
 var collectionRelationsHolder = $('div#ngpp_gmsagcbundle_orderstype_relations');
 // setup an "add a relation" link
-var $addRelationLink = $('<a href="#" class="btn add_tag_link">Add a relation</a>');
+var $addRelationLink = $('<a href="#" class="btn btn-success add_tag_link"><i class="icon-plus icon-white"></i> Add a relation</a>');
 var $newRelationLinkDiv = $('<div></div>').append($addRelationLink);
 
 jQuery(document).ready(function() {
@@ -68,7 +68,7 @@ function addRelationForm(collectionRelationsHolder, $newLinkDiv) {
     addRelationFormDeleteLink($newFormDiv);
 }
 function addRelationFormDeleteLink($relationFormDiv) {
-    var $removeFormA = $('<a href="#" class="btn">Delete this relation</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-danger"><i class="icon-remove icon-white"></i> Delete this relation</a>');
     $relationFormDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
