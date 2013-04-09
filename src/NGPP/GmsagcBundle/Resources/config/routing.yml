@@ -2,6 +2,15 @@ ngpp_gmsagc_home:
     pattern:  /
     defaults: { _controller: NGPPGmsagcBundle:Default:index }
 
+ngpp_gmsagc_invoices:
+    pattern:  /invoices
+    defaults: { _controller: NGPPGmsagcBundle:Invoices:index }
+ngpp_gmsagc_invoices_save:
+    pattern:  /invoices/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Invoices:save, id: null }
+    requirements:
+        id:  \d+
+
 ngpp_gmsagc_orders:
     pattern:  /orders
     defaults: { _controller: NGPPGmsagcBundle:Orders:index }
