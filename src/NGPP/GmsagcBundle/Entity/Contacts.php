@@ -202,7 +202,7 @@ class Contacts
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      * @return Contacts
      */
-    public function addRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function addRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
     {
         $this->relations[] = $relations;
 
@@ -214,9 +214,23 @@ class Contacts
      *
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      */
-    public function removeRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function removeRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
     {
         $this->relations->removeElement($relations);
+    }
+    
+    /**
+     * Set relations
+     * 
+     * @param \Doctrine\Common\Collections\ArrayCollection $relations
+     */
+    public function setRelations($relations)
+    {
+        foreach ($relations as $relation) {
+            $relation->setContact($this);
+        }
+
+        $this->$relations = $relations;
     }
 
     /**

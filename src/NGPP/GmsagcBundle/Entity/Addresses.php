@@ -50,13 +50,6 @@ class Addresses
     private $country;
     
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="contact_id", type="integer")
-     */
-    private $contact_id;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="addresses")
      */
     protected $contact;
@@ -162,29 +155,6 @@ class Addresses
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * Set contact_id
-     *
-     * @param integer $contactId
-     * @return Addresses
-     */
-    public function setContactId($contactId)
-    {
-        $this->contact_id = $contactId;
-    
-        return $this;
-    }
-
-    /**
-     * Get contact_id
-     *
-     * @return integer 
-     */
-    public function getContactId()
-    {
-        return $this->contact_id;
     }
 
     /**

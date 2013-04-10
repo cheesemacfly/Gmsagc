@@ -11,16 +11,23 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Relations
-{    
+{
     /**
-     * @ORM\ManyToOne(targetEntity="Contacts")
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="relations")
      */
     protected $contact;
         
     /**
-     * @ORM\ManyToOne(targetEntity="Orders")
-     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Orders", inversedBy="relations")
      */
     protected $order;
     
@@ -39,19 +46,20 @@ class Relations
     private $invoiced;
     
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="type_id", type="integer")
-     */
-    private $type_id;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Types", inversedBy="relations")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      */
     protected $type;
-
-
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
     /**
      * Set invoice
      *
@@ -96,29 +104,6 @@ class Relations
     public function getInvoiced()
     {
         return $this->invoiced;
-    }
-
-    /**
-     * Set type_id
-     *
-     * @param integer $typeId
-     * @return Relations
-     */
-    public function setTypeId($typeId)
-    {
-        $this->type_id = $typeId;
-    
-        return $this;
-    }
-
-    /**
-     * Get type_id
-     *
-     * @return integer 
-     */
-    public function getTypeId()
-    {
-        return $this->type_id;
     }
     
     /**
