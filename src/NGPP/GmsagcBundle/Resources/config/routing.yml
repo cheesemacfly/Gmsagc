@@ -2,12 +2,12 @@ ngpp_gmsagc_home:
     pattern:  /
     defaults: { _controller: NGPPGmsagcBundle:Default:index }
 
-ngpp_gmsagc_invoices:
+ngpp_gmsagc_relations:
     pattern:  /invoices
-    defaults: { _controller: NGPPGmsagcBundle:Invoices:index }
-ngpp_gmsagc_invoices_save:
+    defaults: { _controller: NGPPGmsagcBundle:Relations:index }
+ngpp_gmsagc_relations_save:
     pattern:  /invoices/save/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Invoices:save, id: null }
+    defaults: { _controller: NGPPGmsagcBundle:Relations:save, id: null }
     requirements:
         id:  \d+
 

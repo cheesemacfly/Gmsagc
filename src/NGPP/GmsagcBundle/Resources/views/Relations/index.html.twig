@@ -2,7 +2,7 @@
 
 {% block content %}
     <br>
-    {% if invoices is defined and invoices %}
+    {% if relations is defined and relations %}
         <table class="table table-hover">
             <tr>
                 <th>#order</th>
@@ -11,14 +11,14 @@
                 <th>Invoice date</th>
                 <th></th>
             </tr>
-        {% for invoice in invoices %}
+        {% for relation in relations %}
             <tr>
-                <td>{{ invoice.order.id }}</td>
-                <td>{{ invoice.contact.id }}</td>
-                <td>{{ invoice.invoice }}</td>
-                <td>{{ invoice.invoiced|date('m/d/Y') }}</td>
+                <td>{{ relation.order.id }}</td>
+                <td>{{ relation.contact.id }}</td>
+                <td>{{ relation.invoice }}</td>
+                <td>{{ relation.invoiced|date('m/d/Y') }}</td>
                 <td>
-                    <a href="{{ path('ngpp_gmsagc_invoices_save', {'order_id': invoice.order.id, 'contact_id': invoice.contact.id}) }}" class="btn btn-warning">
+                    <a href="{{ path('ngpp_gmsagc_relations_save', {'id': relation.id}) }}" class="btn btn-warning">
                         <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
                     </a>
                 </td>

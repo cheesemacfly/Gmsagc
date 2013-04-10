@@ -40,7 +40,7 @@ class Relations
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="invoiced", type="datetime", nullable=true)
+     * @ORM\Column(name="invoiced", type="date", nullable=true)
      */
     private $invoiced;
     
