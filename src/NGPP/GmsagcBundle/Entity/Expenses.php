@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Expenses
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Expenses
@@ -64,28 +63,12 @@ class Expenses
     private $created;
     
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="contact_id", type="integer")
-     */
-    private $contact_id;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="order_id", type="integer")
-     */
-    private $order_id;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="expenses")
-     * @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
      */
     protected $contact;
     
     /**
      * @ORM\ManyToOne(targetEntity="Orders", inversedBy="expenses")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;
 
@@ -236,52 +219,6 @@ class Expenses
     public function getCreated()
     {
         return $this->created;
-    }
-
-    /**
-     * Set contact_id
-     *
-     * @param integer $contactId
-     * @return Expenses
-     */
-    public function setContactId($contactId)
-    {
-        $this->contact_id = $contactId;
-    
-        return $this;
-    }
-
-    /**
-     * Get contact_id
-     *
-     * @return integer 
-     */
-    public function getContactId()
-    {
-        return $this->contact_id;
-    }
-
-    /**
-     * Set order_id
-     *
-     * @param integer $orderId
-     * @return Expenses
-     */
-    public function setOrderId($orderId)
-    {
-        $this->order_id = $orderId;
-    
-        return $this;
-    }
-
-    /**
-     * Get order_id
-     *
-     * @return integer 
-     */
-    public function getOrderId()
-    {
-        return $this->order_id;
     }
 
     /**

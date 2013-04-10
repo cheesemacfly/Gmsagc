@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Orders
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Orders
@@ -69,34 +68,6 @@ class Orders
      * @ORM\Column(name="shrinkage", type="string", length=255, nullable=true)
      */
     private $shrinkage;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="press_id", type="integer")
-     */
-    private $press_id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="material_id", type="integer")
-     */
-    private $material_id;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="action_id", type="integer")
-     */
-    private $action_id;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="mold_id", type="integer")
-     */
-    private $mold_id;
     
     /**
      * @ORM\ManyToOne(targetEntity="Press", inversedBy="orders", cascade={"persist"})
@@ -312,98 +283,6 @@ class Orders
     public function getShrinkage()
     {
         return $this->shrinkage;
-    }
-
-    /**
-     * Set press_id
-     *
-     * @param integer $pressId
-     * @return Orders
-     */
-    public function setPressId($pressId)
-    {
-        $this->press_id = $pressId;
-    
-        return $this;
-    }
-
-    /**
-     * Get press_id
-     *
-     * @return integer 
-     */
-    public function getPressId()
-    {
-        return $this->press_id;
-    }
-
-    /**
-     * Set material_id
-     *
-     * @param integer $materialId
-     * @return Orders
-     */
-    public function setMaterialId($materialId)
-    {
-        $this->material_id = $materialId;
-    
-        return $this;
-    }
-
-    /**
-     * Get material_id
-     *
-     * @return integer 
-     */
-    public function getMaterialId()
-    {
-        return $this->material_id;
-    }
-
-    /**
-     * Set action_id
-     *
-     * @param integer $actionId
-     * @return Orders
-     */
-    public function setActionId($actionId)
-    {
-        $this->action_id = $actionId;
-    
-        return $this;
-    }
-
-    /**
-     * Get action_id
-     *
-     * @return integer 
-     */
-    public function getActionId()
-    {
-        return $this->action_id;
-    }
-
-    /**
-     * Set mold_id
-     *
-     * @param integer $moldId
-     * @return Orders
-     */
-    public function setMoldId($moldId)
-    {
-        $this->mold_id = $moldId;
-    
-        return $this;
-    }
-
-    /**
-     * Get mold_id
-     *
-     * @return integer 
-     */
-    public function getMoldId()
-    {
-        return $this->mold_id;
     }
 
     /**

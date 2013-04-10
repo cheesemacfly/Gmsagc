@@ -23,7 +23,8 @@ class InvoicesController extends Controller
         
         $form = $this->createForm(new RelationsType(), $relation);
 
-        if ($this->getRequest()->isMethod('POST')) {                            
+        if ($this->getRequest()->isMethod('POST')) {
+            
             $em->persist($relation);
             $em->flush();
 

@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Action
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Actions
@@ -80,7 +79,7 @@ class Actions
      * @param \NGPP\GmsagcBundle\Entity\Orders $orders
      * @return Actions
      */
-    public function addOrder(\NGPP\GmsagcBundle\Entity\Orders $orders)
+    public function addOrders(\NGPP\GmsagcBundle\Entity\Orders $orders)
     {
         $this->orders[] = $orders;
     
@@ -92,7 +91,7 @@ class Actions
      *
      * @param \NGPP\GmsagcBundle\Entity\Orders $orders
      */
-    public function removeOrder(\NGPP\GmsagcBundle\Entity\Orders $orders)
+    public function removeOrders(\NGPP\GmsagcBundle\Entity\Orders $orders)
     {
         $this->orders->removeElement($orders);
     }

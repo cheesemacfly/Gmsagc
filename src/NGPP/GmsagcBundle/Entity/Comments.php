@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comments
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Comments
@@ -36,15 +35,7 @@ class Comments
     private $created;
     
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="order_id", type="integer")
-     */
-    private $order_id;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Orders", inversedBy="comments")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     protected $order;
 
@@ -103,29 +94,6 @@ class Comments
     public function getCreated()
     {
         return $this->created;
-    }
-
-    /**
-     * Set order_id
-     *
-     * @param integer $orderId
-     * @return Comments
-     */
-    public function setOrderId($orderId)
-    {
-        $this->order_id = $orderId;
-    
-        return $this;
-    }
-
-    /**
-     * Get order_id
-     *
-     * @return integer 
-     */
-    public function getOrderId()
-    {
-        return $this->order_id;
     }
 
     /**

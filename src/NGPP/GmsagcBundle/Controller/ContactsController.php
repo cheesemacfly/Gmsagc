@@ -33,8 +33,7 @@ class ContactsController extends Controller
                 $originalAddresses[] = $address;
             }
             
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
+            if ($form->bind($this->getRequest())->isValid()) {
                 
                 // filter $originalAddresses to contain Addresses no longer present
                 foreach ($contact->getAddresses() as $address) {

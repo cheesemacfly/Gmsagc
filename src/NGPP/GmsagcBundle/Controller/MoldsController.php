@@ -25,8 +25,9 @@ class MoldsController extends Controller
         $form = $this->createForm(new MoldsType(), $mold);
 
         if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
+            
+            if ($form->bind($this->getRequest())->isValid()) {
+                
                 $em->persist($mold);
                 $em->flush();
 

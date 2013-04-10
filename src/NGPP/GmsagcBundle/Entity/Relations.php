@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Relation
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Relations

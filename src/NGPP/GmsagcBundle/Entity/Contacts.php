@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Contacts
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Contacts
@@ -169,7 +168,7 @@ class Contacts
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      * @return Contacts
      */
-    public function addExpense(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
+    public function addExpenses(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
     {
         $this->expenses[] = $expenses;
     
@@ -181,7 +180,7 @@ class Contacts
      *
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      */
-    public function removeExpense(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
+    public function removeExpenses(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
     {
         $this->expenses->removeElement($expenses);
     }

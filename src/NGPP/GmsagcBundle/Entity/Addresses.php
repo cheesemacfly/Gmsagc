@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Addresses
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Addresses

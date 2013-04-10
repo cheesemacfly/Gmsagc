@@ -7,8 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Molds
  *
- * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="NGPP\GmsagcBundle\Entity\MoldsRepository")
  */
 class Molds
@@ -184,7 +182,7 @@ class Molds
      * @param \NGPP\GmsagcBundle\Entity\Orders $orders
      * @return Molds
      */
-    public function addOrder(\NGPP\GmsagcBundle\Entity\Orders $orders)
+    public function addOrders(\NGPP\GmsagcBundle\Entity\Orders $orders)
     {
         $this->orders[] = $orders;
     
@@ -196,7 +194,7 @@ class Molds
      *
      * @param \NGPP\GmsagcBundle\Entity\Orders $orders
      */
-    public function removeOrder(\NGPP\GmsagcBundle\Entity\Orders $orders)
+    public function removeOrders(\NGPP\GmsagcBundle\Entity\Orders $orders)
     {
         $this->orders->removeElement($orders);
     }

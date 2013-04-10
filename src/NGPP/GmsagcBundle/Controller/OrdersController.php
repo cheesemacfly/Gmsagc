@@ -51,24 +51,11 @@ class OrdersController extends Controller
                     // delete the Relation entirely
                     $em->remove($relation);
                 }
-                                
-//                foreach($order->getRelations() as $relation)
-//                {
-//                    $em->detach($relation);
-//                }
                 
                 $em->persist($order);
                 $em->flush();
-                
-//                foreach($order->getRelations() as $relation)
-//                {
-//                    $relation->setOrder($order);
-//                    $em->persist($relation);
-//                }
-//                
-//                $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'The order has been saved!');
+                $this->get('session')->getFlashBag()->add('success', 'orders.saved');
                 
                 return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
             }
@@ -94,10 +81,10 @@ class OrdersController extends Controller
             $em->remove($order);
             $em->flush();
             
-            $this->get('session')->getFlashBag()->add('success', 'The order has been deleted!');
+            $this->get('session')->getFlashBag()->add('success', 'orders.deleted');
         }
         else
-            $this->get('session')->getFlashBag()->add('error', 'The order has not been deleted!');
+            $this->get('session')->getFlashBag()->add('error', 'orders.nodeleted');
         
         return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
     }

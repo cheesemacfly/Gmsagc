@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Types
  *
- * @ORM\Table()
  * @ORM\Entity
  */
 class Types
@@ -32,6 +31,7 @@ class Types
      * @ORM\OneToMany(targetEntity="Relations", mappedBy="type")
      */
     protected $relations;
+    
     /**
      * Constructor
      */
@@ -79,7 +79,7 @@ class Types
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      * @return Types
      */
-    public function addRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function addRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
     {
         $this->relations[] = $relations;
     
@@ -91,7 +91,7 @@ class Types
      *
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      */
-    public function removeRelation(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function removeRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
     {
         $this->relations->removeElement($relations);
     }
