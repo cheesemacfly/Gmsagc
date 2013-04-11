@@ -1,5 +1,8 @@
 parameters:
-#    ngpp_gmsagc.example.class: NGPP\GmsagcBundle\Example
+    ngpp_gmsagc_types:
+        owner: 1
+        customer: 2
+        provider: 3
 
 services:
     ngpp_gmsagc.type.press_selector:
