@@ -16,7 +16,6 @@ class Types
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -26,18 +25,27 @@ class Types
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Relations", mappedBy="type")
-     */
-    protected $relations;
     
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($id, $name)
     {
-        $this->relations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id = $id;
+        $this->name = $name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $id
+     * @return Types
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
     }
     
     /**
@@ -71,38 +79,5 @@ class Types
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add relations
-     *
-     * @param \NGPP\GmsagcBundle\Entity\Relations $relations
-     * @return Types
-     */
-    public function addRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
-    {
-        $this->relations[] = $relations;
-    
-        return $this;
-    }
-
-    /**
-     * Remove relations
-     *
-     * @param \NGPP\GmsagcBundle\Entity\Relations $relations
-     */
-    public function removeRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
-    {
-        $this->relations->removeElement($relations);
-    }
-
-    /**
-     * Get relations
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRelations()
-    {
-        return $this->relations;
     }
 }
