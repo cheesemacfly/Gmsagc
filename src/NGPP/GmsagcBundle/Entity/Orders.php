@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Orders
@@ -24,6 +25,7 @@ class Orders
      * @var \Date
      *
      * @ORM\Column(name="oral", type="date", nullable=true)
+     * @Assert\Date()
      */
     private $oral;
 
@@ -31,6 +33,7 @@ class Orders
      * @var \Date
      *
      * @ORM\Column(name="written", type="date", nullable=true)
+     * @Assert\Date()
      */
     private $written;
 
@@ -45,6 +48,7 @@ class Orders
      * @var \Date
      *
      * @ORM\Column(name="trial", type="date", nullable=true)
+     * @Assert\Date()
      */
     private $trial;
 
@@ -52,6 +56,7 @@ class Orders
      * @var float
      *
      * @ORM\Column(name="quote", type="float")
+     * @Assert\Type(type="float")
      */
     private $quote;
 
@@ -59,6 +64,7 @@ class Orders
      * @var integer
      *
      * @ORM\Column(name="pieces", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
     private $pieces;
 
@@ -130,9 +136,9 @@ class Orders
      * @param \DateTime $oral
      * @return Orders
      */
-    public function setOral($oral)
+    public function setOral(\DateTime $oral = null)
     {
-        $this->oral = $oral;
+        $this->oral = $oral ? clone $oral : null;
     
         return $this;
     }
@@ -144,7 +150,7 @@ class Orders
      */
     public function getOral()
     {
-        return $this->oral;
+        return $this->oral ? clone $this->oral : null;
     }
 
     /**
@@ -153,9 +159,9 @@ class Orders
      * @param \DateTime $written
      * @return Orders
      */
-    public function setWritten($written)
+    public function setWritten(\DateTime $written = null)
     {
-        $this->written = $written;
+        $this->written = $written ? clone $written : null;
     
         return $this;
     }
@@ -167,7 +173,7 @@ class Orders
      */
     public function getWritten()
     {
-        return $this->written;
+        return $this->written ? clone $this->written : null;
     }
 
     /**
@@ -199,9 +205,9 @@ class Orders
      * @param \DateTime $trial
      * @return Orders
      */
-    public function setTrial($trial)
+    public function setTrial(\DateTime $trial = null)
     {
-        $this->trial = $trial;
+        $this->trial = $trial ? clone $trial : null;
     
         return $this;
     }
@@ -213,7 +219,7 @@ class Orders
      */
     public function getTrial()
     {
-        return $this->trial;
+        return $this->trial ? clone $this->trial: null;
     }
 
     /**

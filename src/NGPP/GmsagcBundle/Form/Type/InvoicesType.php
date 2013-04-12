@@ -12,7 +12,7 @@ class InvoicesType extends AbstractType
     {
         $builder
             ->add('invoice')
-            ->add('invoiced', null, array('widget' => 'single_text'))
+            ->add('invoiced', 'date', array('widget' => 'single_text'))
         ;
     }
 

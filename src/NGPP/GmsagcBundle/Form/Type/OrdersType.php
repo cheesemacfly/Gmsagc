@@ -16,10 +16,10 @@ class OrdersType extends AbstractType
             'allow_delete' => true,
             'by_reference' => false,));
         $builder
-            ->add('oral', null, array('widget' => 'single_text'))
-            ->add('written', null, array('widget' => 'single_text'))
+            ->add('oral', 'date', array('widget' => 'single_text', 'required' => false))
+            ->add('written', 'date', array('widget' => 'single_text', 'required' => false))
             ->add('observation')
-            ->add('trial', null, array('widget' => 'single_text'))
+            ->add('trial', 'date', array('widget' => 'single_text', 'required' => false))
             ->add('quote')
             ->add('pieces')
             ->add('shrinkage')

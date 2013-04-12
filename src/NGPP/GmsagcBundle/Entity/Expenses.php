@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Expenses
@@ -31,6 +32,7 @@ class Expenses
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $description;
 
@@ -38,6 +40,8 @@ class Expenses
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="float")
      */
     private $price;
 
@@ -52,6 +56,7 @@ class Expenses
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $type;
 
@@ -59,6 +64,8 @@ class Expenses
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
      */
     private $created;
     

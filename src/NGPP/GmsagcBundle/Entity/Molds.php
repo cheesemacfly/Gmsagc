@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Molds
@@ -30,6 +31,7 @@ class Molds
      * @var float
      *
      * @ORM\Column(name="weight", type="float", nullable=true)
+     * @Assert\Type(type="float")
      */
     private $weight;
 
@@ -44,6 +46,7 @@ class Molds
      * @var integer
      *
      * @ORM\Column(name="shell", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
     private $shell;
 

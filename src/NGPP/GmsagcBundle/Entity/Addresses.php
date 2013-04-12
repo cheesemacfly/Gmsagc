@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Addresses
@@ -24,6 +25,7 @@ class Addresses
      * @var string
      *
      * @ORM\Column(name="street", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $street;
 
@@ -31,6 +33,7 @@ class Addresses
      * @var string
      *
      * @ORM\Column(name="zipcode", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $zipcode;
 
@@ -38,6 +41,7 @@ class Addresses
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $city;
 
@@ -45,6 +49,7 @@ class Addresses
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $country;
     
