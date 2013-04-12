@@ -34,19 +34,6 @@ class Types
         $this->id = $id;
         $this->name = $name;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $id
-     * @return Types
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    
-        return $this;
-    }
     
     /**
      * Get id
