@@ -25,7 +25,7 @@ class Orders
      * @var \Date
      *
      * @ORM\Column(name="oral", type="date", nullable=true)
-     * @Assert\Date()
+     * @Assert\Type(type="\DateTime")
      */
     private $oral;
 
@@ -33,7 +33,7 @@ class Orders
      * @var \Date
      *
      * @ORM\Column(name="written", type="date", nullable=true)
-     * @Assert\Date()
+     * @Assert\Type(type="\DateTime")
      */
     private $written;
 
@@ -48,7 +48,7 @@ class Orders
      * @var \Date
      *
      * @ORM\Column(name="trial", type="date", nullable=true)
-     * @Assert\Date()
+     * @Assert\Type(type="\DateTime")
      */
     private $trial;
 

@@ -45,7 +45,7 @@ class Relations
      * @var \DateTime
      *
      * @ORM\Column(name="invoiced", type="date", nullable=true)
-     * @Assert\Date()
+     * @Assert\Type(type="\DateTime")
      */
     private $invoiced;
     
