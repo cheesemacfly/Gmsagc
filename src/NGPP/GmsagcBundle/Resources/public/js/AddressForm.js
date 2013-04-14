@@ -26,21 +26,16 @@ jQuery(document).ready(function() {
 });
 function addAddressForm(collectionAddressesHolder, $newLinkDiv) {
     // Get the data-prototype explained earlier
-    var prototype = collectionAddressesHolder.data('prototype');
+    var prototype = collectionAddressesHolder.data('prototype').replace(/__name__label__/g, '');
 
     // get the new index
     var index = collectionAddressesHolder.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__label__/g, 'Address nb ' + (index + 1))
-            .replace(/__name__/g, index);
 
     // increase the index with one for the next item
     collectionAddressesHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormDiv = $('<div></div>').append(newForm);
+    var $newFormDiv = $('<div></div>').append(prototype);
     $newLinkDiv.before($newFormDiv);
     // add a delete link to the new form
     addAddressFormDeleteLink($newFormDiv);
