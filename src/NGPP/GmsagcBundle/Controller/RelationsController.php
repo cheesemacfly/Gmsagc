@@ -10,7 +10,9 @@ class RelationsController extends Controller
     public function indexAction()
     {
         return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
-                array('relations' => $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Relations')->findAll()));
+                array('relations' => $this->getDoctrine()
+                                          ->getRepository('NGPPGmsagcBundle:Relations')
+                                          ->findByType($this->container->getParameter('ngpp_gmsagc_types')['customer'])));
     }
     
     public function saveAction($id = null)
