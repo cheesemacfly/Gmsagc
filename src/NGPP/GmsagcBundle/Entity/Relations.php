@@ -50,7 +50,7 @@ class Relations
     private $invoiced;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Types", inversedBy="relations")
+     * @ORM\ManyToOne(targetEntity="Types")
      */
     protected $type;
     

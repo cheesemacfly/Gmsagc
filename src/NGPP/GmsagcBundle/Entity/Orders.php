@@ -86,7 +86,7 @@ class Orders
     protected $material;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Actions", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="Actions")
      */
     protected $action;
     
