@@ -6,6 +6,10 @@ parameters:
     ngpp_gmsagc_actions:
         creation: 1
         modification: 2
+    ngpp_gmsagc_users:
+        admin: password
+    ngpp_gmsagc_roles:
+        ROLE_ADMIN: ROLE_ADMIN
 
 services:
     ngpp_gmsagc.type.press_selector:

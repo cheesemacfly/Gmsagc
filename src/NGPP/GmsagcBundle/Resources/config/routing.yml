@@ -1,3 +1,9 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: NGPPGmsagcBundle:Users:login }
+login_check:
+    pattern:   /login_check
+    
 ngpp_gmsagc_home:
     pattern:  /
     defaults: { _controller: NGPPGmsagcBundle:Default:index }
