@@ -30,11 +30,8 @@
                 {% endfor %}
                 </ul>-->
                 
-                <a class="brand" href="#">Gmsagc</a>
+                <a class="brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
                 <ul class="nav">
-                    <li>
-                        <a href="{{ path('ngpp_gmsagc_home') }}">{{ 'home'|trans }}</a>
-                    </li>
                     <li>
                         <a href="{{ path('ngpp_gmsagc_orders') }}">
                             {{ 'orders.menu'|trans }}
@@ -57,11 +54,11 @@
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Dropdown<b class="caret"></b>
+                            {{ 'stats.menu'|trans }}<b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ path('ngpp_gmsagc_orders_save') }}">Add order</a>
+                                <a href="#">{{ 'report.menu'|trans }}</a>
                             </li>
                         </ul>
                     </li>
