@@ -3,7 +3,7 @@ login:
     defaults:  { _controller: NGPPGmsagcBundle:Users:login }
 login_check:
     pattern:   /login_check
-    
+
 ngpp_gmsagc_home:
     pattern:  /
     defaults: { _controller: NGPPGmsagcBundle:Default:index }
@@ -30,7 +30,7 @@ ngpp_gmsagc_orders_delete:
     defaults: { _controller: NGPPGmsagcBundle:Orders:delete }
     requirements:
         id:  \d+
-        
+
 ngpp_gmsagc_contacts:
     pattern:  /contacts
     defaults: { _controller: NGPPGmsagcBundle:Contacts:index }
@@ -56,6 +56,20 @@ ngpp_gmsagc_molds_save:
 ngpp_gmsagc_molds_delete:
     pattern:  /molds/delete/{id}
     defaults: { _controller: NGPPGmsagcBundle:Molds:delete }
+    requirements:
+        id:  \d+
+
+ngpp_gmsagc_users:
+    pattern:  /users
+    defaults: { _controller: NGPPGmsagcBundle:Users:index }
+ngpp_gmsagc_users_save:
+    pattern:  /users/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Users:save, id: null }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_users_delete:
+    pattern:  /users/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Users:delete }
     requirements:
         id:  \d+
 

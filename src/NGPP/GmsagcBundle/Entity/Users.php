@@ -41,6 +41,11 @@ class Users implements AdvancedUserInterface, \Serializable
     private $email;
 
     /**
+     * @ORM\Column(type="decimal", precision=6, scale=2, nullable=true)
+     */
+    private $rate;
+    
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
@@ -77,7 +82,7 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function setUsername($username = null)
+    public function setUsername($username)
     {
         $this->username = $username;
         
@@ -103,7 +108,7 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function setPassword($password = null)
+    public function setPassword($password)
     {
         $this->password = $password;
         
@@ -124,6 +129,24 @@ class Users implements AdvancedUserInterface, \Serializable
     public function setEmail($email = null)
     {
         $this->email = $email;
+        
+        return $this;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getRate()
+    {
+        return $this->rate;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setRate($rate = null)
+    {
+        $this->rate = $rate;
         
         return $this;
     }
