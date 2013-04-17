@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -22,6 +23,7 @@ class Users implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -32,11 +34,14 @@ class Users implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=6)
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -47,6 +52,7 @@ class Users implements AdvancedUserInterface, \Serializable
     
     /**
      * @ORM\Column(name="is_active", type="boolean")
+     * @Assert\Type(type="boolean")
      */
     private $isActive;
     
@@ -165,6 +171,24 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setGroups($groups)
+    {
+        $this->groups = $groups;
+        
+        return $this;
+    }
+    
+    /**
+     * @inheritDoc
+     */
     public function getRoles()
     {
         return $this->groups->toArray();
@@ -173,9 +197,9 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function setRoles($roles)
+    public function setRoles($groups)
     {
-        $this->roles = $roles;
+        $this->groups = $groups;
         
         return $this;
     }
@@ -183,9 +207,9 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function addRole(\NGPP\GmsagcBundle\Entity\Groups $role)
+    public function addRole(\NGPP\GmsagcBundle\Entity\Groups $group)
     {
-        $this->roles[] = $role;
+        $this->groups[] = $group;
     
         return $this;
     }
@@ -193,9 +217,9 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function removeRole(\NGPP\GmsagcBundle\Entity\Groups $role)
+    public function removeRole(\NGPP\GmsagcBundle\Entity\Groups $group)
     {
-        $this->roles->removeElement($role);
+        $this->groups->removeElement($group);
     }
 
     /**

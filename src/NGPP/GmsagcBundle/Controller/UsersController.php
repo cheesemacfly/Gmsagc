@@ -54,6 +54,9 @@ class UsersController extends Controller
             
             if ($form->bind($this->getRequest())->isValid()) {
                 
+                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+                
                 $em->persist($user);
                 $em->flush();
 

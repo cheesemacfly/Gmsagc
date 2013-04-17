@@ -16,11 +16,18 @@ class UsersType extends AbstractType
                 'type' => 'password',
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
-                'required' => true,
+                'required' => false,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password')))
-            ->add('email', 'email')
+            ->add('email', 'email', array(
+                'required' => false
+            ))
             ->add('rate')
+            ->add('groups', 'entity', array('property' => 'name',
+                'expanded' => true,
+                'multiple' => true,
+                'class' => 'NGPPGmsagcBundle:Groups',
+                ))
         ;
     }
 

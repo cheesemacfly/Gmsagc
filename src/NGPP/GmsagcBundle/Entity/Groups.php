@@ -110,7 +110,7 @@ class Groups implements RoleInterface
     /**
      * @inheritDoc
      */
-    public function addUser(\NGPP\GmsagcBundle\Entity\Users $user)
+    public function addUser(Users $user)
     {
         $user->addRole($this);
         $this->users[] = $user;
@@ -121,7 +121,7 @@ class Groups implements RoleInterface
     /**
      * @inheritDoc
      */
-    public function removeUser(\NGPP\GmsagcBundle\Entity\Users $user)
+    public function removeUser(Users $user)
     {
         $this->users->removeElement($user);
     }

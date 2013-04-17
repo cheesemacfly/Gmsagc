@@ -4,6 +4,7 @@ namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Contacts
@@ -33,7 +34,6 @@ class Contacts
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
@@ -58,9 +58,9 @@ class Contacts
      */
     public function __construct()
     {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->expenses = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->relations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addresses = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
+        $this->relations = new ArrayCollection();
     }
     
     /**
@@ -125,7 +125,7 @@ class Contacts
      * @param \NGPP\GmsagcBundle\Entity\Addresses $address
      * @return Contacts
      */
-    public function addAddresses(\NGPP\GmsagcBundle\Entity\Addresses $address)
+    public function addAddresses(Addresses $address)
     {
         $this->addresses[] = $address;
     
@@ -137,7 +137,7 @@ class Contacts
      *
      * @param \NGPP\GmsagcBundle\Entity\Addresses $address
      */
-    public function removeAddresses(\NGPP\GmsagcBundle\Entity\Addresses $address)
+    public function removeAddresses(Addresses $address)
     {
         $this->addresses->removeElement($address);
     }
@@ -172,7 +172,7 @@ class Contacts
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      * @return Contacts
      */
-    public function addExpenses(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
+    public function addExpenses(Expenses $expenses)
     {
         $this->expenses[] = $expenses;
     
@@ -184,7 +184,7 @@ class Contacts
      *
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      */
-    public function removeExpenses(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
+    public function removeExpenses(Expenses $expenses)
     {
         $this->expenses->removeElement($expenses);
     }
@@ -205,7 +205,7 @@ class Contacts
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      * @return Contacts
      */
-    public function addRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function addRelations(Relations $relations)
     {
         $this->relations[] = $relations;
 
@@ -217,7 +217,7 @@ class Contacts
      *
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      */
-    public function removeRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function removeRelations(Relations $relations)
     {
         $this->relations->removeElement($relations);
     }

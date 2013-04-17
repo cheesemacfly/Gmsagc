@@ -4,6 +4,7 @@ namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Orders
@@ -56,7 +57,6 @@ class Orders
      * @var float
      *
      * @ORM\Column(name="quote", type="decimal", precision=12, scale=2)
-     * @Assert\Type(type="decimal")
      */
     private $quote;
 
@@ -115,9 +115,9 @@ class Orders
      */
     public function __construct()
     {
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->expenses = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->relations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
+        $this->relations = new ArrayCollection();
     }
     
     /**
@@ -297,7 +297,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Press $press
      * @return Orders
      */
-    public function setPress(\NGPP\GmsagcBundle\Entity\Press $press = null)
+    public function setPress(Press $press = null)
     {
         $this->press = $press;
     
@@ -320,7 +320,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Materials $material
      * @return Orders
      */
-    public function setMaterial(\NGPP\GmsagcBundle\Entity\Materials $material = null)
+    public function setMaterial(Materials $material = null)
     {
         $this->material = $material;
     
@@ -343,7 +343,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Actions $action
      * @return Orders
      */
-    public function setAction(\NGPP\GmsagcBundle\Entity\Actions $action = null)
+    public function setAction(Actions $action = null)
     {
         $this->action = $action;
     
@@ -366,7 +366,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Molds $mold
      * @return Orders
      */
-    public function setMold(\NGPP\GmsagcBundle\Entity\Molds $mold = null)
+    public function setMold(Molds $mold = null)
     {
         $this->mold = $mold;
     
@@ -389,7 +389,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Comments $comments
      * @return Orders
      */
-    public function addComment(\NGPP\GmsagcBundle\Entity\Comments $comments)
+    public function addComment(Comments $comments)
     {
         $this->comments[] = $comments;
     
@@ -401,7 +401,7 @@ class Orders
      *
      * @param \NGPP\GmsagcBundle\Entity\Comments $comments
      */
-    public function removeComment(\NGPP\GmsagcBundle\Entity\Comments $comments)
+    public function removeComment(Comments $comments)
     {
         $this->comments->removeElement($comments);
     }
@@ -422,7 +422,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      * @return Orders
      */
-    public function addExpense(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
+    public function addExpense(Expenses $expenses)
     {
         $this->expenses[] = $expenses;
     
@@ -434,7 +434,7 @@ class Orders
      *
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      */
-    public function removeExpense(\NGPP\GmsagcBundle\Entity\Expenses $expenses)
+    public function removeExpense(Expenses $expenses)
     {
         $this->expenses->removeElement($expenses);
     }
@@ -455,7 +455,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      * @return Orders
      */
-    public function addRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function addRelations(Relations $relations)
     {
         $this->relations[] = $relations;
 
@@ -467,7 +467,7 @@ class Orders
      *
      * @param \NGPP\GmsagcBundle\Entity\Relations $relations
      */
-    public function removeRelations(\NGPP\GmsagcBundle\Entity\Relations $relations)
+    public function removeRelations(Relations $relations)
     {
         $this->relations->removeElement($relations);
     }

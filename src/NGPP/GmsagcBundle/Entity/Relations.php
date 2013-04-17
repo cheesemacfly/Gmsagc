@@ -116,7 +116,7 @@ class Relations
      * @param \NGPP\GmsagcBundle\Entity\Contacts $contact
      * @return Relations
      */
-    public function setContact(\NGPP\GmsagcBundle\Entity\Contacts $contact = null)
+    public function setContact(Contacts $contact = null)
     {
         $this->contact = $contact;
 
@@ -139,7 +139,7 @@ class Relations
      * @param \NGPP\GmsagcBundle\Entity\Orders $order
      * @return Relations
      */
-    public function setOrder(\NGPP\GmsagcBundle\Entity\Orders $order = null)
+    public function setOrder(Orders $order = null)
     {
         $this->order = $order;
 
@@ -162,7 +162,7 @@ class Relations
      * @param \NGPP\GmsagcBundle\Entity\Types $type
      * @return Relations
      */
-    public function setType(\NGPP\GmsagcBundle\Entity\Types $type = null)
+    public function setType(Types $type = null)
     {
         $this->type = $type;
     

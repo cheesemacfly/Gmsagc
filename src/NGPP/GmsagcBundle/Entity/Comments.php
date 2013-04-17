@@ -102,7 +102,7 @@ class Comments
      * @param \NGPP\GmsagcBundle\Entity\Orders $order
      * @return Comments
      */
-    public function setOrder(\NGPP\GmsagcBundle\Entity\Orders $order = null)
+    public function setOrder(Orders $order = null)
     {
         $this->order = $order;
     

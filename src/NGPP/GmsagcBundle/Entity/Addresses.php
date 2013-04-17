@@ -167,7 +167,7 @@ class Addresses
      * @param \NGPP\GmsagcBundle\Entity\Contacts $contact
      * @return Addresses
      */
-    public function setContact(\NGPP\GmsagcBundle\Entity\Contacts $contact = null)
+    public function setContact(Contacts $contact = null)
     {
         $this->contact = $contact;
     

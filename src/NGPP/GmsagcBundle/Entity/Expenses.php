@@ -234,7 +234,7 @@ class Expenses
      * @param \NGPP\GmsagcBundle\Entity\Contacts $contact
      * @return Expenses
      */
-    public function setContact(\NGPP\GmsagcBundle\Entity\Contacts $contact = null)
+    public function setContact(Contacts $contact = null)
     {
         $this->contact = $contact;
     
@@ -257,7 +257,7 @@ class Expenses
      * @param \NGPP\GmsagcBundle\Entity\Orders $order
      * @return Expenses
      */
-    public function setOrder(\NGPP\GmsagcBundle\Entity\Orders $order = null)
+    public function setOrder(Orders $order = null)
     {
         $this->order = $order;
     

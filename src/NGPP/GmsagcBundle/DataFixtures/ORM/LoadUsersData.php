@@ -37,7 +37,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
             $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
             $user->setPassword($encoder->encodePassword($value, $user->getSalt()));
             
-            $user->addRoles($this->getReference('ROLE_ADMIN'));
+            $user->addRole($this->getReference('ROLE_ADMIN'));
             
             $manager->persist($user);
         }

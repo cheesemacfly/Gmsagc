@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -61,7 +62,7 @@ class Molds
     public function __construct($id = 0)
     {
         $this->id = $id;
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -185,7 +186,7 @@ class Molds
      * @param \NGPP\GmsagcBundle\Entity\Orders $orders
      * @return Molds
      */
-    public function addOrders(\NGPP\GmsagcBundle\Entity\Orders $orders)
+    public function addOrders(Orders $orders)
     {
         $this->orders[] = $orders;
     
@@ -197,7 +198,7 @@ class Molds
      *
      * @param \NGPP\GmsagcBundle\Entity\Orders $orders
      */
-    public function removeOrders(\NGPP\GmsagcBundle\Entity\Orders $orders)
+    public function removeOrders(Orders $orders)
     {
         $this->orders->removeElement($orders);
     }
