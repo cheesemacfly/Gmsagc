@@ -83,4 +83,46 @@ class Groups implements RoleInterface
         
         return $this;
     }
+    
+    
+    /**
+     * @inheritDoc
+     */
+    public function getUsers()
+    {
+        return $this->users->toArray();
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setUsers($users)
+    {
+        foreach($users as $user)
+        {
+            $user->addRole($this);
+        }
+        $this->users = $users;
+        
+        return $this;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function addUser(\NGPP\GmsagcBundle\Entity\Users $user)
+    {
+        $user->addRole($this);
+        $this->users[] = $user;
+    
+        return $this;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function removeUser(\NGPP\GmsagcBundle\Entity\Users $user)
+    {
+        $this->users->removeElement($user);
+    }
 }

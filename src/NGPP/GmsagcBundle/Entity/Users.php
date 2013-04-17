@@ -52,6 +52,7 @@ class Users implements AdvancedUserInterface, \Serializable
     
     /**
      * @ORM\ManyToMany(targetEntity="Groups", inversedBy="users")
+     * @ORM\JoinTable(name="Users_Groups")
      *
      */
     private $groups;
@@ -167,6 +168,34 @@ class Users implements AdvancedUserInterface, \Serializable
     public function getRoles()
     {
         return $this->groups->toArray();
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+        
+        return $this;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function addRole(\NGPP\GmsagcBundle\Entity\Groups $role)
+    {
+        $this->roles[] = $role;
+    
+        return $this;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function removeRole(\NGPP\GmsagcBundle\Entity\Groups $role)
+    {
+        $this->roles->removeElement($role);
     }
 
     /**

@@ -8,8 +8,9 @@ parameters:
         modification: 2
     ngpp_gmsagc_users:
         admin: password
-    ngpp_gmsagc_roles:
-        ROLE_ADMIN: ROLE_ADMIN
+    ngpp_gmsagc_groups:
+        ROLE_ADMIN: Admistrators
+        ROLE_USER: Users
 
 services:
     ngpp_gmsagc.type.press_selector:

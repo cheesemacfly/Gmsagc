@@ -7,9 +7,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use NGPP\GmsagcBundle\Entity\Users;
+use NGPP\GmsagcBundle\Entity\Groups;
 
-class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadGroupsData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -29,19 +29,17 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->container->getParameter('ngpp_gmsagc_users') as $key => $value)
+        foreach($this->container->getParameter('ngpp_gmsagc_groups') as $key => $value)
         {
-            $user = new Users();
-            $user->setUsername($key);
+            $group = new Groups();
+            $group->setRole($key);
+            $group->setName($value);
             
-            $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-            $user->setPassword($encoder->encodePassword($value, $user->getSalt()));
+            $manager->persist($group);
+            $manager->flush();
             
-            $user->addRoles($this->getReference('ROLE_ADMIN'));
-            
-            $manager->persist($user);
+            $this->addReference($key, $group);
         }
-        $manager->flush();
     }
     
     /**
@@ -49,6 +47,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
      */
     public function getOrder()
     {
-        return 2;
+        return 1;
     }
 }
