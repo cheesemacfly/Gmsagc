@@ -57,6 +57,7 @@ class Orders
      * @var float
      *
      * @ORM\Column(name="quote", type="decimal", precision=12, scale=2)
+     * @Assert\NotBlank()
      */
     private $quote;
 

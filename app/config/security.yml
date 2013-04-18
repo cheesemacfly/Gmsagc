@@ -35,8 +35,8 @@ security:
             #    realm: "Secured Demo Area"
 
     access_control:
-        - { path: ^/molds, roles: ROLE_USER }
-        - { path: ^/orders, roles: ROLE_ADMIN }
+        #- { path: ^/molds, roles: ROLE_USER }
+        #- { path: ^/orders, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #
         # You must uncomment the two following rules to restrict access to paths

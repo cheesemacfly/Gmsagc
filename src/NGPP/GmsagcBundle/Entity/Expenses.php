@@ -22,13 +22,6 @@ class Expenses
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="refOrder", type="integer")
-     */
-    private $refOrder;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
@@ -39,9 +32,8 @@ class Expenses
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="decimal", precision=12, scale=2)
      * @Assert\NotBlank()
-     * @Assert\Type(type="float")
      */
     private $price;
 
@@ -53,19 +45,11 @@ class Expenses
     private $observation;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    private $type;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
      * @Assert\NotBlank()
-     * @Assert\DateTime()
+     * @Assert\Type(type="\DateTime")
      */
     private $created;
     
@@ -88,29 +72,6 @@ class Expenses
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set refOrder
-     *
-     * @param integer $refOrder
-     * @return Expenses
-     */
-    public function setRefOrder($refOrder)
-    {
-        $this->refOrder = $refOrder;
-    
-        return $this;
-    }
-
-    /**
-     * Get refOrder
-     *
-     * @return integer 
-     */
-    public function getRefOrder()
-    {
-        return $this->refOrder;
     }
 
     /**
@@ -180,29 +141,6 @@ class Expenses
     public function getObservation()
     {
         return $this->observation;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return Expenses
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**

@@ -2,7 +2,6 @@ parameters:
     ngpp_gmsagc_types:
         owner: 1
         customer: 2
-        provider: 3
     ngpp_gmsagc_actions:
         creation: 1
         modification: 2
