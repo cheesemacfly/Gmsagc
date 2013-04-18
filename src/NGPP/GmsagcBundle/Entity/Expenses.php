@@ -47,7 +47,7 @@ class Expenses
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="datetime")
+     * @ORM\Column(name="created", type="date")
      * @Assert\NotBlank()
      * @Assert\Type(type="\DateTime")
      */

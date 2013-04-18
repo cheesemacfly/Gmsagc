@@ -1,6 +1,6 @@
 <?php
 
-namespace NGPP\GmsagcBundle\Form;
+namespace NGPP\GmsagcBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,16 +11,14 @@ class ExpensesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('refOrder')
+            ->add('order', 'entity',
+                    array('property' => 'id',
+                        'class' => 'NGPPGmsagcBundle:Orders',
+                        'disabled' => true))
             ->add('description')
             ->add('price')
             ->add('observation')
-            ->add('type')
-            ->add('created')
-            ->add('contact_id')
-            ->add('order_id')
-            ->add('contact')
-            ->add('order')
+            ->add('created', null, array('widget' => 'single_text'))
         ;
     }
 
