@@ -5,7 +5,9 @@ namespace NGPP\GmsagcBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use \NGPP\GmsagcBundle\Entity\Users;
-use \NGPP\GmsagcBundle\Form\Type\UsersType;
+use \NGPP\GmsagcBundle\Form\Type\UsersCreationType;
+use \NGPP\GmsagcBundle\Form\Type\UsersEditType;
+use \NGPP\GmsagcBundle\Form\Type\UsersPasswordEditType;
 
 class UsersController extends Controller
 {
@@ -44,18 +46,27 @@ class UsersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
                 
-        //Determine if editing or creating
-        $user = !is_null($id) && !is_null($user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id)) ? 
-                $user : new Users();
-        
-        $form = $this->createForm(new UsersType(), $user);
+        //Edit mode
+        if(!is_null($id) && !is_null($user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id)))
+        {
+            $form = $this->createForm(new UsersEditType(), $user);
+        }
+        else
+        {
+            $user = new Users();
+            $form = $this->createForm(new UsersCreationType(), $user);
+        }
 
         if ($this->getRequest()->isMethod('POST')) {
             
             if ($form->bind($this->getRequest())->isValid()) {
                 
-                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-                $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+                //Encode password only when creating user
+                if($user->getId() === null)
+                {
+                    $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                    $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+                }
                 
                 $em->persist($user);
                 $em->flush();
@@ -71,13 +82,46 @@ class UsersController extends Controller
                 array('form' => $form->createView()));
     }
     
+    public function passwordAction($id = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id);
+
+        if ($user){
+            
+            $form = $this->createForm(new UsersPasswordEditType(), $user);
+            
+            if ($this->getRequest()->isMethod('POST')) {
+
+                if ($form->bind($this->getRequest())->isValid()) {
+
+                    $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                    $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+
+                    $em->persist($user);
+                    $em->flush();
+
+                    $this->get('session')->getFlashBag()->add('success',
+                        $this->get('translator')->trans('users.saved'));
+
+                    return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
+                }
+            }
+        }
+        else        
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
+        
+        return $this->render('NGPPGmsagcBundle:Users:password.html.twig',
+                array('form' => $form->createView()));
+    }
+    
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id);
 
-        if ($user)
-        {            
+        if ($user){
+            
             $em->remove($user);
             $em->flush();
             

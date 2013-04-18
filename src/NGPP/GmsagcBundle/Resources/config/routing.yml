@@ -67,6 +67,11 @@ ngpp_gmsagc_users_save:
     defaults: { _controller: NGPPGmsagcBundle:Users:save, id: null }
     requirements:
         id:  \d+
+ngpp_gmsagc_users_password:
+    pattern:  /users/password/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Users:password, id: null }
+    requirements:
+        id:  \d+
 ngpp_gmsagc_users_delete:
     pattern:  /users/delete/{id}
     defaults: { _controller: NGPPGmsagcBundle:Users:delete }
