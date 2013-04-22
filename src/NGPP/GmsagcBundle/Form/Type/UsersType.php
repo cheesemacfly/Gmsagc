@@ -5,8 +5,9 @@ namespace NGPP\GmsagcBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use NGPP\GmsagcBundle\Form\EventListener\AddPasswordFieldSubscriber;
 
-class UsersEditType extends AbstractType
+class UsersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,6 +23,8 @@ class UsersEditType extends AbstractType
                 'class' => 'NGPPGmsagcBundle:Groups',
                 ))
         ;
+        
+        $builder->addEventSubscriber(new AddPasswordFieldSubscriber());
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -33,6 +36,6 @@ class UsersEditType extends AbstractType
 
     public function getName()
     {
-        return 'ngpp_gmsagcbundle_usersedittype';
+        return 'ngpp_gmsagcbundle_userstype';
     }
 }

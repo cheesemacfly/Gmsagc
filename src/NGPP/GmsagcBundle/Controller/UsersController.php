@@ -5,8 +5,7 @@ namespace NGPP\GmsagcBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use \NGPP\GmsagcBundle\Entity\Users;
-use \NGPP\GmsagcBundle\Form\Type\UsersCreationType;
-use \NGPP\GmsagcBundle\Form\Type\UsersEditType;
+use \NGPP\GmsagcBundle\Form\Type\UsersType;
 use \NGPP\GmsagcBundle\Form\Type\UsersPasswordEditType;
 
 class UsersController extends Controller
@@ -45,17 +44,12 @@ class UsersController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-                
-        //Edit mode
-        if(!is_null($id) && !is_null($user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id)))
-        {
-            $form = $this->createForm(new UsersEditType(), $user);
-        }
-        else
-        {
-            $user = new Users();
-            $form = $this->createForm(new UsersCreationType(), $user);
-        }
+        
+        //Determine if editing or creating
+        $user = !is_null($id) && !is_null($user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id)) ? 
+                $user : new Users();
+        
+        $form = $this->createForm(new UsersType(), $user);
 
         if ($this->getRequest()->isMethod('POST')) {
             
