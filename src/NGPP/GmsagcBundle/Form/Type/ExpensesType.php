@@ -16,7 +16,7 @@ class ExpensesType extends AbstractType
                         'class' => 'NGPPGmsagcBundle:Orders',
                         'disabled' => true))
             ->add('description')
-            ->add('price')
+            ->add('price', 'money')
             ->add('observation')
             ->add('created', null, array('widget' => 'single_text'))
             ->add('contact', 'entity',

@@ -20,7 +20,7 @@ class OrdersType extends AbstractType
             ->add('written', null, array('widget' => 'single_text'))
             ->add('observation')
             ->add('trial', null, array('widget' => 'single_text'))
-            ->add('quote')
+            ->add('quote', 'money')
             ->add('pieces')
             ->add('shrinkage')
             ->add('press', 'press_selector', array('attr' => array('autocomplete' => 'off')))
