@@ -19,6 +19,9 @@ class ExpensesType extends AbstractType
             ->add('price')
             ->add('observation')
             ->add('created', null, array('widget' => 'single_text'))
+            ->add('contact', 'entity',
+                    array('property' => 'name',
+                        'class' => 'NGPPGmsagcBundle:Contacts'))
         ;
     }
 

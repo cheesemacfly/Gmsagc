@@ -63,6 +63,10 @@ class Expenses
      */
     protected $order;
 
+    public function __construct($order = null)
+    {
+        $this->order = $order;
+    }
 
     /**
      * Get id
