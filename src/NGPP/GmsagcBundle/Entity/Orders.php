@@ -423,7 +423,7 @@ class Orders
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      * @return Orders
      */
-    public function addExpense(Expenses $expenses)
+    public function addExpenses(Expenses $expenses)
     {
         $this->expenses[] = $expenses;
     
@@ -435,7 +435,7 @@ class Orders
      *
      * @param \NGPP\GmsagcBundle\Entity\Expenses $expenses
      */
-    public function removeExpense(Expenses $expenses)
+    public function removeExpenses(Expenses $expenses)
     {
         $this->expenses->removeElement($expenses);
     }

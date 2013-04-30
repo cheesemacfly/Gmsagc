@@ -81,9 +81,14 @@ ngpp_gmsagc_users_delete:
 ngpp_gmsagc_expenses:
     pattern:  /expenses
     defaults: { _controller: NGPPGmsagcBundle:Expenses:index }
-ngpp_gmsagc_expenses_save:
-    pattern:  /expenses/save/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Expenses:save, id: null }
+ngpp_gmsagc_expenses_create:
+    pattern:  /expenses/create/{order_id}
+    defaults: { _controller: NGPPGmsagcBundle:Expenses:create }
+    requirements:
+        order_id:  \d+
+ngpp_gmsagc_expenses_edit:
+    pattern:  /expenses/edit/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Expenses:edit }
     requirements:
         id:  \d+
 ngpp_gmsagc_expenses_delete:

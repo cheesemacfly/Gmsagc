@@ -1,27 +1,24 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>
-    <a href="{{ path('ngpp_gmsagc_expenses_save') }}" class="btn btn-success">
-        <i class="icon-plus icon-white"></i> {{ 'expenses.add'|trans }}
-    </a>
     <br><br>
     {% if expenses is defined and expenses %}
         <table class="table table-hover">
             <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Country</th>
+                <th>#order</th>
+                <th>Description</th>
+                <th>Price</th>
                 <th></th>
             </tr>
         {% for expense in expenses %}
             <tr>
                 <td>{{ expense.id }}</td>
+                <td>{{ expense.order.id }}</td>
                 <td>{{ expense.description }}</td>
                 <td>{{ expense.price }}</td>
                 <td>
-                    <a href="{{ path('ngpp_gmsagc_expenses_save', {'id': expense.id}) }}" class="btn btn-warning">
+                    <a href="{{ path('ngpp_gmsagc_expenses_edit', {'id': expense.id}) }}" class="btn btn-warning">
                         <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
                     </a>
                 </td>

@@ -57,13 +57,20 @@ class Expenses
      * @ORM\ManyToOne(targetEntity="Contacts", inversedBy="expenses")
      */
     protected $contact;
+        
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order_id", type="integer")
+     */
+    protected $order_id;
     
     /**
      * @ORM\ManyToOne(targetEntity="Orders", inversedBy="expenses")
      */
     protected $order;
 
-    public function __construct($order = null)
+    public function __construct($order)
     {
         $this->order = $order;
     }
@@ -191,6 +198,29 @@ class Expenses
     public function getContact()
     {
         return $this->contact;
+    }
+    
+    /**
+     * Set order_id
+     *
+     * @param integer $orderId
+     * @return Expenses
+     */
+    public function setOrderId($orderId)
+    {
+        $this->order_id = $orderId;
+    
+        return $this;
+    }
+
+    /**
+     * Get order_id
+     *
+     * @return integer 
+     */
+    public function getOrderId()
+    {
+        return $this->order_id;
     }
 
     /**

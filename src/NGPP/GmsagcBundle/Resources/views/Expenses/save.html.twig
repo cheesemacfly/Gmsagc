@@ -3,9 +3,9 @@
 {% block content %}
     <form
         {% if form.vars.value.id %}
-            action="{{ path('ngpp_gmsagc_expenses_save', {'id': form.vars.value.id}) }}"
-        {% else %}
-            action="{{ path('ngpp_gmsagc_expenses_save') }}"
+            action="{{ path('ngpp_gmsagc_expenses_edit', {'id': form.vars.value.id}) }}"
+        {% elseif form.vars.value.orderid %}
+            action="{{ path('ngpp_gmsagc_expenses_create', {'order_id': form.vars.value.orderid}) }}"
         {% endif %}
         method="post" {{ form_enctype(form) }}>
         <fieldset>
