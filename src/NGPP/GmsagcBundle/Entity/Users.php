@@ -62,6 +62,11 @@ class Users implements AdvancedUserInterface, \Serializable
      *
      */
     private $groups;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Hours", mappedBy="user")
+     */
+    protected $hours;
 
     public function __construct()
     {        

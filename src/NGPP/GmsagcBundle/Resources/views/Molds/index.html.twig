@@ -3,7 +3,7 @@
 {% block content %}
     <br>
     <a href="{{ path('ngpp_gmsagc_molds_save') }}" class="btn btn-success">
-        <i class="icon-plus icon-white"></i> Create new mold
+        <i class="icon-plus icon-white"></i> {{ 'molds.add'|trans }}
     </a>
     <br><br>
     {% if molds is defined and molds %}
@@ -25,13 +25,13 @@
                 <td>{{ mold.shell }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_molds_save', {'id': mold.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> Edit
+                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
                     </a>
                 </td>
             </tr>
         {% endfor %}
         </table>
     {% else %}
-        <h1>Nothing to show yet!</h1>
+        <h1>{{ 'message.nothing'|trans }}</h1>
     {% endif %}
 {% endblock %}

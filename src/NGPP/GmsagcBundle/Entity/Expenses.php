@@ -45,7 +45,7 @@ class Expenses
     private $observation;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="created", type="date")
      * @Assert\NotBlank()

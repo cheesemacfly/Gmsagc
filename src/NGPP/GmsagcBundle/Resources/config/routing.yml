@@ -58,6 +58,20 @@ ngpp_gmsagc_molds_delete:
     defaults: { _controller: NGPPGmsagcBundle:Molds:delete }
     requirements:
         id:  \d+
+        
+ngpp_gmsagc_hours:
+    pattern:  /hours
+    defaults: { _controller: NGPPGmsagcBundle:Hours:index }
+ngpp_gmsagc_hours_save:
+    pattern:  /hours/save/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Hours:save, id: null }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_hours_delete:
+    pattern:  /hours/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Hours:delete }
+    requirements:
+        id:  \d+
 
 ngpp_gmsagc_users:
     pattern:  /users
