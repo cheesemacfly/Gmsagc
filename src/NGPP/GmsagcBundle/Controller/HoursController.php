@@ -17,10 +17,11 @@ class HoursController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        
+        $test = $this->getRequest();
+
         //Determine if editing or creating
         $hour = !is_null($id) && !is_null($hour = $em->getRepository('NGPPGmsagcBundle:Hours')->find($id)) ? 
-                $hour : new Hours($em->getRepository('NGPPGmsagcBundle:Hours')->getNewId());
+                $hour : new Hours();
                         
         $form = $this->createForm(new HoursType(), $hour);
 
@@ -41,6 +42,34 @@ class HoursController extends Controller
         return $this->render('NGPPGmsagcBundle:Hours:save.html.twig',
                 array('form' => $form->createView()));
     }
+    
+//    public function saveAction($id = null)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//        
+//        //Determine if editing or creating
+//        $hour = !is_null($id) && !is_null($hour = $em->getRepository('NGPPGmsagcBundle:Hours')->find($id)) ? 
+//                $hour : new Hours($em->getRepository('NGPPGmsagcBundle:Hours')->getNewId());
+//                        
+//        $form = $this->createForm(new HoursType(), $hour);
+//
+//        if ($this->getRequest()->isMethod('POST')) {
+//            
+//            if ($form->bind($this->getRequest())->isValid()) {
+//                
+//                $em->persist($hour);
+//                $em->flush();
+//
+//                $this->get('session')->getFlashBag()->add('success',
+//                    $this->get('translator')->trans('hours.saved'));
+//                
+//                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
+//            }
+//        }
+//        
+//        return $this->render('NGPPGmsagcBundle:Hours:save.html.twig',
+//                array('form' => $form->createView()));
+//    }
     
     public function deleteAction($id)
     {

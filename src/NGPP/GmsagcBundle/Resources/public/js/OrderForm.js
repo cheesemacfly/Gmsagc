@@ -1,8 +1,3 @@
-// Manage date type input on older browsers
-if (!Modernizr.inputtypes.date) {
-    $("input[type='date']").datepicker({ dateFormat: 'yy-mm-dd' });
-}
-
 // Autocomplete for press and materials
 $('#ngpp_gmsagcbundle_orderstype_press').typeahead({
     source: function (query, process) {

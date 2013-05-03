@@ -15,9 +15,11 @@ class HoursType extends AbstractType
             ->add('end', null, array('widget' => 'single_text'))
             ->add('user', 'entity',
                     array('property' => 'username',
+                        'disabled' => true,
                         'class' => 'NGPPGmsagcBundle:Users'))
             ->add('order', 'entity',
                     array('property' => 'id',
+                        'disabled' => true,
                         'class' => 'NGPPGmsagcBundle:Orders'))
         ;
     }
@@ -25,7 +27,8 @@ class HoursType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'NGPP\GmsagcBundle\Entity\Hours'
+            'data_class' => 'NGPP\GmsagcBundle\Entity\Hours',
+            'csrf_protection' => false
         ));
     }
 

@@ -67,11 +67,15 @@ ngpp_gmsagc_hours_save:
     defaults: { _controller: NGPPGmsagcBundle:Hours:save, id: null }
     requirements:
         id:  \d+
+    options:
+        expose: true
 ngpp_gmsagc_hours_delete:
     pattern:  /hours/delete/{id}
     defaults: { _controller: NGPPGmsagcBundle:Hours:delete }
     requirements:
         id:  \d+
+    options:
+        expose: true
 
 ngpp_gmsagc_users:
     pattern:  /users
