@@ -8,21 +8,20 @@
         <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui-1.10.1.custom.min.css') }}" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('css/jquery.weekcalendar.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/timePicker.css') }}" type="text/css" />
 
         <script src="{{ asset('js/jquery-1.9.1.min.js') }}" ></script>
-        <script src="{{ asset('js/jquery-ui-1.10.2.custom.min.js') }}" ></script>
+        <script src="{{ asset('js/jquery-ui-1.10.3.custom.min.js') }}" ></script>
         <script src="{{ asset('js/modernizr.js') }}" ></script>
         <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" ></script>
-        <script src="{{ asset('js/date.js') }}" ></script>
-        <script src="{{ asset('js/jquery.weekcalendar.js') }}" ></script>
+        <script src="{{ asset('js/jquery.timePicker.js') }}" ></script>
         {% block javascripts %}{% endblock %}
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
     </head>
     <body>
-        <nav class="navbar navbar-static-top">
+        <nav class="navbar navbar-static-top navbar-inverse">
             <div class="navbar-inner">
                 
                 <!--{% set navigation = [['ngpp_gmsagc_home', 'Home Page'], 

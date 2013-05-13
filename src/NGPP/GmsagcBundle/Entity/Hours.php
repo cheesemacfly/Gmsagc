@@ -4,11 +4,13 @@ namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Hours
  * 
  * @ORM\Entity
+ * @UniqueEntity({"user", "order"})
  */
 class Hours
 {
@@ -24,25 +26,39 @@ class Hours
     /**
      * @var \DateTime
      * 
-     * @ORM\Column(name="start", type="date")
+     * @ORM\Column(name="day", type="date")
      * @Assert\NotBlank()
      * @Assert\Type(type="\DateTime")
      */
-    private $start;
+    private $day;
 
     /**
      * @var \DateTime
      * 
-     * @ORM\Column(name="end", type="date")
+     * @ORM\Column(name="time", type="time")
      * @Assert\NotBlank()
      * @Assert\Type(type="\DateTime")
      */
-    private $end;
+    private $time;
+        
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     */
+    protected $user_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Users", inversedBy="hours")
      */
     protected $user;
+        
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order_id", type="integer")
+     */
+    protected $order_id;
     
     /**
      * @ORM\ManyToOne(targetEntity="Orders", inversedBy="hours")
@@ -60,58 +76,12 @@ class Hours
     }
 
     /**
-     * Set start
-     *
-     * @param \DateTime $start
-     * @return Hours
-     */
-    public function setStart($start)
-    {
-        $this->start = $start;
-
-        return $this;
-    }
-
-    /**
-     * Get start
-     *
-     * @return \DateTime 
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
-     * Set end
-     *
-     * @param \DateTime $end
-     * @return Hours
-     */
-    public function setEnd($end)
-    {
-        $this->end = $end;
-
-        return $this;
-    }
-
-    /**
-     * Get end
-     *
-     * @return \DateTime 
-     */
-    public function getEnd()
-    {
-        return $this->end;
-    }
-
-    /**
      * Set user
      *
      * @param \NGPP\GmsagcBundle\Entity\Users $user
      * @return Hours
      */
-    public function setUser(\NGPP\GmsagcBundle\Entity\Users $user = null)
+    public function setUser(Users $user = null)
     {
         $this->user = $user;
 
@@ -134,7 +104,7 @@ class Hours
      * @param \NGPP\GmsagcBundle\Entity\Orders $order
      * @return Hours
      */
-    public function setOrder(\NGPP\GmsagcBundle\Entity\Orders $order = null)
+    public function setOrder(Orders $order = null)
     {
         $this->order = $order;
 
@@ -149,5 +119,97 @@ class Hours
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * Set day
+     *
+     * @param \DateTime $day
+     * @return Hours
+     */
+    public function setDay(\DateTime $day = null)
+    {
+        $this->day = $day;
+
+        return $this;
+    }
+
+    /**
+     * Get day
+     *
+     * @return \DateTime 
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * Set time
+     *
+     * @param \DateTime $time
+     * @return Hours
+     */
+    public function setTime(\DateTime $time = null)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time
+     *
+     * @return \DateTime 
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set user_id
+     *
+     * @param integer $userId
+     * @return Hours
+     */
+    public function setUserId($userId)
+    {
+        $this->user_id = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get user_id
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set order_id
+     *
+     * @param integer $orderId
+     * @return Hours
+     */
+    public function setOrderId($orderId)
+    {
+        $this->order_id = $orderId;
+
+        return $this;
+    }
+
+    /**
+     * Get order_id
+     *
+     * @return integer 
+     */
+    public function getOrderId()
+    {
+        return $this->order_id;
     }
 }

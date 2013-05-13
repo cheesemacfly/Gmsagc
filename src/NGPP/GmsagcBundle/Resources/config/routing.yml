@@ -58,24 +58,6 @@ ngpp_gmsagc_molds_delete:
     defaults: { _controller: NGPPGmsagcBundle:Molds:delete }
     requirements:
         id:  \d+
-        
-ngpp_gmsagc_hours:
-    pattern:  /hours
-    defaults: { _controller: NGPPGmsagcBundle:Hours:index }
-ngpp_gmsagc_hours_save:
-    pattern:  /hours/save/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Hours:save, id: null }
-    requirements:
-        id:  \d+
-    options:
-        expose: true
-ngpp_gmsagc_hours_delete:
-    pattern:  /hours/delete/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Hours:delete }
-    requirements:
-        id:  \d+
-    options:
-        expose: true
 
 ngpp_gmsagc_users:
     pattern:  /users
@@ -112,6 +94,27 @@ ngpp_gmsagc_expenses_edit:
 ngpp_gmsagc_expenses_delete:
     pattern:  /expenses/delete/{id}
     defaults: { _controller: NGPPGmsagcBundle:Expenses:delete }
+    requirements:
+        id:  \d+
+        
+ngpp_gmsagc_hours:
+    pattern:  /hours/{week}/{year}
+    defaults: { _controller: NGPPGmsagcBundle:Hours:index, week : null, year : null }
+    requirements:
+        week:  \d+
+        year:  \d+
+        
+ngpp_gmsagc_hours_create:
+    pattern:  /hours/create
+    defaults: { _controller: NGPPGmsagcBundle:Hours:create }
+ngpp_gmsagc_hours_edit:
+    pattern:  /hours/edit/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Hours:edit }
+    requirements:
+        id:  \d+
+ngpp_gmsagc_hours_delete:
+    pattern:  /hours/delete/{id}
+    defaults: { _controller: NGPPGmsagcBundle:Hours:delete }
     requirements:
         id:  \d+
 

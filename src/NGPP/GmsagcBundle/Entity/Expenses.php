@@ -70,6 +70,10 @@ class Expenses
      */
     protected $order;
 
+    /**
+     * 
+     * @param \NGPP\GmsagcBundle\Entity\Orders $order
+     */
     public function __construct($order)
     {
         $this->order = $order;

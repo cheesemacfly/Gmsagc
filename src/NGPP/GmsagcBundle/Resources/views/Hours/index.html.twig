@@ -1,37 +1,28 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>
-    <a href="{{ path('ngpp_gmsagc_hours_save') }}" class="btn btn-success">
-        <i class="icon-plus icon-white"></i> {{ 'hours.add'|trans }}
-    </a>
-    <br><br>
-    {% if hours is defined and hours %}
+    <br>    
+    <form action="{{ path('ngpp_gmsagc_hours') }}" method="post" {{ form_enctype(form) }}>
         <table class="table table-hover">
             <tr>
                 <th>#</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>User</th>
-                <th>#order</th>
-                <th></th>
+                {% for i in 0..4 %}
+                    <td>{{ start|date_modify('+' ~ i ~ ' day')|date }}</td>
+                {% endfor %}
             </tr>
-        {% for hour in hours %}
+        {% for user in users %}
             <tr>
-                <td>{{ hour.id }}</td>
-                <td>{{ hour.start|date('m/d/Y') }}</td>
-                <td>{{ hour.end|date('m/d/Y') }}</td>
-                <td>{{ hour.user.username }}</td>
-                <td>{{ hour.order.id }}</td>
-                <td>
-                    <a href="{{ path('ngpp_gmsagc_hours_save', {'id': hour.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
-                    </a>
-                </td>
+                <td>{{ user.username }}</td>
+                {% for hour in form.hours %}
+                    <td>{{ form_row(hour.time) }}</td>
+                {% endfor %}
             </tr>
         {% endfor %}
         </table>
-    {% else %}
-        <h1>{{ 'message.nothing'|trans }}</h1>
-    {% endif %}
+        {{ form_rest(form) }}
+        <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
+        <a href="{{ path('ngpp_gmsagc_home') }}" class="btn">
+            {{ 'action.cancel'|trans }}
+        </a>
+    </form>
 {% endblock %}
