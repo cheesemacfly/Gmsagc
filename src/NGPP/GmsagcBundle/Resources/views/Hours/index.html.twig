@@ -14,7 +14,9 @@
             <tr>
                 <td>{{ user.username }}</td>
                 {% for hour in form.hours %}
-                    <td>{{ form_row(hour.time) }}</td>
+                    {% if hour.vars.value.user.id == user.id %}
+                        <td>{{ form_row(hour.time) }}</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}

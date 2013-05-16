@@ -33,13 +33,13 @@ class HoursController extends Controller
         $calendar = new Calendar();
         
         foreach ($users as $user)
-        {
-            $loopDate = $start;
-            
+        {            
             for ($i = 0; $i < 5; $i++)
             {
-                $hour = new Hours();
-                $hour->setDay($loopDate->add(new \DateInterval('P1D')));
+                $hour = new Hours();                
+                $dolly = clone $start;
+                
+                $hour->setDay($dolly->add(new \DateInterval('P' . $i . 'D')));
                 $hour->setUser($user);
                 $hour->setOrder($order);
                 
@@ -65,7 +65,10 @@ class HoursController extends Controller
                 $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('hours.saved'));
                 
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', array('order_id' => $order_id)));
+                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', array(
+                                                                                'order_id' => $order_id,
+                                                                                'week' => $week,
+                                                                                'year' => $year)));
             }
         }
         
