@@ -98,9 +98,10 @@ ngpp_gmsagc_expenses_delete:
         id:  \d+
         
 ngpp_gmsagc_hours:
-    pattern:  /hours/{week}/{year}
+    pattern:  /hours/{order_id}/{week}/{year}
     defaults: { _controller: NGPPGmsagcBundle:Hours:index, week : null, year : null }
     requirements:
+        order_id:  \d+
         week:  \d+
         year:  \d+
         

@@ -11,7 +11,8 @@ class HoursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('time', null, array('widget' => 'single_text',
+            ->add('time', null, array(
+                'widget' => 'single_text',
                 'label' => false,
                 'required' => false,
                 'attr' => array('class' => 'input-small')))

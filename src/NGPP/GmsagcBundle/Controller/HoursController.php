@@ -11,40 +11,43 @@ class Calendar
 {
     public $hours;
     
-    public function __construct() {
-        $this->hours = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __construct()
+    {
+        $this->hours = array();
     }
 }
 
 class HoursController extends Controller
 {
-    public function indexAction($week = null, $year = null)
+    public function indexAction($order_id, $week = null, $year = null)
     {
         $week = $week ?: date('W');
         $year = $year ?: date('Y');
         
         $start = new \DateTime($year . 'W' . $week);
+        
         $users = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Users')->findAll();
         
-        $order = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Orders')->findOneById(1);
+        $order = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Orders')->findOneById($order_id);
         
         $calendar = new Calendar();
         
         foreach ($users as $user)
         {
+            $loopDate = $start;
+            
             for ($i = 0; $i < 5; $i++)
             {
                 $hour = new Hours();
-                $hour->setDay($start);
+                $hour->setDay($loopDate->add(new \DateInterval('P1D')));
                 $hour->setUser($user);
                 $hour->setOrder($order);
                 
-                $calendar->hours->add($hour);
+                $calendar->hours[] = $hour;
             }
         }
         
         $form = $this->createForm(new CalendarType(), $calendar);
-        
         
         if ($this->getRequest()->isMethod('POST')) {
             
@@ -62,13 +65,14 @@ class HoursController extends Controller
                 $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('hours.saved'));
                 
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
+                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', array('order_id' => $order_id)));
             }
         }
         
         return $this->render('NGPPGmsagcBundle:Hours:index.html.twig',
                 array('start' => $start,
                     'users' => $users,
+                    'order' => $order,
                     'form' => $form->createView()));
     }
  

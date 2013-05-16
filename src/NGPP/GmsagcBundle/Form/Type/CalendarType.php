@@ -15,10 +15,6 @@ class CalendarType extends AbstractType
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-    }
-
     public function getName()
     {
         return 'ngpp_gmsagcbundle_calendartype';
