@@ -4,19 +4,15 @@
         <meta charset="UTF-8" />
         {% block meta %}{% endblock %}
         <title>{% block title %}Gmsagc{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('css/smoothness/jquery-ui-1.10.1.custom.min.css') }}" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('css/timePicker.css') }}" type="text/css" />
-
-        <script src="{{ asset('js/jquery-1.9.1.min.js') }}" ></script>
-        <script src="{{ asset('js/jquery-ui-1.10.3.custom.min.js') }}" ></script>
-        <script src="{{ asset('js/modernizr.js') }}" ></script>
-        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" ></script>
-        <script src="{{ asset('js/jquery.timePicker.js') }}" ></script>
-        {% block javascripts %}{% endblock %}
-
+        {% block stylesheets %}{% endblock %}        
+        {% stylesheets 
+            'css/*'
+            'bootstrap/css/*'
+            'css/smoothness/*'
+            filter='cssrewrite, ?yui_css'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
     </head>
@@ -125,7 +121,12 @@
         </footer>
         <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-        {% javascripts '@NGPPGmsagcBundle/Resources/public/js/*' %}
+        {% javascripts 
+           'js/*'
+           'bootstrap/js/bootstrap.js'
+            '@NGPPGmsagcBundle/Resources/public/js/*'
+           filter='?yui_js'
+        %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     </body>
