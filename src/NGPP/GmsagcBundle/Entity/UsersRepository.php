@@ -11,6 +11,13 @@ use Doctrine\ORM\NoResultException;
 
 class UsersRepository extends EntityRepository implements UserProviderInterface
 {
+    public function getEmployees()
+    {
+        $result = $this->createQueryBuilder('u')
+                        ->where('u.rate IS NOT NULL')
+                        ->getQuery()->getResult();
+        return $result;
+    }
     public function loadUserByUsername($username)
     {
         $q = $this

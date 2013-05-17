@@ -7,41 +7,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \NGPP\GmsagcBundle\Entity\Hours;
 use \NGPP\GmsagcBundle\Form\Type\CalendarType;
 
-class Calendar
-{
-    public $hours;
-    
-    public function __construct()
-    {
-        $this->hours = array();
-    }
-}
-
 class HoursController extends Controller
 {
     public function indexAction($order_id, $week = null, $year = null)
     {
-        $week = $week ?: date('W');
-        $year = $year ?: date('Y');
+        $start_day = new \DateTime(($year ?: date('Y')) . 'W' . ($week ?: date('W')));
         
-        $start = new \DateTime($year . 'W' . $week);
+        $em = $this->getDoctrine()->getManager();
         
-        $users = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Users')->findAll();
+        if(count($users = $em->getRepository('NGPPGmsagcBundle:Users')->getEmployees()) < 1)
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
         
-        $order = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Orders')->findOneById($order_id);
+        if(is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->findOneById($order_id)))
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
         
         $calendar = new Calendar();
         
+        //Load hours from database or create object if it doesn't exist
         foreach ($users as $user)
         {            
             for ($i = 0; $i < 5; $i++)
             {
-                $hour = new Hours();                
-                $dolly = clone $start;
+                $dolly = clone $start_day;
+                $dolly->add(new \DateInterval('P' . $i . 'D'));
+
+                if (is_null($hour = $em->getRepository('NGPPGmsagcBundle:Hours')->getHour($user->getId(), $order->getId(), $dolly)))
+                {
+                    $hour = new Hours();
                 
-                $hour->setDay($dolly->add(new \DateInterval('P' . $i . 'D')));
-                $hour->setUser($user);
-                $hour->setOrder($order);
+                    $hour->setDay($dolly);
+                    $hour->setUser($user);
+                    $hour->setOrder($order);
+                }
                 
                 $calendar->hours[] = $hour;
             }
@@ -52,13 +49,12 @@ class HoursController extends Controller
         if ($this->getRequest()->isMethod('POST')) {
             
             if ($form->bind($this->getRequest())->isValid()) {
-
-                $em = $this->getDoctrine()->getManager();
                 
+                //persist only usefull hours
                 foreach($calendar->hours as $hour)
                 {
                     $time = $hour->getTime();
-                    is_null($time) || $time->getTimestamp() <= 0 ?: $em->persist($hour);
+                    is_null($time) ?: $em->persist($hour);
                 }
                 $em->flush();
 
@@ -66,99 +62,28 @@ class HoursController extends Controller
                     $this->get('translator')->trans('hours.saved'));
                 
                 return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', array(
-                                                                                'order_id' => $order_id,
+                                                                                'order_id' => $order->getId(),
                                                                                 'week' => $week,
                                                                                 'year' => $year)));
             }
         }
         
-        return $this->render('NGPPGmsagcBundle:Hours:index.html.twig',
-                array('start' => $start,
-                    'users' => $users,
-                    'order' => $order,
-                    'form' => $form->createView()));
+        return $this->render('NGPPGmsagcBundle:Hours:index.html.twig', array(
+                                'form' => $form->createView(),
+                                'order' => $order,
+                                'users' => $users));
     }
- 
+}
     
-//    public function indexAction()
-//    {
-//        return $this->render('NGPPGmsagcBundle:Hours:index.html.twig',
-//                array('hours' => $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Hours')->findAll()));
-//    }
-//    
-//    public function createAction($order_id)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        
-//        if(is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($order_id)))
-//            return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
-//        
-//        $hour = new Hours($order);
-//        
-//        $form = $this->createForm(new HoursType(), $hour);
-//
-//        if ($this->getRequest()->isMethod('POST')) {
-//            
-//            if ($form->bind($this->getRequest())->isValid()) {
-//                            
-//                $em->persist($hour);
-//                $em->flush();
-//
-//                $this->get('session')->getFlashBag()->add('success',
-//                    $this->get('translator')->trans('hours.saved'));
-//                
-//                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
-//            }
-//        }
-//        
-//        return $this->render('NGPPGmsagcBundle:Hours:save.html.twig',
-//                array('form' => $form->createView()));
-//    }
-//    
-//    public function editAction($id)
-//    {        
-//        $em = $this->getDoctrine()->getManager();
-//        
-//        if(is_null($hour = $em->getRepository('NGPPGmsagcBundle:Hours')->find($id)))
-//            return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
-//        
-//        $form = $this->createForm(new HoursType(), $hour);
-//
-//        if ($this->getRequest()->isMethod('POST')) {
-//            
-//            if ($form->bind($this->getRequest())->isValid()) {
-//                            
-//                $em->persist($hour);
-//                $em->flush();
-//
-//                $this->get('session')->getFlashBag()->add('success',
-//                    $this->get('translator')->trans('hours.saved'));
-//                
-//                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
-//            }
-//        }
-//        
-//        return $this->render('NGPPGmsagcBundle:Expenses:save.html.twig',
-//                array('form' => $form->createView()));
-//    }
-//    
-//    public function deleteAction($id)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $hour = $em->getRepository('NGPPGmsagcBundle:Hours')->find($id);
-//
-//        if ($hour)
-//        {
-//            $em->remove($hour);
-//            $em->flush();
-//            
-//            $this->get('session')->getFlashBag()->add('success',
-//                    $this->get('translator')->trans('hours.deleted'));
-//        }
-//        else
-//            $this->get('session')->getFlashBag()->add('error',
-//                    $this->get('translator')->trans('hours.nodeleted'));
-//        
-//        return $this->redirect($this->generateUrl('ngpp_gmsagc_hours'));
-//    }
+/**
+* The only goal of this class is to be able to provide an object to the form type
+*/
+class Calendar
+{
+    public $hours;
+
+    public function __construct()
+    {
+        $this->hours = array();
+    }
 }

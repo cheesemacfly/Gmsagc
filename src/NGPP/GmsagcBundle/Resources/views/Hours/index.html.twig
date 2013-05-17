@@ -7,7 +7,7 @@
             <tr>
                 <th>#</th>
                 {% for i in 0..4 %}
-                    <td>{{ start|date_modify('+' ~ i ~ ' day')|date }}</td>
+                    <td>{{ form.hours[0].vars.value.day|date_modify('+' ~ i ~ ' day')|date }}</td>
                 {% endfor %}
             </tr>
         {% for user in users %}

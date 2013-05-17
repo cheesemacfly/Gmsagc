@@ -9,8 +9,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Hours
  * 
- * @ORM\Entity
- * @UniqueEntity({"user", "order"})
+ * @ORM\Entity(repositoryClass="NGPP\GmsagcBundle\Entity\HoursRepository")
+ * @UniqueEntity({"user", "order", "day"})
  */
 class Hours
 {

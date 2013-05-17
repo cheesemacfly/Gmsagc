@@ -104,15 +104,7 @@ ngpp_gmsagc_hours:
         order_id:  \d+
         week:  \d+
         year:  \d+
-        
-ngpp_gmsagc_hours_create:
-    pattern:  /hours/create
-    defaults: { _controller: NGPPGmsagcBundle:Hours:create }
-ngpp_gmsagc_hours_edit:
-    pattern:  /hours/edit/{id}
-    defaults: { _controller: NGPPGmsagcBundle:Hours:edit }
-    requirements:
-        id:  \d+
+
 ngpp_gmsagc_hours_delete:
     pattern:  /hours/delete/{id}
     defaults: { _controller: NGPPGmsagcBundle:Hours:delete }
