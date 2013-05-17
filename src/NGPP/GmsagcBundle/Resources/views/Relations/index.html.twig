@@ -5,10 +5,10 @@
     {% if relations is defined and relations %}
         <table class="table table-hover">
             <tr>
-                <th>#order</th>
-                <th>#contact</th>
-                <th>Invoice number</th>
-                <th>Invoice date</th>
+                <th>{{ 'Order'|trans }}</th>
+                <th>{{ 'Contact'|trans }}</th>
+                <th>{{ 'Invoice'|trans }}</th>
+                <th>{{ 'Invoiced'|trans }}</th>
                 <th></th>
             </tr>
         {% for relation in relations %}

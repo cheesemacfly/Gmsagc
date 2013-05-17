@@ -18,12 +18,14 @@ orders:
   saved: La commande a été sauvegardée
   deleted: La commande a été supprimée
   nodeleted: La commande n'a pas été supprimée
+  
 molds:
   menu: Moules
   add: Ajouter un moule
   saved: Le moule a été sauvegardé
   deleted: Le moule a été supprimé
   nodeleted: Le moule n'a pas été supprimé
+  
 contacts:
   menu: Contacts
   save: Sauvegarder un contact
@@ -31,5 +33,89 @@ contacts:
   saved: Le contact a été sauvegardé
   deleted: Le contact a été supprimé
   nodeleted: Le contact n'a pas été supprimé
-press:
-  menu: Presses
+  
+addresses:
+  add: Ajouter une addresse
+  delete: Supprimer cette addresse
+  
+invoices:
+  menu: Factures
+  save: Sauvegarder une facture
+  add: Ajouter une facture
+  saved: La facture a été sauvegardée
+  deleted: La facture a été supprimée
+  nodeleted: La facture n'a pas été supprimée
+  
+users:
+  menu: Employés
+  save: Sauvegarder un employé
+  add: Ajouter un employé
+  saved: L'employé a été sauvegardé
+  deleted: L'employé a été supprimé
+  nodeleted: L'employé n'a pas été supprimé
+  
+password:
+  edit: Modifier le mot de passe
+  
+expenses:
+  menu: Frais
+  save: Sauvegarder une dépense
+  add: Ajouter une dépense
+  saved: La dépense a été sauvegardée
+  deleted: La dépense a été supprimée
+  nodeleted: La dépense n'a pas été supprimée
+  
+hours:
+  menu: Heures
+  save: Sauvegarder les heures
+  add: Ajouter des heures
+  saved: Les heures ont été sauvegardées
+  deleted: Les heures ont été supprimées
+  nodeleted: Les heure n'ont pas été supprimées
+  
+#Generic
+
+#Orders
+Oral: Orale
+Written: Ecrite
+Comment: Commentaire
+Trial: Essai
+Mold: Moule
+Quote: Devis
+Action: Action
+Pieces: Pieces
+Press: Presse
+Material: Matériaux
+Shrinkage: Retrait
+
+#Molds
+Id: Numéro
+Name: Nom
+Weight: Poids
+Place: Emplacement
+Shell: Carcasse
+
+#Addresses
+Street: Rue
+Zipcode: Code postal
+City: Ville
+Country: Pays
+
+#Invoices
+Invoice: Num facture
+Invoiced: Date facturation
+
+#Users
+Password: Mot de passe
+Repeat Password: Repéter le mot de passe
+Username: Nom
+Rate: Taux horaire
+Groups: Groupes
+
+#Expenses
+Order: Commande
+Description: Description
+Price: Prix
+Observation: Commentaire
+Created: Créé le
+Contact: Contact
