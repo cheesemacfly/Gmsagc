@@ -1,14 +1,29 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
+    {% set start_day = form.hours[0].vars.value.day %}
     <br>    
-    <form action="{{ path('ngpp_gmsagc_hours', {'order_id': order.id}) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('ngpp_gmsagc_hours', {'order_id': order.id, 'week' : week, 'year' : year}) }}" method="post" {{ form_enctype(form) }}>
         <table class="table table-hover">
             <tr>
-                <th>#</th>
+                <th>
+                    {% set week_before = start_day|date_modify('-1 week') %}
+                    <a href="{{ path('ngpp_gmsagc_hours', {'order_id': order.id, 'week' : week_before|date('W'), 'year' : week_before|date('Y')}) }}" >
+                        {{ 'action.week.before'|trans }}
+                    </a>
+                </th>
                 {% for i in 0..4 %}
-                    <td>{{ form.hours[0].vars.value.day|date_modify('+' ~ i ~ ' day')|date }}</td>
+                    <th>{{ form.hours[0].vars.value.day|date_modify('+' ~ i ~ ' day')|date('d/m/Y') }}</th>
                 {% endfor %}
+                <th>
+                    {% set week_after = start_day|date_modify('+1 week') %}
+                    {% set next_week = week_after|date('W') %}
+                    {% set next_year = week_after|date('Y') %}
+                    {% set next_year = next_week == 1 ? next_year + 1 : next_year %}
+                    <a href="{{ path('ngpp_gmsagc_hours', {'order_id': order.id, 'week' : next_week, 'year' : next_year}) }}" >
+                        {{ 'action.week.after'|trans }}
+                    </a>                    
+                </th>
             </tr>
         {% for user in users %}
             <tr>
@@ -18,10 +33,12 @@
                         <td>{{ form_row(hour.time) }}</td>
                     {% endif %}
                 {% endfor %}
+                <td></td>
             </tr>
         {% endfor %}
         </table>
         {{ form_rest(form) }}
+        <br>
         <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
         <a href="{{ path('ngpp_gmsagc_home') }}" class="btn">
             {{ 'action.cancel'|trans }}

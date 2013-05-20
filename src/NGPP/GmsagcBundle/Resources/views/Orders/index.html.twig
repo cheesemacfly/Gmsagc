@@ -17,29 +17,27 @@
                 <th>{{ 'Mold'|trans }}</th>
                 <th>{{ 'Quote'|trans }}</th>
                 <th>{{ 'Action'|trans }}</th>
-                <th>{{ 'Pieces'|trans }}</th>
-                <th>{{ 'Press'|trans }}</th>
-                <th>{{ 'Material'|trans }}</th>
-                <th>{{ 'Shrinkage'|trans }}</th>
                 <th></th>
             </tr>
         {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.oral|date('m/d/Y') }}</td>
-                <td>{{ order.written|date('m/d/Y') }}</td>
+                <td>{{ order.oral ? order.oral|date('d/m/Y') : '-' }}</td>
+                <td>{{ order.written ? order.written|date('d/m/Y') : '-' }}</td>
                 <td>{{ order.observation }}</td>
-                <td>{{ order.trial|date('m/d/Y') }}</td>
+                <td>{{ order.trial ? order.trial|date('d/m/Y') : '-' }}</td>
                 <td>{{ order.mold.name }}</td>
-                <td>{{ order.quote }}</td>
+                <td>{{ order.quote }} &euro;</td>
                 <td>{{ order.action.name }}</td>
-                <td>{{ order.pieces }}</td>
-                <td>{{ order.press.name }}</td>
-                <td>{{ order.material.name }}</td>
-                <td>{{ order.shrinkage }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_orders_save', {'id': order.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> Edit
+                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                    </a>
+                    <a href="{{ path('ngpp_gmsagc_hours', {'order_id': order.id}) }}" class="btn btn-info">
+                        <i class="icon-plus icon-white"></i> {{ 'hours.menu'|trans }}
+                    </a>
+                    <a href="{{ path('ngpp_gmsagc_expenses_create', {'order_id': order.id}) }}" class="btn btn-info">
+                        <i class="icon-plus icon-white"></i> {{ 'expenses.menu'|trans }}
                     </a>
                 </td>
             </tr>

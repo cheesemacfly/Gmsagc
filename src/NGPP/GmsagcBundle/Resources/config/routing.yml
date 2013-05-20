@@ -102,8 +102,8 @@ ngpp_gmsagc_hours:
     defaults: { _controller: NGPPGmsagcBundle:Hours:index, week : null, year : null }
     requirements:
         order_id:  \d+
-        week:  \d+
-        year:  \d+
+        week: \d+
+        year: \d+
 
 ngpp_gmsagc_hours_delete:
     pattern:  /hours/delete/{id}

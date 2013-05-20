@@ -16,7 +16,7 @@
                 <td>{{ relation.order.id }}</td>
                 <td>{{ relation.contact.id }}</td>
                 <td>{{ relation.invoice }}</td>
-                <td>{{ relation.invoiced|date('m/d/Y') }}</td>
+                <td>{{ relation.invoiced ? relation.invoiced|date('m/d/Y') : '-' }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_relations_save', {'id': relation.id}) }}" class="btn btn-warning">
                         <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}

@@ -11,7 +11,11 @@ class HoursController extends Controller
 {
     public function indexAction($order_id, $week = null, $year = null)
     {
-        $start_day = new \DateTime(($year ?: date('Y')) . 'W' . ($week ?: date('W')));
+        //Sanitize week and year
+        $week = preg_match('/0[1-9]|[1-4][0-9]|5[0-3]/', $week) ? $week : date('W');
+        $year = preg_match('/[0-9]{4}/', $year) ? $year : date('Y');
+
+        $start_day = new \DateTime($year . 'W' . $week);
         
         $em = $this->getDoctrine()->getManager();
         
@@ -71,7 +75,9 @@ class HoursController extends Controller
         return $this->render('NGPPGmsagcBundle:Hours:index.html.twig', array(
                                 'form' => $form->createView(),
                                 'order' => $order,
-                                'users' => $users));
+                                'users' => $users,
+                                'week' => $week,
+                                'year' => $year));
     }
 }
     

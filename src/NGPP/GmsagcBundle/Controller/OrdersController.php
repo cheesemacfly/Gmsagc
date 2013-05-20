@@ -3,6 +3,7 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use \NGPP\GmsagcBundle\Entity\Relations;
 use \NGPP\GmsagcBundle\Entity\Orders;
 use \NGPP\GmsagcBundle\Form\Type\OrdersType;
 
@@ -19,8 +20,23 @@ class OrdersController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         //Determine if editing or creating
-        $order = !is_null($id) && !is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)) ? 
-                $order : new Orders();
+        /*$order = !is_null($id) && !is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)) ? 
+                $order : new Orders();*/
+        
+        if(is_null($id) || is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)))
+        {
+            $order = new Orders();
+            
+            $customer_relation = new Relations();
+            $customer_type_id = $this->container->getParameter('ngpp_gmsagc_types')['customer'];
+            $customer_relation->setType($em->getRepository('NGPPGmsagcBundle:Types')->findOneById($customer_type_id));
+            $order->addRelations($customer_relation);
+            
+            $owner_relation = new Relations();
+            $owner_type_id = $this->container->getParameter('ngpp_gmsagc_types')['owner'];
+            $owner_relation->setType($em->getRepository('NGPPGmsagcBundle:Types')->findOneById($owner_type_id));
+            $order->addRelations($owner_relation);
+        }
         
         $form = $this->createForm(new OrdersType(), $order);
 

@@ -10,7 +10,11 @@
         method="post" {{ form_enctype(form) }}>
         <fieldset>
           <legend>{{ 'orders.save'|trans }}</legend>
+            {% for relation in form.relations %}
+                {{ relation.vars.value.type.name|capitalize }} : {{ form_widget(relation) }}
+            {% endfor %}
             {{ form_widget(form) }}
+            <br>
             <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
             <a href="{{ path('ngpp_gmsagc_orders') }}" class="btn">
                 {{ 'action.cancel'|trans }}

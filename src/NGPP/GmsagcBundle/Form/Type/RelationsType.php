@@ -11,12 +11,11 @@ class RelationsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'entity',
-                    array('property' => 'name',
-                        'class' => 'NGPPGmsagcBundle:Types'))
             ->add('contact', 'entity',
                     array('property' => 'name',
-                        'class' => 'NGPPGmsagcBundle:Contacts'))
+                        'class' => 'NGPPGmsagcBundle:Contacts',
+                        'label' => false,
+                        'empty_value' => ''))
         ;
     }
 

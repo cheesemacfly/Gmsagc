@@ -6,6 +6,9 @@ action:
   delete: Supprimer
   edit: Editer
   cancel: Annuler
+  week:
+    before: << Précédent
+    after: Suivant >>
 
 message:
   nothing: Rien à voir ici!
@@ -14,6 +17,7 @@ message:
 
 orders:
   menu: Commandes
+  save: Sauvegarder une commande
   add: Ajouter une commande
   saved: La commande a été sauvegardée
   deleted: La commande a été supprimée
@@ -21,6 +25,7 @@ orders:
   
 molds:
   menu: Moules
+  save: Sauvegarder un moule
   add: Ajouter un moule
   saved: Le moule a été sauvegardé
   deleted: Le moule a été supprimé
@@ -87,6 +92,8 @@ Pieces: Pieces
 Press: Presse
 Material: Matériaux
 Shrinkage: Retrait
+Customer: Client
+Owner: Propriétaire
 
 #Molds
 Id: Numéro
