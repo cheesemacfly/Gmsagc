@@ -18,8 +18,7 @@
     </head>
     <body>
         <nav class="navbar navbar-static-top navbar-inverse">
-            <div class="navbar-inner">
-                
+            <div class="navbar-inner">                
                 <!--{% set navigation = [['ngpp_gmsagc_home', 'Home Page'], 
                                     ['ngpp_gmsagc_orders', 'Orders']] %}
                 <a class="brand" href="#">Gmsagc</a>
@@ -75,6 +74,20 @@
                         </ul>
                     </li>
                     -->
+                </ul>
+                <ul class="nav pull-right">
+                    <li class="divider-vertical"></li>
+                    <li class="pull-right">
+                        {% if app.user %}
+                            <a href="{{ path('logout') }}">
+                                <i class="icon-off icon-white"></i> {{ 'action.logout'|trans }}
+                            </a>
+                        {% else %}
+                            <a href="{{ path('login') }}">
+                                <i class="icon-user icon-white"></i> {{ 'action.login'|trans }}
+                            </a>
+                        {% endif %}
+                    </li>
                 </ul>
             </div>
         </nav>

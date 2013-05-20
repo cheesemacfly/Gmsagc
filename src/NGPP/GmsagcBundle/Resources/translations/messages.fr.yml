@@ -1,6 +1,8 @@
 home: Accueil
 
 action:
+  login: Connexion
+  logout: Déconnexion
   add: Ajouter
   save: Sauvegarder
   delete: Supprimer
