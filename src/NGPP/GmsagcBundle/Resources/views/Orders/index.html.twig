@@ -27,7 +27,7 @@
                 <td>{{ order.observation }}</td>
                 <td>{{ order.trial ? order.trial|date('d/m/Y') : '-' }}</td>
                 <td>{{ order.mold.name }}</td>
-                <td>{{ order.quote }} &euro;</td>
+                <td>{{ order.quote }} {{ 'currency'|trans|raw }}</td>
                 <td>{{ order.action.name }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_orders_save', {'id': order.id}) }}" class="btn btn-warning">

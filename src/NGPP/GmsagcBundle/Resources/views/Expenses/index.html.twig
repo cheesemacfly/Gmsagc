@@ -16,7 +16,7 @@
                 <td>{{ expense.id }}</td>
                 <td>{{ expense.order.id }}</td>
                 <td>{{ expense.description }}</td>
-                <td>{{ expense.price }}</td>
+                <td>{{ expense.price }} {{ 'currency'|trans|raw }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_expenses_edit', {'id': expense.id}) }}" class="btn btn-warning">
                         <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}

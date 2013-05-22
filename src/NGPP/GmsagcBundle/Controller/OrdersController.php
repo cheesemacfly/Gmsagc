@@ -19,10 +19,6 @@ class OrdersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        //Determine if editing or creating
-        /*$order = !is_null($id) && !is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)) ? 
-                $order : new Orders();*/
-        
         if(is_null($id) || is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)))
         {
             $order = new Orders();
@@ -41,37 +37,23 @@ class OrdersController extends Controller
         $form = $this->createForm(new OrdersType(), $order);
 
         if ($this->getRequest()->isMethod('POST')) {
-                        
-            //Hanldes delete of relations
-            $originalRelations = array();
-            // Create an array of the current Relations objects in the database
-            foreach ($order->getRelations() as $relation) {
-                $originalRelations[] = $relation;
-            }
             
             if ($form->bind($this->getRequest())->isValid()) {
                 
-                // filter $originalRelations to contain Relations no longer present
-                foreach ($order->getRelations() as $relation) {
-                    foreach ($originalRelations as $key => $toDel) {
-                        if (($toDel->getOrder() === $relation->getOrder()) && ($toDel->getContact() === $relation->getContact())) {
-                            unset($originalRelations[$key]);
-                        }
-                    }
-                }
-
-                // remove the relationship between the Relations and the Order
-                foreach ($originalRelations as $relation) {
-                    // remove the Relation from the Order
-                    $order->getRelations()->removeElement($relation);
-                    // delete the Relation entirely
-                    $em->remove($relation);
-                }
-                
                 $em->persist($order);
                 $em->flush();
+                
+                //Update relations now that order_id is set
+                foreach($order->getRelations() as $relation)
+                {
+                    $relation->setOrder($order);
+                    
+                    $em->persist($relation);
+                }
+                $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'orders.saved');
+                $this->get('session')->getFlashBag()->add('success',
+                    $this->get('translator')->trans('orders.saved'));
                 
                 return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
             }
@@ -88,19 +70,19 @@ class OrdersController extends Controller
 
         if ($order)
         {
-            // remove the relationship between the Relations and the Orders
             foreach ($order->getRelations() as $relation) {
-                // delete the Relations entirely
                 $em->remove($relation);
             }
             
             $em->remove($order);
             $em->flush();
             
-            $this->get('session')->getFlashBag()->add('success', 'orders.deleted');
+            $this->get('session')->getFlashBag()->add('success',
+                    $this->get('translator')->trans('orders.deleted'));
         }
         else
-            $this->get('session')->getFlashBag()->add('error', 'orders.nodeleted');
+            $this->get('session')->getFlashBag()->add('error',
+                    $this->get('translator')->trans('orders.nodeleted'));
         
         return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
     }

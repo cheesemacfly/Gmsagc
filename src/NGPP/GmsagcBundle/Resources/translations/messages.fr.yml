@@ -81,6 +81,7 @@ hours:
   nodeleted: Les heure n'ont pas été supprimées
   
 #Generic
+currency: '&euro;'
 
 #Orders
 Oral: Orale
