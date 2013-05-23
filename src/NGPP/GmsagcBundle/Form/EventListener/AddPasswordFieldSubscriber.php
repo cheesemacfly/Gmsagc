@@ -5,6 +5,7 @@ namespace NGPP\GmsagcBundle\Form\EventListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use NGPP\GmsagcBundle\Form\Type\PasswordType;
 
 class AddPasswordFieldSubscriber implements EventSubscriberInterface
 {
@@ -18,19 +19,16 @@ class AddPasswordFieldSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         $data = $event->getData();
-        $form = $event->getForm();
+        $builder = $event->getForm();
 
         // check if the user object is "new"
         // If you didn't pass any data to the form, the data is "null".
         // This should be considered a new "User"
         if (!$data || !$data->getId()) {
-            $form->add('password', 'repeated', array(
-                        'type' => 'password',
-                        'invalid_message' => 'The password fields must match.',
-                        'options' => array('attr' => array('class' => 'password-field')),
-                        'required' => false,
-                        'first_options'  => array('label' => 'Password'),
-                        'second_options' => array('label' => 'Repeat Password')));
+            $builder->add('password', new PasswordType(), array(
+                'label' => false,
+                'data_class' => 'NGPP\GmsagcBundle\Entity\Users'
+            ));
         }
     }
 }
