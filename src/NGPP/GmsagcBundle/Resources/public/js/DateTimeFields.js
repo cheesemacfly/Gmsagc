@@ -4,5 +4,9 @@ if (!Modernizr.inputtypes.date) {
 }
 //Manage time type input on older browsers
 if (!Modernizr.inputtypes.time) {
-    $("input[type='time']").timePicker({endTime: "08:00", step: 30});
+    $("input[type='time']").timepicker({
+        'timeFormat': 'H:i',
+	'minTime': '0',
+	'maxTime': '8:00'
+    });
 }
