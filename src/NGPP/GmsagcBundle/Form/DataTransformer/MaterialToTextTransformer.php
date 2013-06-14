@@ -51,7 +51,7 @@ class MaterialToTextTransformer implements DataTransformerInterface
 
         $material = $this->om
             ->getRepository('NGPPGmsagcBundle:Materials')
-            ->findOneBy(array('name' => $text))
+            ->findOneByName($text)
         ;
 
         if (null === $material) {

@@ -51,7 +51,7 @@ class PressToTextTransformer implements DataTransformerInterface
 
         $press = $this->om
             ->getRepository('NGPPGmsagcBundle:Press')
-            ->findOneBy(array('name' => $text))
+            ->findOneByName($text)
         ;
 
         if (null === $press) {

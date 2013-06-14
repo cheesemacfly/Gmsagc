@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block content %}
-    <form
+    <form id="ordersForm"
         {% if form.vars.value.id %}
             action="{{ path('ngpp_gmsagc_orders_save', {'id': form.vars.value.id}) }}"
         {% else %}

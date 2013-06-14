@@ -22,3 +22,13 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: material_selector }
+    ngpp_gmsagc.form.orders:
+        class: NGPP\GmsagcBundle\Form\Type\OrdersType
+        arguments: ["@ngpp_gmsagc.form.save_orders_listener"]
+        tags:
+            - { name: form.type, alias: ngpp_gmsagc_orders_save }
+    ngpp_gmsagc.form.save_orders_listener:
+        class: NGPP\GmsagcBundle\Form\EventListener\SaveOrdersListener
+        arguments: 
+            - "@form.factory"
+            - "@doctrine.orm.entity_manager"

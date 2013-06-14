@@ -32,6 +32,13 @@ ngpp_gmsagc_orders_delete:
     defaults: { _controller: NGPPGmsagcBundle:Orders:delete }
     requirements:
         id:  \d+
+ngpp_gmsagc_ajax_orders_save:
+    pattern:  /ajax/orders/save
+    defaults: { _controller: NGPPGmsagcBundle:Orders:ajaxsave }
+    requirements:
+        id:  \d+
+    options:
+        expose: true
 
 ngpp_gmsagc_contacts:
     pattern:  /contacts

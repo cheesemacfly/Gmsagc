@@ -6,8 +6,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use NGPP\GmsagcBundle\Form\EventListener\SaveOrdersListener;
+
 class OrdersType extends AbstractType
 {
+    private $SaveOrdersListener;
+    
+    function __construct(SaveOrdersListener $SaveOrdersListener)
+    {
+        $this->SaveOrdersListener = $SaveOrdersListener;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('relations', 'collection', array('type' => new RelationsType()));
@@ -24,16 +33,16 @@ class OrdersType extends AbstractType
             ->add('action', 'entity',
                     array('property' => 'name',
                         'class' => 'NGPPGmsagcBundle:Actions'))
-            ->add('mold', 'entity',
-                    array('property' => 'name',
-                        'class' => 'NGPPGmsagcBundle:Molds'))
         ;
+
+        $builder->addEventSubscriber($this->SaveOrdersListener);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'NGPP\GmsagcBundle\Entity\Orders'
+            'data_class' => 'NGPP\GmsagcBundle\Entity\Orders',
+            'csrf_protection' => false
         ));
     }
 

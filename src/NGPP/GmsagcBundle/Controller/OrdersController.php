@@ -34,7 +34,7 @@ class OrdersController extends Controller
             $order->addRelations($owner_relation);
         }
         
-        $form = $this->createForm(new OrdersType(), $order);
+        $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), $order);
 
         if ($this->getRequest()->isMethod('POST')) {
             
@@ -58,6 +58,15 @@ class OrdersController extends Controller
                 return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
             }
         }
+        
+        return $this->render('NGPPGmsagcBundle:Orders:save.html.twig',
+                array('form' => $form->createView()));
+    }
+    
+    public function ajaxsaveAction()
+    {
+        $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), new Orders());
+        $form->bind($this->getRequest());
         
         return $this->render('NGPPGmsagcBundle:Orders:save.html.twig',
                 array('form' => $form->createView()));
