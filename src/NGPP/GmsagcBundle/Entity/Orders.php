@@ -92,7 +92,7 @@ class Orders
     protected $action;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Molds", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="Molds", inversedBy="orders", cascade={"persist"})
      */
     protected $mold;
     
