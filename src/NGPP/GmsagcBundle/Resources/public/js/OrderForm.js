@@ -1,7 +1,7 @@
 // Autocomplete for press and materials
 $('#ngpp_gmsagcbundle_orderstype_press').typeahead({
     source: function (query, process) {
-        $.get(Routing.generate('ngpp_gmsagc_press_list', { name: query }), function (data) {
+        $.get(Routing.generate('ngpp_gmsagc_ajax_press_list', { name: query }), function (data) {
             process(data);
         });
     }
@@ -9,7 +9,7 @@ $('#ngpp_gmsagcbundle_orderstype_press').typeahead({
 
 $('#ngpp_gmsagcbundle_orderstype_material').typeahead({
     source: function (query, process) {
-        $.get(Routing.generate('ngpp_gmsagc_materials_list', { name: query }), function (data) {
+        $.get(Routing.generate('ngpp_gmsagc_ajax_materials_list', { name: query }), function (data) {
             process(data);
         });
     }
@@ -23,7 +23,6 @@ $('#ngpp_gmsagcbundle_orderstype_action').change(function() {
         dateType: 'html'
     }).done(function(data){
         //Replace mold form/field with the one from the response
-        console.log($(data).find('#ngpp_gmsagcbundle_orderstype_mold'));
-        $('#ngpp_gmsagcbundle_orderstype_mold').parent().html($(data).find('#ngpp_gmsagcbundle_orderstype_mold').parent().html());
+        $('#ngpp_gmsagcbundle_orderstype_mold').replaceWith($(data).find('#ngpp_gmsagcbundle_orderstype_mold'));
     });
 });

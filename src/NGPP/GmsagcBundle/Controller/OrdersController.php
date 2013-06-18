@@ -5,7 +5,6 @@ namespace NGPP\GmsagcBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \NGPP\GmsagcBundle\Entity\Relations;
 use \NGPP\GmsagcBundle\Entity\Orders;
-use \NGPP\GmsagcBundle\Form\Type\OrdersType;
 
 class OrdersController extends Controller
 {
@@ -35,28 +34,26 @@ class OrdersController extends Controller
         }
         
         $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), $order);
-
-        if ($this->getRequest()->isMethod('POST')) {
+        $form->handleRequest($this->getRequest());
             
-            if ($form->bind($this->getRequest())->isValid()) {
-                
-                $em->persist($order);
-                $em->flush();
-                
-                //Update relations now that order_id is set
-                foreach($order->getRelations() as $relation)
-                {
-                    $relation->setOrder($order);
-                    
-                    $em->persist($relation);
-                }
-                $em->flush();
+        if ($form->isValid()) {
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('orders.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
+            $em->persist($order);
+            $em->flush();
+
+            //Update relations now that order_id is set
+            foreach($order->getRelations() as $relation)
+            {
+                $relation->setOrder($order);
+
+                $em->persist($relation);
             }
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('orders.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
         }
         
         return $this->render('NGPPGmsagcBundle:Orders:save.html.twig',
@@ -66,7 +63,7 @@ class OrdersController extends Controller
     public function ajaxsaveAction()
     {
         $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), new Orders());
-        $form->bind($this->getRequest());
+        $form->handleRequest($this->getRequest());
         
         return $this->render('NGPPGmsagcBundle:Orders:save.html.twig',
                 array('form' => $form->createView()));
