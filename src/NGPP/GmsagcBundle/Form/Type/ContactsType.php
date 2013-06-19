@@ -12,9 +12,8 @@ class ContactsType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('email', 'email', array(
-                'required' => false
-            ))
+            ->add('email')
+            ->add('phone')
         ;
         $builder->add('addresses', 'collection', array(
             'type' => new AddressesType(),

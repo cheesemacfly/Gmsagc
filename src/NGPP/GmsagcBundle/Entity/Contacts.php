@@ -37,6 +37,13 @@ class Contacts
      * @Assert\Email()
      */
     private $email;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=50, nullable=true)
+     */
+    private $phone;
 
     /**
      * @ORM\OneToMany(targetEntity="Addresses", mappedBy="contact", cascade={"persist"})
@@ -117,6 +124,29 @@ class Contacts
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return Contacts
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
