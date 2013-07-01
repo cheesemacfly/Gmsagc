@@ -35,7 +35,6 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=40)
      * @Assert\NotBlank()
-     * @Assert\Length(min=6)
      */
     private $password;
 
@@ -57,6 +56,12 @@ class Users implements AdvancedUserInterface, \Serializable
     private $isActive;
     
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=10, max=100)
+     */
+    private $resultsPerPage;
+    
+    /**
      * @ORM\ManyToMany(targetEntity="Groups", inversedBy="users")
      * @ORM\JoinTable(name="Users_Groups")
      *
@@ -73,6 +78,7 @@ class Users implements AdvancedUserInterface, \Serializable
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->groups = new ArrayCollection();
+        $this->resultsPerPage = 20;
     }
 
     /**
@@ -162,6 +168,14 @@ class Users implements AdvancedUserInterface, \Serializable
         
         return $this;
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
 
     /**
      * @inheritDoc
@@ -169,6 +183,25 @@ class Users implements AdvancedUserInterface, \Serializable
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+        
+        return $this;
+    }
+    
+    
+    /**
+     * @inheritDoc
+     */
+    public function getResultsPerPage()
+    {
+        return $this->resultsPerPage;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function setResultsPerPage($resultsPerPage)
+    {
+        $this->resultsPerPage = $resultsPerPage;
         
         return $this;
     }

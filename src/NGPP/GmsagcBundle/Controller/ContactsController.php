@@ -12,16 +12,14 @@ class ContactsController extends Controller
     
     public function indexAction($page = null)
     {
-        $em = $this->getDoctrine()->getManager();
+        $max_items = !is_null($this->getUser()) ? $this->getUser()->getResultsPerPage() : self::MAX_ITEMS;
+        $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Contacts');
         
-        $offset = is_null($page) ? null : self::MAX_ITEMS * ($page - 1);
+        $offset = is_null($page) ? null : $max_items * ($page - 1);
         $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
         
-        $contacts = $em->getRepository('NGPPGmsagcBundle:Contacts')
-                ->getList($criteria, self::MAX_ITEMS, $offset);
-        
-        //TODO: get the real total number corresponding to the request
-        $pages = ceil(count($contacts) / self::MAX_ITEMS);
+        $contacts = $repo->getList($criteria, $max_items, $offset);
+        $pages = ceil($repo->getTotal($criteria) / $max_items);
         
         return $this->render('NGPPGmsagcBundle:Contacts:index.html.twig', array('contacts' => $contacts, 'pages' => $pages));
     }

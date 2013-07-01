@@ -1,0 +1,47 @@
+{% if pages is defined and pages > 1 %}
+    {% set currentRoute = app.request.attributes.get('_route') %}
+    {% set currentQuery = app.request.query.all %}
+    {% set currentPage = app.request.attributes.get('_route_params')['page'] %}
+    <div class="pagination pagination-large pagination-centered">
+        <ul>
+            {% if currentPage is null or currentPage == 1 %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href="{{ path(currentRoute, currentQuery) }}">
+                    &laquo;
+                </a>
+            </li>
+            {% if currentPage is null or currentPage == 1 %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href="{{ path(currentRoute, currentQuery) }}">
+                    1
+                </a>
+            </li>
+            {% for page in 2..pages %}
+                {% if currentPage == page %}
+                    <li class="active">
+                {% else %}
+                    <li>
+                {% endif %}
+                    <a href="{{ path(currentRoute, {'page': page}|merge(currentQuery)) }}">
+                        {{ page }}
+                    </a>
+                </li>
+            {% endfor %}                    
+            {% if currentPage == pages %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href="{{ path(currentRoute, {'page': pages}|merge(currentQuery)) }}">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endif %}

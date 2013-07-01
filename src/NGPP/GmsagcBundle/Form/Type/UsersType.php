@@ -17,6 +17,8 @@ class UsersType extends AbstractType
                 'required' => false
             ))
             ->add('rate')
+            ->add('resultsPerPage', 'choice', array('choices' => array(10 => 10, 20 => 20, 50 => 50, 100 => 100)))
+            ->add('isActive')
             ->add('groups', 'entity', array('property' => 'name',
                 'expanded' => true,
                 'multiple' => true,

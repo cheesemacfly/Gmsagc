@@ -1,10 +1,19 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
+    {% set currentRoute = app.request.attributes.get('_route') %}
+    {% set currentQuery = app.request.query.all %}
     <br>
-    <a href="{{ path('ngpp_gmsagc_contacts_save') }}" class="btn btn-success">
-        <i class="icon-plus icon-white"></i> {{ 'contacts.add'|trans }}
-    </a>
+    <div class="row">
+        <div class="span6">
+            <a href="{{ path('ngpp_gmsagc_contacts_save') }}" class="btn btn-success">
+                <i class="icon-plus icon-white"></i> {{ 'contacts.add'|trans }}
+            </a>
+        </div>
+        <div class="span6">
+            {% include 'NGPPGmsagcBundle:_Shared:search.html.twig' %}
+        </div>
+    </div>    
     <br><br>
     {% if contacts is defined and contacts %}
         <table class="table table-hover">
@@ -29,19 +38,7 @@
             </tr>
         {% endfor %}
         </table>
-        {% if pages is defined %}
-            <div class="pagination pagination-large pagination-centered">
-                <ul>
-                    <li class="active">
-                        <a href="{{ path('ngpp_gmsagc_contacts', app.request.query.all) }}">&laquo;</a>
-                    </li>
-                    {% for page in 1..pages %}
-                        <li><a href="{{ path('ngpp_gmsagc_contacts', {'page': page}|merge(app.request.query.all)) }}">{{ page }}</a></li>
-                    {% endfor %}
-                    <li><a href="{{ path('ngpp_gmsagc_contacts', {'page': pages}|merge(app.request.query.all)) }}">&raquo;</a></li>
-                </ul>
-            </div>
-        {% endif %}
+        {% include 'NGPPGmsagcBundle:_Shared:pagination.html.twig' %}
     {% else %}
         <h1>{{ 'message.nothing'|trans }}</h1>
     {% endif %}
