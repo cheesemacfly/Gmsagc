@@ -39,8 +39,10 @@ ngpp_gmsagc_ajax_orders_save:
         id:  \d+
 
 ngpp_gmsagc_contacts:
-    pattern:  /contacts
-    defaults: { _controller: NGPPGmsagcBundle:Contacts:index }
+    pattern:  /contacts/{page}
+    defaults: { _controller: NGPPGmsagcBundle:Contacts:index, page: null }
+    requirements:
+        page:  \d+
 ngpp_gmsagc_contacts_save:
     pattern:  /contacts/save/{id}
     defaults: { _controller: NGPPGmsagcBundle:Contacts:save, id: null }

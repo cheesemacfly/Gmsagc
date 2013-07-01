@@ -29,6 +29,19 @@
             </tr>
         {% endfor %}
         </table>
+        {% if pages is defined %}
+            <div class="pagination pagination-large pagination-centered">
+                <ul>
+                    <li class="active">
+                        <a href="{{ path('ngpp_gmsagc_contacts', app.request.query.all) }}">&laquo;</a>
+                    </li>
+                    {% for page in 1..pages %}
+                        <li><a href="{{ path('ngpp_gmsagc_contacts', {'page': page}|merge(app.request.query.all)) }}">{{ page }}</a></li>
+                    {% endfor %}
+                    <li><a href="{{ path('ngpp_gmsagc_contacts', {'page': pages}|merge(app.request.query.all)) }}">&raquo;</a></li>
+                </ul>
+            </div>
+        {% endif %}
     {% else %}
         <h1>{{ 'message.nothing'|trans }}</h1>
     {% endif %}

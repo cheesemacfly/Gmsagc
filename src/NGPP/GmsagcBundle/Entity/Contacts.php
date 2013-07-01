@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Contacts
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NGPP\GmsagcBundle\Entity\ContactsRepository")
  */
 class Contacts
 {

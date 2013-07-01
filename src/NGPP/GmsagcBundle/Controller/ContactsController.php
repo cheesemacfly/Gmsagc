@@ -8,10 +8,22 @@ use \NGPP\GmsagcBundle\Form\Type\ContactsType;
 
 class ContactsController extends Controller
 {
-    public function indexAction()
+    const MAX_ITEMS = 10;
+    
+    public function indexAction($page = null)
     {
-        return $this->render('NGPPGmsagcBundle:Contacts:index.html.twig',
-                array('contacts' => $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Contacts')->findAll()));
+        $em = $this->getDoctrine()->getManager();
+        
+        $offset = is_null($page) ? null : self::MAX_ITEMS * ($page - 1);
+        $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
+        
+        $contacts = $em->getRepository('NGPPGmsagcBundle:Contacts')
+                ->getList($criteria, self::MAX_ITEMS, $offset);
+        
+        //TODO: get the real total number corresponding to the request
+        $pages = ceil(count($contacts) / self::MAX_ITEMS);
+        
+        return $this->render('NGPPGmsagcBundle:Contacts:index.html.twig', array('contacts' => $contacts, 'pages' => $pages));
     }
     
     public function saveAction($id = null)
