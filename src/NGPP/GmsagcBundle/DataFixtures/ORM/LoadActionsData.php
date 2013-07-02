@@ -28,9 +28,9 @@ class LoadActionsData implements FixtureInterface, ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->container->getParameter('ngpp_gmsagc.actions') as $key => $value)
+        foreach($this->container->getParameter('ngpp_gmsagc.actions') as $action)
         {
-            $manager->persist(new Actions($value, $key));
+            $manager->persist(new Actions($action['id'], $action['name']));
         }
         $manager->flush();
     }

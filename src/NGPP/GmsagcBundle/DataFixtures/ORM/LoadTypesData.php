@@ -28,9 +28,9 @@ class LoadTypesData implements FixtureInterface, ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->container->getParameter('ngpp_gmsagc.types') as $key => $value)
+        foreach($this->container->getParameter('ngpp_gmsagc.types') as $type)
         {
-            $manager->persist(new Types($value, $key));
+            $manager->persist(new Types($type['id'], $type['name']));
         }
         $manager->flush();
     }
