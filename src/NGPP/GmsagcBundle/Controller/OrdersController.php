@@ -33,7 +33,7 @@ class OrdersController extends Controller
             $order->addRelations($owner_relation);
         }
         
-        $form = $this->createForm($this->get('ngpp_gmsagc_service.form.orders'), $order);
+        $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), $order);
         $form->handleRequest($this->getRequest());
             
         if ($form->isValid()) {

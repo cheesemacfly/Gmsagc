@@ -4,6 +4,8 @@ namespace NGPP\GmsagcBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 class NGPPGmsagcExtension extends Extension
 {
@@ -22,5 +24,11 @@ class NGPPGmsagcExtension extends Extension
         {
             $container->setParameter('ngpp_gmsagc.'.$key, $value);
         }
+        
+        $loader = new YamlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+        $loader->load('services.yml');
     }
 }
