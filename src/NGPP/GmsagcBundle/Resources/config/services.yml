@@ -1,16 +1,3 @@
-parameters:
-    ngpp_gmsagc_types:
-        owner: 1
-        customer: 2
-    ngpp_gmsagc_actions:
-        creation: 1
-        modification: 2
-    ngpp_gmsagc_users:
-        admin: password
-    ngpp_gmsagc_groups:
-        ROLE_ADMIN: Admistrators
-        ROLE_USER: Users
-
 services:
     ngpp_gmsagc.type.press_selector:
         class: NGPP\GmsagcBundle\Form\Type\PressSelectorType
@@ -29,6 +16,4 @@ services:
             - { name: form.type, alias: ngpp_gmsagc_orders_save }
     ngpp_gmsagc.form.save_orders_listener:
         class: NGPP\GmsagcBundle\Form\EventListener\SaveOrdersListener
-        arguments: 
-            - "@form.factory"
-            - "@doctrine.orm.entity_manager"
+        arguments: ["@form.factory", "@doctrine.orm.entity_manager"]

@@ -29,7 +29,7 @@ class LoadGroupsData extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->container->getParameter('ngpp_gmsagc_groups') as $key => $value)
+        foreach($this->container->getParameter('ngpp_gmsagc.groups') as $key => $value)
         {
             $group = new Groups();
             $group->setRole($key);

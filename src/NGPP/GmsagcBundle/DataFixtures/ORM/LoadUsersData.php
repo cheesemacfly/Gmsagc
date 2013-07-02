@@ -29,7 +29,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
      */
     public function load(ObjectManager $manager)
     {
-        foreach($this->container->getParameter('ngpp_gmsagc_users') as $key => $value)
+        foreach($this->container->getParameter('ngpp_gmsagc.users') as $key => $value)
         {
             $user = new Users();
             $user->setUsername($key);

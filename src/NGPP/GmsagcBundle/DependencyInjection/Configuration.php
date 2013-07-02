@@ -5,24 +5,53 @@ namespace NGPP\GmsagcBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * Defines the configuration tree for the bundle
+     * 
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ngpp_gmsagc');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->integerNode('results_per_page')
+                ->min(10)
+                ->max(100)
+                ->defaultValue(10)
+                ->end()
+            ->end();
+        $rootNode
+            ->children()
+                ->arrayNode('types')->addDefaultsIfNotSet()
+                ->children()
+                    ->integerNode('owner')->defaultValue(1)->end()
+                    ->integerNode('customer')->defaultValue(2)->end()
+            ->end();
+        $rootNode
+            ->children()
+                ->arrayNode('actions')->addDefaultsIfNotSet()
+                ->children()
+                    ->integerNode('creation')->defaultValue(1)->end()
+                    ->integerNode('modification')->defaultValue(2)->end()
+            ->end();
+        $rootNode
+            ->children()
+                ->arrayNode('users')->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('admin')->defaultValue('password')->end()
+            ->end();
+        $rootNode
+            ->children()
+                ->arrayNode('groups')->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('ROLE_ADMIN')->defaultValue('Admistrators')->end()
+                    ->scalarNode('ROLE_USER')->defaultValue('Users')->end()
+            ->end();
 
         return $treeBuilder;
     }

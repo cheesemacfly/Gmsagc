@@ -8,11 +8,12 @@ use \NGPP\GmsagcBundle\Form\Type\ContactsType;
 
 class ContactsController extends Controller
 {
-    const MAX_ITEMS = 10;
-    
     public function indexAction($page = null)
     {
-        $max_items = !is_null($this->getUser()) ? $this->getUser()->getResultsPerPage() : self::MAX_ITEMS;
+        //Use default value if user not logged in
+        $max_items = !is_null($this->getUser()) ? 
+                $this->getUser()->getResultsPerPage() : $this->container->getParameter('ngpp_gmsagc.results_per_page');
+        
         $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Contacts');
         
         $offset = is_null($page) ? null : $max_items * ($page - 1);

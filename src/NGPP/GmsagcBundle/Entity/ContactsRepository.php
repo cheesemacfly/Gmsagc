@@ -27,7 +27,7 @@ class ContactsRepository extends EntityRepository
             $logger = $this->get('logger');
             $logger->err(sprintf('NoResultException in ContactsRepository::getTotal with criteria %s', $criteria));
             
-            return null;
+            return 0;
         }
         
         return $result;        
@@ -53,8 +53,6 @@ class ContactsRepository extends EntityRepository
             $query = $query->setFirstResult($offset);
         }
         
-        $result = $query->getQuery()->getResult();
-        
-        return $result;
+        return $query->getQuery()->getResult();
     }
 }

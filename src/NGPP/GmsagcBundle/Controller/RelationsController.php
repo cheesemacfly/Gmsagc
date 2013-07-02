@@ -12,7 +12,7 @@ class RelationsController extends Controller
         return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
                 array('relations' => $this->getDoctrine()
                                           ->getRepository('NGPPGmsagcBundle:Relations')
-                                          ->findByType($this->container->getParameter('ngpp_gmsagc_types')['customer'])));
+                                          ->findByType($this->container->getParameter('ngpp_gmsagc.types')['customer'])));
     }
     
     public function saveAction($id = null)
