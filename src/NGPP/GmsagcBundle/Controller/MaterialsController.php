@@ -9,7 +9,7 @@ class MaterialsController extends Controller
 {
     public function listAction($name = null, $limit = 10)
     {
-        $repo = $this->getDoctrine()->getEntityManager()->getRepository('NGPPGmsagcBundle:Materials');
+        $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Materials');
         $materials = $repo->getList($name, $limit);
         
         $materialsJSON = array();

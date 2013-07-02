@@ -3,22 +3,22 @@
 namespace NGPP\GmsagcBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use NGPP\GmsagcBundle\Entity\Materials;
 
 class MaterialToTextTransformer implements DataTransformerInterface
 {
     /**
-     * @var ObjectManager
+     * @var EntityManager
      */
-    private $om;
+    private $em;
 
     /**
-     * @param ObjectManager $om
+     * @param EntityManager $em
      */
-    public function __construct(ObjectManager $om)
+    public function __construct(EntityManager $em)
     {
-        $this->om = $om;
+        $this->em = $em;
     }
 
     /**
@@ -49,7 +49,7 @@ class MaterialToTextTransformer implements DataTransformerInterface
             return null;
         }
 
-        $material = $this->om
+        $material = $this->em
             ->getRepository('NGPPGmsagcBundle:Materials')
             ->findOneByName($text)
         ;
