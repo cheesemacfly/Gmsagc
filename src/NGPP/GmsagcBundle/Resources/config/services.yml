@@ -16,4 +16,4 @@ services:
             - { name: form.type, alias: ngpp_gmsagc_orders_save }
     ngpp_gmsagc.form.save_orders_listener:
         class: NGPP\GmsagcBundle\Form\EventListener\SaveOrdersListener
-        arguments: ["@form.factory"]
+        arguments: ["@form.factory", "@service_container"]

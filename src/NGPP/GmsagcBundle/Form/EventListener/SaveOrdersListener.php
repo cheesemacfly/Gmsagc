@@ -5,6 +5,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use NGPP\GmsagcBundle\Form\Type\MoldsType;
 
@@ -14,13 +15,19 @@ class SaveOrdersListener implements EventSubscriberInterface
      * @var FormFactoryInterface
      */
     private $factory;
+    
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
 
     /**
      * @param factory FormFactoryInterface
      */
-    public function __construct(FormFactoryInterface $factory)
+    public function __construct(FormFactoryInterface $factory, ContainerInterface $container)
     {
         $this->factory = $factory;
+        $this->container = $container;
     }
 
     public static function getSubscribedEvents()
@@ -63,10 +70,12 @@ class SaveOrdersListener implements EventSubscriberInterface
     {
         switch($action_id)
         {
-            case 2:
+            case $this->container->getParameter('ngpp_gmsagc.actions')['modification']['id']:
+            case $this->container->getParameter('ngpp_gmsagc.actions')['molding']['id']:
+            case $this->container->getParameter('ngpp_gmsagc.actions')['reparation']['id']:
                 $builder->add('mold', 'entity', array('property' => 'name', 'class' => 'NGPPGmsagcBundle:Molds'));
                 break;
-            //Tirggered even if action is null
+            //Allow Molds creation by default
             default:
                 $builder->add('mold', new MoldsType(), array('data_class' => 'NGPP\GmsagcBundle\Entity\Molds'));
         }
