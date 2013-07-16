@@ -14,7 +14,7 @@ action:
     after: Suivant >>
 
 message:
-  nothing: Rien à voir ici!
+  nothing: Aucun résultat disponible
   confirm:
     delete: Voulez vous vraiment supprimer l'élément?
 

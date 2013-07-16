@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Orders
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NGPP\GmsagcBundle\Entity\OrdersRepository")
  */
 class Orders
 {

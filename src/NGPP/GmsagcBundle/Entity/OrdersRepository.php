@@ -4,11 +4,11 @@ namespace NGPP\GmsagcBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-class ContactsRepository extends EntityRepository
+class OrdersRepository extends EntityRepository
 {
     public function getTotal($criteria = null)
     {
-        $query = $this->createQueryBuilder('c')->select('count(c.id)');
+        $query = $this->createQueryBuilder('o')->select('count(o.id)');
 
         $this->setCriteria($query, $criteria); 
         
@@ -19,7 +19,7 @@ class ContactsRepository extends EntityRepository
         catch(\Doctrine\ORM\NoResultException $e)
         {
             $logger = $this->get('logger');
-            $logger->err(sprintf('NoResultException in ContactsRepository::getTotal with criteria %s', $criteria));
+            $logger->err(sprintf('NoResultException in OrdersRepository::getTotal with criteria %s', $criteria));
             
             return 0;
         }
@@ -29,7 +29,7 @@ class ContactsRepository extends EntityRepository
     
     public function getList($criteria = null, $limit = null, $offset = null)
     {
-        $query = $this->createQueryBuilder('c');
+        $query = $this->createQueryBuilder('o');
 
         $this->setCriteria($query, $criteria);        
         $query->setMaxResults($limit);
@@ -42,9 +42,9 @@ class ContactsRepository extends EntityRepository
     {
         if(!is_null($criteria))
         {
-            $query->where('c.name LIKE :criteria')
-                ->orWhere('c.email LIKE :criteria')
-                ->orWhere('c.phone LIKE :criteria')
+            $query->leftJoin('o.mold', 'm')
+                ->where('o.observation LIKE :criteria')
+                ->orWhere('m.name LIKE :criteria')
                 ->setParameter('criteria', '%'.$criteria.'%');
         }
     }

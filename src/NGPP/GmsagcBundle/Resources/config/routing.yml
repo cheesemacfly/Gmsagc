@@ -20,8 +20,10 @@ ngpp_gmsagc_relations_save:
         id:  \d+
 
 ngpp_gmsagc_orders:
-    pattern:  /orders
-    defaults: { _controller: NGPPGmsagcBundle:Orders:index }
+    pattern:  /orders/{page}
+    defaults: { _controller: NGPPGmsagcBundle:Orders:index, page: null }
+    requirements:
+        page:  \d+
 ngpp_gmsagc_orders_save:
     pattern:  /orders/save/{id}
     defaults: { _controller: NGPPGmsagcBundle:Orders:save, id: null }

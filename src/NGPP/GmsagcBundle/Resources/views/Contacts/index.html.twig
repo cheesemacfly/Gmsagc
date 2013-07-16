@@ -1,8 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    {% set currentRoute = app.request.attributes.get('_route') %}
-    {% set currentQuery = app.request.query.all %}
     <br>
     <div class="row">
         <div class="span6">
@@ -40,6 +38,6 @@
         </table>
         {% include 'NGPPGmsagcBundle:_Shared:pagination.html.twig' %}
     {% else %}
-        <h1>{{ 'message.nothing'|trans }}</h1>
+        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
     {% endif %}
 {% endblock %}
