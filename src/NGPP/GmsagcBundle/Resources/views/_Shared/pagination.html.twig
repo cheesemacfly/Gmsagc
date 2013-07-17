@@ -13,25 +13,30 @@
                     &laquo;
                 </a>
             </li>
-            {% if currentPage is null or currentPage == 1 %}
-                <li class="active">
-            {% else %}
-                <li>
-            {% endif %}
-                <a href="{{ path(currentRoute, currentQuery) }}">
-                    1
-                </a>
-            </li>
-            {% for page in 2..pages %}
-                {% if currentPage == page %}
-                    <li class="active">
+            {% set startPage = currentPage - 5 > 1 ? currentPage - 5 : 1 %}
+            {% set endPage = startPage + 10 > pages ? pages - 5 : startPage + 10 %}
+            {% for page in startPage..endPage %}
+                {% if page == 1 %}
+                    {% if currentPage is null or currentPage == page %}
+                        <li class="active">
+                    {% else %}
+                        <li>
+                    {% endif %}
+                        <a href="{{ path(currentRoute, currentQuery) }}">
+                            {{ page }}
+                        </a>
+                    </li>
                 {% else %}
-                    <li>
+                    {% if currentPage == page %}
+                        <li class="active">
+                    {% else %}
+                        <li>
+                    {% endif %}
+                        <a href="{{ path(currentRoute, {'page': page}|merge(currentQuery)) }}">
+                            {{ page }}
+                        </a>
+                    </li>
                 {% endif %}
-                    <a href="{{ path(currentRoute, {'page': page}|merge(currentQuery)) }}">
-                        {{ page }}
-                    </a>
-                </li>
             {% endfor %}                    
             {% if currentPage == pages %}
                 <li class="active">
