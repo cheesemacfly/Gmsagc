@@ -1,4 +1,6 @@
 {% if pages is defined and pages > 1 %}
+    {% set maxPages = 10 %}
+    {% set span = maxPages // 2 %}
     {% set currentRoute = app.request.attributes.get('_route') %}
     {% set currentQuery = app.request.query.all %}
     {% set currentPage = app.request.attributes.get('_route_params')['page'] %}
@@ -13,8 +15,8 @@
                     &laquo;
                 </a>
             </li>
-            {% set startPage = currentPage - 5 > 1 ? currentPage - 5 : 1 %}
-            {% set endPage = startPage + 10 > pages ? pages - 5 : startPage + 10 %}
+            {% set startPage = currentPage - span < 1 or maxPages > pages ? 1 : (currentPage + span > pages ? pages - maxPages : currentPage - span) %}
+            {% set endPage = startPage + (maxPages > pages ? pages - 1 : maxPages) %}
             {% for page in startPage..endPage %}
                 {% if page == 1 %}
                     {% if currentPage is null or currentPage == page %}
