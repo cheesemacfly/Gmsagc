@@ -9,10 +9,39 @@ class RelationsController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
-                array('relations' => $this->getDoctrine()
-                                          ->getRepository('NGPPGmsagcBundle:Relations')
-                                          ->findByType($this->container->getParameter('ngpp_gmsagc.types')['customer'])));
+        $repo = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Relations');
+        
+        if(!is_null($firstInvoiced = $repo->getFirstInvoiced()))
+        {
+            $dates = array();
+            $currentDate = (new \DateTime($firstInvoiced[1]))->modify('first day of this month');
+            $now = new \DateTime();
+            
+            while($currentDate < $now)
+            {
+                $year = $currentDate->format('Y');
+                $month = $currentDate->format('F');
+
+                if(!array_key_exists($year, $dates))
+                {
+                    $dates[] = $year;
+                    $dates[$year] = array();
+                }
+                
+                if(!array_key_exists($month, $dates[$year]))
+                    $dates[$year][] = $month;
+                
+                $currentDate->add(new \DateInterval('P1M'));
+            }
+            
+            return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
+                    array('relations' => $repo->findByType($this->container->getParameter('ngpp_gmsagc.types')['customer']),
+                    'firstInvoiced' => $dates));
+        }
+        else
+        {
+            return $this->render('NGPPGmsagcBundle:Relations:index.html.twig');
+        }
     }
     
     public function saveAction($id = null)

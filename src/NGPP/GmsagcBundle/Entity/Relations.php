@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Relation
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NGPP\GmsagcBundle\Entity\RelationsRepository")
  * @UniqueEntity({"contact", "order"})
  */
 class Relations
