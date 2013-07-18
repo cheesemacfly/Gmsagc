@@ -35,10 +35,21 @@ class UsersController extends Controller
         );
     }
     
-    public function indexAction()
+    public function indexAction($page = null)
     {
-        return $this->render('NGPPGmsagcBundle:Users:index.html.twig',
-                array('users' => $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Users')->findAll()));
+        //Use default value if user not logged in
+        $max_items = !is_null($this->getUser()) ? 
+                $this->getUser()->getResultsPerPage() : $this->container->getParameter('ngpp_gmsagc.results_per_page');
+        
+        $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Users');
+        
+        $offset = is_null($page) ? null : $max_items * ($page - 1);
+        $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
+        
+        $users = $repo->getList($criteria, $max_items, $offset);
+        $pages = ceil($repo->getTotal($criteria) / $max_items);
+        
+        return $this->render('NGPPGmsagcBundle:Users:index.html.twig', array('users' => $users, 'pages' => $pages));
     }
     
     public function saveAction($id = null)

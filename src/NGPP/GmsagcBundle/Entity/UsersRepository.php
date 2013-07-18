@@ -64,4 +64,46 @@ class UsersRepository extends EntityRepository implements UserProviderInterface
         return $this->getEntityName() === $class
             || is_subclass_of($class, $this->getEntityName());
     }
+    
+    public function getTotal($criteria = null)
+    {
+        $query = $this->createQueryBuilder('u')->select('COUNT(u.id)');
+
+        $this->setCriteria($query, $criteria); 
+        
+        try
+        {
+            $result = $query->getQuery()->getSingleScalarResult();
+        }
+        catch(\Doctrine\ORM\NoResultException $e)
+        {
+            $logger = $this->get('logger');
+            $logger->err(sprintf('NoResultException in UsersRepository::getTotal with criteria %s', $criteria));
+            
+            return 0;
+        }
+        
+        return $result;        
+    }
+    
+    public function getList($criteria = null, $limit = null, $offset = null)
+    {
+        $query = $this->createQueryBuilder('u');
+
+        $this->setCriteria($query, $criteria);        
+        $query->setMaxResults($limit);
+        $query->setFirstResult($offset);
+        
+        return $query->getQuery()->getResult();
+    }
+    
+    private function setCriteria($query, $criteria)
+    {
+        if(!is_null($criteria))
+        {
+            $query->where('u.username LIKE :criteria')
+                ->orWhere('u.email LIKE :criteria')
+                ->setParameter('criteria', '%'.$criteria.'%');
+        }
+    }
 }

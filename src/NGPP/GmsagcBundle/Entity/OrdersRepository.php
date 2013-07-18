@@ -8,7 +8,7 @@ class OrdersRepository extends EntityRepository
 {
     public function getTotal($criteria = null)
     {
-        $query = $this->createQueryBuilder('o')->select('count(o.id)');
+        $query = $this->createQueryBuilder('o')->select('COUNT(o.id)');
 
         $this->setCriteria($query, $criteria); 
         
@@ -42,9 +42,13 @@ class OrdersRepository extends EntityRepository
     {
         if(!is_null($criteria))
         {
-            $query->leftJoin('o.mold', 'm')
+            $query->leftJoin('o.mold', 'mo')
+                ->leftJoin('o.press', 'p')
+                ->leftJoin('o.material', 'ma')
                 ->where('o.observation LIKE :criteria')
-                ->orWhere('m.name LIKE :criteria')
+                ->orWhere('mo.name LIKE :criteria')
+                ->orWhere('ma.name LIKE :criteria')
+                ->orWhere('p.name LIKE :criteria')
                 ->setParameter('criteria', '%'.$criteria.'%');
         }
     }

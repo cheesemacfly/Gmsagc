@@ -13,16 +13,68 @@ use Doctrine\ORM\EntityRepository;
 class MoldsRepository extends EntityRepository
 {
     /**
-     * Return last id+1 or null if not find
+     * Return last id+1 or 1 if not found
      * 
      * @return integer
      */
     public function getNewId()
     {
-        $result = $this->createQueryBuilder('m')
-                ->select('MAX(m.id)')
-                ->getQuery()->getOneOrNullResult();
+        $query = $this->createQueryBuilder('m')->select('MAX(m.id)');
         
-        return is_array($result) ? $result[1] + 1 : null;
+        try
+        {
+            $result = $query->getQuery()->getSingleScalarResult();
+        }
+        catch(\Doctrine\ORM\NoResultException $e)
+        {
+            $logger = $this->get('logger');
+            $logger->err(sprintf('NoResultException in MoldsRepository::getNewId'));
+            
+            return 1;
+        }
+        
+        return $result;
+    }
+    
+    public function getTotal($criteria = null)
+    {
+        $query = $this->createQueryBuilder('m')->select('COUNT(m.id)');
+
+        $this->setCriteria($query, $criteria); 
+        
+        try
+        {
+            $result = $query->getQuery()->getSingleScalarResult();
+        }
+        catch(\Doctrine\ORM\NoResultException $e)
+        {
+            $logger = $this->get('logger');
+            $logger->err(sprintf('NoResultException in MoldsRepository::getTotal with criteria %s', $criteria));
+            
+            return 0;
+        }
+        
+        return $result;
+    }
+    
+    public function getList($criteria = null, $limit = null, $offset = null)
+    {
+        $query = $this->createQueryBuilder('m');
+
+        $this->setCriteria($query, $criteria);        
+        $query->setMaxResults($limit);
+        $query->setFirstResult($offset);
+        
+        return $query->getQuery()->getResult();
+    }
+    
+    private function setCriteria($query, $criteria)
+    {
+        if(!is_null($criteria))
+        {
+            $query->where('m.name LIKE :criteria')
+                ->orWhere('m.place LIKE :criteria')
+                ->setParameter('criteria', '%'.$criteria.'%');
+        }
     }
 }

@@ -57,8 +57,10 @@ ngpp_gmsagc_contacts_delete:
         id:  \d+
 
 ngpp_gmsagc_molds:
-    pattern:  /molds
-    defaults: { _controller: NGPPGmsagcBundle:Molds:index }
+    pattern:  /molds/{page}
+    defaults: { _controller: NGPPGmsagcBundle:Molds:index, page: null }
+    requirements:
+        page:  \d+
 ngpp_gmsagc_molds_save:
     pattern:  /molds/save/{id}
     defaults: { _controller: NGPPGmsagcBundle:Molds:save, id: null }
@@ -71,8 +73,10 @@ ngpp_gmsagc_molds_delete:
         id:  \d+
 
 ngpp_gmsagc_users:
-    pattern:  /users
-    defaults: { _controller: NGPPGmsagcBundle:Users:index }
+    pattern:  /users/{page}
+    defaults: { _controller: NGPPGmsagcBundle:Users:index, page: null }
+    requirements:
+        page:  \d+
 ngpp_gmsagc_users_save:
     pattern:  /users/save/{id}
     defaults: { _controller: NGPPGmsagcBundle:Users:save, id: null }

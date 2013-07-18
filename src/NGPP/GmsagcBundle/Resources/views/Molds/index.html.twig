@@ -2,9 +2,16 @@
 
 {% block content %}
     <br>
-    <a href="{{ path('ngpp_gmsagc_molds_save') }}" class="btn btn-success">
-        <i class="icon-plus icon-white"></i> {{ 'molds.add'|trans }}
-    </a>
+    <div class="row">
+        <div class="span6">
+            <a href="{{ path('ngpp_gmsagc_molds_save') }}" class="btn btn-success">
+                <i class="icon-plus icon-white"></i> {{ 'molds.add'|trans }}
+            </a>
+        </div>
+        <div class="span6">
+            {% include 'NGPPGmsagcBundle:_Shared:search.html.twig' %}
+        </div>
+    </div> 
     <br><br>
     {% if molds is defined and molds %}
         <table class="table table-hover">
@@ -31,7 +38,8 @@
             </tr>
         {% endfor %}
         </table>
+        {% include 'NGPPGmsagcBundle:_Shared:pagination.html.twig' %}
     {% else %}
-        <h1>{{ 'message.nothing'|trans }}</h1>
+        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
     {% endif %}
 {% endblock %}

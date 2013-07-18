@@ -8,7 +8,7 @@ class ContactsRepository extends EntityRepository
 {
     public function getTotal($criteria = null)
     {
-        $query = $this->createQueryBuilder('c')->select('count(c.id)');
+        $query = $this->createQueryBuilder('c')->select('COUNT(c.id)');
 
         $this->setCriteria($query, $criteria); 
         
