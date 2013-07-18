@@ -17,3 +17,9 @@ services:
     ngpp_gmsagc.form.save_orders_listener:
         class: NGPP\GmsagcBundle\Form\EventListener\SaveOrdersListener
         arguments: ["@form.factory", "@service_container"]
+    ngpp_gmsagc.form.type.places:
+        class: NGPP\GmsagcBundle\Form\Type\PlacesType
+        arguments: 
+            - "%ngpp_gmsagc.molds_places%"
+        tags:
+            - { name: form.type, alias: places }

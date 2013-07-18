@@ -7,14 +7,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MoldsType extends AbstractType
-{
+{    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('id')
             ->add('name')
             ->add('weight')
-            ->add('place')
+            ->add('place', 'places')
             ->add('shell')
         ;
     }

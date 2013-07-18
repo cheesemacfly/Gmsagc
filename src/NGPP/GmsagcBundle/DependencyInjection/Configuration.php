@@ -90,6 +90,16 @@ class Configuration implements ConfigurationInterface
             ->end();
         $rootNode
             ->children()
+                ->arrayNode('molds_places')->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('GMSA')->defaultValue('GMSA')->end()
+                        ->scalarNode('GEO')->defaultValue('GEO')->end()
+                        ->scalarNode('CLIENTS')->defaultValue('CLIENTS')->end()
+                        ->scalarNode('AUTRE')->defaultValue('AUTRE')->end()
+                    ->end()
+            ->end();
+        $rootNode
+            ->children()
                 ->arrayNode('users')->addDefaultsIfNotSet()
                 ->children()
                     ->scalarNode('admin')->defaultValue('password')->end()
