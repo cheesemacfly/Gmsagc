@@ -12,7 +12,7 @@ class RelationsController extends Controller
         // Year in Invoices are counted from July to June instead of January to December.
         $repo = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Relations');
         $customerType = $this->container->getParameter('ngpp_gmsagc.types')['customer'];
-        $relations = array();
+        $relations = $dates = array();
         
         if(is_null($year))
         {
@@ -37,7 +37,6 @@ class RelationsController extends Controller
         
         if(!is_null($firstInvoiced = $repo->getFirstInvoiced()))
         {
-            $dates = array();
             $firstInvoiced->modify('first day of this month');
             $cursorDate = new \DateTime('first day of this month');
             
@@ -72,16 +71,13 @@ class RelationsController extends Controller
                 
                 //Move to previous month
                 $cursorDate->sub(new \DateInterval('P1M'));
-            }
-            
-            return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
-                    array('relations' => $relations,
-                    'dates' => $dates));
+            }            
         }
-        else
-        {
-            return $this->render('NGPPGmsagcBundle:Relations:index.html.twig');
-        }
+        
+        return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
+                array('relations' => $relations,
+                    'dates' => $dates,
+                    'toInvoice' => is_null($year)));
     }
     
     public function saveAction($id = null)

@@ -66,6 +66,7 @@ invoices:
   saved: La facture a été sauvegardée
   deleted: La facture a été supprimée
   nodeleted: La facture n'a pas été supprimée
+  todo: Facture(s) à traiter
   
 users:
   menu: Employés

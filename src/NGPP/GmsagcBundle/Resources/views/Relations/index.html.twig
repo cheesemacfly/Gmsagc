@@ -7,7 +7,12 @@
             {% include 'NGPPGmsagcBundle:Relations:navigation.html.twig' %}
         </div>
         <div class="span10">
-            {% if relations is defined and relations is iterable %}
+            {% if relations is defined and relations is iterable and relations|length > 0 %}
+                {% if toInvoice is defined and toInvoice %}
+                    <h3>
+                        {{ 'invoices.todo'|trans }}
+                    </h3>
+                {% endif %}
                 <table class="table table-hover table-condensed">
                     <tr>
                         <th>{{ 'Order'|trans }}</th>

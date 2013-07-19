@@ -36,6 +36,11 @@ class RelationsRepository extends EntityRepository
                     ->setParameter('startDate', $startDate)
                     ->setParameter('endDate', $endDate);
         }
+        else
+        {            
+            $query->andWhere('r.invoiced IS NULL')
+                    ->orWhere('r.invoice IS NULL');
+        }
         
         $query->orderBy('r.invoiced', 'DESC');
         
