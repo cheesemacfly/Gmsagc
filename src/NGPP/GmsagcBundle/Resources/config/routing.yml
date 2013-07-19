@@ -11,8 +11,11 @@ ngpp_gmsagc_home:
     defaults: { _controller: NGPPGmsagcBundle:Default:index }
 
 ngpp_gmsagc_relations:
-    pattern:  /invoices
-    defaults: { _controller: NGPPGmsagcBundle:Relations:index }
+    pattern:  /invoices/{year}/{month}
+    defaults: { _controller: NGPPGmsagcBundle:Relations:index, year: null, month: null }
+    requirements:
+        year:  ^(20|19)[0-9]{2}$
+        month:  ^(0?[1-9]|1[012])$
 ngpp_gmsagc_relations_save:
     pattern:  /invoices/save/{id}
     defaults: { _controller: NGPPGmsagcBundle:Relations:save, id: null }

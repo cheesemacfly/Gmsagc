@@ -7,9 +7,33 @@ use NGPP\GmsagcBundle\Form\Type\InvoicesType;
 
 class RelationsController extends Controller
 {
-    public function indexAction()
+    public function indexAction($year = null, $month = null)
     {
+        // Year in Invoices are counted from July to June instead of January to December.
         $repo = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Relations');
+        $customerType = $this->container->getParameter('ngpp_gmsagc.types')['customer'];
+        $relations = array();
+        
+        if(is_null($year))
+        {
+            $relations = $repo->getList($customerType['id']);
+        }
+        else if(is_null($month))
+        {
+            $startDate = new \DateTime($year . '-07-01');
+            $endDate = clone $startDate;
+            $endDate->add(new \DateInterval('P1Y'));
+            
+            $relations = $repo->getList($customerType['id'], $startDate, $endDate);
+        }
+        else
+        {
+            $startDate = new \DateTime($year . '-' . $month . '-01');
+            $endDate = clone $startDate;
+            $endDate->add(new \DateInterval('P1M'));
+            
+            $relations = $repo->getList($customerType['id'], $startDate, $endDate);
+        }
         
         if(!is_null($firstInvoiced = $repo->getFirstInvoiced()))
         {
@@ -29,12 +53,21 @@ class RelationsController extends Controller
 
                 if(!array_key_exists($iYear, $dates))
                 {
-                    $dates[$iYear] = ['name' => $sYear, 'months' => array()];
+                    if($iYear == $year)
+                        $dates[$iYear] = ['name' => $sYear, 'months' => array(), 'active' => is_null($month)];
+                    else
+                        $dates[$iYear] = ['name' => $sYear, 'months' => array()];
                 }
                 
                 if(!array_key_exists($iMonth, $dates[$iYear]['months']))
                 {
-                    $dates[$iYear]['months'][$iMonth] = ['name' => $sMonth, 'year' => $iRealYear];
+                    if($month == $iMonth && $year == $iRealYear)
+                    {
+                        $dates[$iYear]['months']['active'] = true;
+                        $dates[$iYear]['months']['data'][$iMonth] = ['name' => $sMonth, 'year' => $iRealYear, 'active' => true];
+                    }
+                    else
+                        $dates[$iYear]['months']['data'][$iMonth] = ['name' => $sMonth, 'year' => $iRealYear];
                 }
                 
                 //Move to previous month
@@ -42,7 +75,7 @@ class RelationsController extends Controller
             }
             
             return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
-                    array('relations' => $repo->findByType($this->container->getParameter('ngpp_gmsagc.types')['customer']),
+                    array('relations' => $relations,
                     'dates' => $dates));
         }
         else

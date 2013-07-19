@@ -1,0 +1,46 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
+{% if dates is defined and dates is iterable %}
+    <div class="accordion" id="accordion2">
+        {% for iYear, oYear in dates %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <ul class="nav nav-pills">
+                        <li>
+                            <a data-toggle="collapse" data-parent="#accordion2" href="#{{ iYear }}">
+                                <i class="icon-chevron-down"></i>
+                            </a>
+                        </li>
+                        {% if 'active' in oYear|keys and oYear.active %}
+                            <li class="active">
+                        {% else %}
+                            <li>
+                        {% endif %}
+                            <a href="{{ path(currentRoute, {'year': iYear}) }}">
+                                {{ oYear.name }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                {% if 'active' in oYear.months|keys and oYear.months.active %}
+                    <div id="{{ iYear }}" class="accordion-body collapse in">
+                {% else %}
+                    <div id="{{ iYear }}" class="accordion-body collapse">
+                {% endif %}
+                    <div class="accordion-inner">
+                        <ul class="nav nav-pills nav-stacked">
+                            {% for iMonth, oMonth in oYear.months.data %}
+                                {% if 'active' in oMonth|keys and oMonth.active %}
+                                    <li class="active">
+                                {% else %}
+                                    <li>
+                                {% endif %}
+                                    <a href="{{ path(currentRoute, {'year': oMonth.year, 'month' : iMonth}) }}">{{ oMonth.name|trans }} {{oMonth.year}}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

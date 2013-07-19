@@ -18,6 +18,19 @@ message:
   confirm:
     delete: Voulez vous vraiment supprimer l'élément?
 
+December: Décembre
+November: Novembre
+October: Octobre
+September: Septembre
+August: Août
+July: Juillet
+June: Juin
+May: Mai
+April: Avril
+March: Mars
+February: Février
+January: Janvier
+
 orders:
   menu: Commandes
   save: Sauvegarder une commande
