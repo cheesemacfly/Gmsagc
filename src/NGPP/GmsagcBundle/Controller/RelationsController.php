@@ -14,29 +14,36 @@ class RelationsController extends Controller
         if(!is_null($firstInvoiced = $repo->getFirstInvoiced()))
         {
             $dates = array();
-            $currentDate = (new \DateTime($firstInvoiced[1]))->modify('first day of this month');
-            $now = new \DateTime();
+            $firstInvoiced->modify('first day of this month');
+            $cursorDate = new \DateTime('first day of this month');
             
-            while($currentDate < $now)
+            //Magic trick to get the invoices dates (years starting on July)
+            while($cursorDate >= $firstInvoiced)
             {
-                $year = $currentDate->format('Y');
-                $month = $currentDate->format('F');
+                $iMonth = $cursorDate->format('n');
+                $iYear = $iMonth > 5 ? $cursorDate->format('Y') : $cursorDate->format('Y') - 1;
+                $iRealYear = $cursorDate->format('Y');
 
-                if(!array_key_exists($year, $dates))
+                $sYear = $iYear . ' - ' . ($iYear + 1);
+                $sMonth = $cursorDate->format('F');
+
+                if(!array_key_exists($iYear, $dates))
                 {
-                    $dates[] = $year;
-                    $dates[$year] = array();
+                    $dates[$iYear] = ['name' => $sYear, 'months' => array()];
                 }
                 
-                if(!array_key_exists($month, $dates[$year]))
-                    $dates[$year][] = $month;
+                if(!array_key_exists($iMonth, $dates[$iYear]['months']))
+                {
+                    $dates[$iYear]['months'][$iMonth] = ['name' => $sMonth, 'year' => $iRealYear];
+                }
                 
-                $currentDate->add(new \DateInterval('P1M'));
+                //Move to previous month
+                $cursorDate->sub(new \DateInterval('P1M'));
             }
             
             return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
                     array('relations' => $repo->findByType($this->container->getParameter('ngpp_gmsagc.types')['customer']),
-                    'firstInvoiced' => $dates));
+                    'dates' => $dates));
         }
         else
         {

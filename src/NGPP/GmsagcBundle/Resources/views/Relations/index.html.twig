@@ -1,31 +1,70 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>    
-    {% if relations is defined and relations %}
-        <table class="table table-hover table-condensed">
-            <tr>
-                <th>{{ 'Order'|trans }}</th>
-                <th>{{ 'Contact'|trans }}</th>
-                <th>{{ 'Invoice'|trans }}</th>
-                <th>{{ 'Invoiced'|trans }}</th>
-                <th></th>
-            </tr>
-        {% for relation in relations %}
-            <tr>
-                <td>{{ relation.order.id }}</td>
-                <td>{{ relation.contact.id }}</td>
-                <td>{{ relation.invoice }}</td>
-                <td>{{ relation.invoiced ? relation.invoiced|date('m/d/Y') : '-' }}</td>
-                <td>
-                    <a href="{{ path('ngpp_gmsagc_relations_save', {'id': relation.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </table>
-    {% else %}
-        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
-    {% endif %}
+    <br>
+    <div class="row">
+        <div class="span3">
+            {% if dates is defined and dates is iterable %}
+                <div class="accordion" id="accordion2">
+                    {% for iYear, oYear in dates %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <ul class="nav nav-pills">
+                                    <li>
+                                        <a data-toggle="collapse" data-parent="#accordion2" href="#{{ iYear }}">
+                                            <i class="icon-chevron-down"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            {{ oYear.name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="{{ iYear }}" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    <ul class="nav nav-pills nav-stacked">
+                                        {% for month in oYear.months %}
+                                            <li>
+                                                <a href="#">{{ month.name|trans }} {{month.year}}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="span9">
+            {% if relations is defined and relations is iterable %}
+                <table class="table table-hover table-condensed">
+                    <tr>
+                        <th>{{ 'Order'|trans }}</th>
+                        <th>{{ 'Contact'|trans }}</th>
+                        <th>{{ 'Invoice'|trans }}</th>
+                        <th>{{ 'Invoiced'|trans }}</th>
+                        <th></th>
+                    </tr>
+                {% for relation in relations %}
+                    <tr>
+                        <td>{{ relation.order.id }}</td>
+                        <td>{{ relation.contact.id }}</td>
+                        <td>{{ relation.invoice }}</td>
+                        <td>{{ relation.invoiced ? relation.invoiced|date('m/d/Y') : '-' }}</td>
+                        <td>
+                            <a href="{{ path('ngpp_gmsagc_relations_save', {'id': relation.id}) }}" class="btn btn-warning">
+                                <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% else %}
+                <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
