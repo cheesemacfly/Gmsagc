@@ -1,22 +1,43 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
+    <br>
+    <div class="row">
+        <div class="span3">
+            <a href="{{ path('ngpp_gmsagc_expenses_create', {'order_id' : order.id}) }}" class="btn btn-success">
+                <i class="icon-plus icon-white"></i> {{ 'expenses.add'|trans }}
+            </a>
+        </div>
+        <div class="span9">
+            <div class="well">
+                <p class="text-center">
+                    <strong>{{ 'Order'|trans }}</strong> : {{order.id}}
+                    ||
+                    <strong>{{ 'Mold'|trans }}</strong> : {{order.mold.name}}
+                    ||
+                    <strong>{{ 'Action'|trans }}</strong> : {{order.action.name}}
+                    ||
+                    <strong>{{ 'Written'|trans }}</strong> : {{ order.written ? order.written|date('d/m/Y') : '-' }}
+                </p>
+            </div>
+        </div>
+    </div>
     <br><br>
     {% if expenses is defined and expenses %}
         <table class="table table-hover">
             <tr>
-                <th>#</th>
-                <th>{{ 'Order'|trans }}</th>
+                <th>{{ 'Created'|trans }}</th>
                 <th>{{ 'Description'|trans }}</th>
                 <th>{{ 'Price'|trans }}</th>
+                <th>{{ 'Provider'|trans }}</th>
                 <th></th>
             </tr>
         {% for expense in expenses %}
             <tr>
-                <td>{{ expense.id }}</td>
-                <td>{{ expense.order.id }}</td>
+                <td>{{ expense.created ? expense.created|date('d/m/Y') : '-' }}</td>
                 <td>{{ expense.description }}</td>
                 <td>{{ expense.price }} {{ 'currency'|trans|raw }}</td>
+                <td>{{ expense.contact.name }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_expenses_edit', {'id': expense.id}) }}" class="btn btn-warning">
                         <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}

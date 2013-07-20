@@ -86,6 +86,7 @@ expenses:
   saved: La dépense a été sauvegardée
   deleted: La dépense a été supprimée
   nodeleted: La dépense n'a pas été supprimée
+  noorder: "Liste des frais non disponible : commande inexistante"
   
 hours:
   menu: Heures
@@ -147,3 +148,4 @@ Price: Prix
 Observation: Commentaire
 Created: Créé le
 Contact: Contact
+Provider: Fournisseur

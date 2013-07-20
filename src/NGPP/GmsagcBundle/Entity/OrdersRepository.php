@@ -6,6 +6,12 @@ use Doctrine\ORM\EntityRepository;
 
 class OrdersRepository extends EntityRepository
 {
+    /**
+     * Returns the total number of items depending on the selection
+     * 
+     * @param type $criteria
+     * @return int
+     */
     public function getTotal($criteria = null)
     {
         $query = $this->createQueryBuilder('o')->select('COUNT(o.id)');
@@ -27,6 +33,14 @@ class OrdersRepository extends EntityRepository
         return $result;        
     }
     
+    /**
+     * Returns an array of Orders
+     * 
+     * @param type $criteria
+     * @param int $limit
+     * @param int $offset
+     * @return Orders
+     */
     public function getList($criteria = null, $limit = null, $offset = null)
     {
         $query = $this->createQueryBuilder('o');
@@ -38,6 +52,13 @@ class OrdersRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
     
+    /**
+     * Add where conditions for the Orders request
+     * 
+     * @param type $query
+     * @param type $criteria
+     * @return type
+     */
     private function setCriteria($query, $criteria)
     {
         if(!is_null($criteria))
@@ -50,6 +71,14 @@ class OrdersRepository extends EntityRepository
                 ->orWhere('ma.name LIKE :criteria')
                 ->orWhere('p.name LIKE :criteria')
                 ->setParameter('criteria', '%'.$criteria.'%');
+
+            if((int)$criteria > 0)
+            {
+                $query->orWhere('o.id = :criteria')
+                    ->setParameter('criteria', $criteria);
+            }            
         }
+        
+        return $query;
     }
 }

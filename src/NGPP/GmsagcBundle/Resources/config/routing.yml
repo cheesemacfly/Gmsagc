@@ -97,8 +97,10 @@ ngpp_gmsagc_users_delete:
         id:  \d+
         
 ngpp_gmsagc_expenses:
-    pattern:  /expenses
+    pattern:  /expenses/{order_id}
     defaults: { _controller: NGPPGmsagcBundle:Expenses:index }
+    requirements:
+        order_id:  \d+
 ngpp_gmsagc_expenses_create:
     pattern:  /expenses/create/{order_id}
     defaults: { _controller: NGPPGmsagcBundle:Expenses:create }

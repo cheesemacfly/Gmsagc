@@ -19,18 +19,24 @@
     <body>
         <nav class="navbar navbar-static-top navbar-inverse">
             <div class="navbar-inner">                
-                <!--{% set navigation = [['ngpp_gmsagc_home', 'Home Page'], 
-                                    ['ngpp_gmsagc_orders', 'Orders']] %}
-                <a class="brand" href="#">Gmsagc</a>
+                {% set navigation = [['ngpp_gmsagc_orders', 'orders.menu'|trans],
+                                    ['ngpp_gmsagc_molds', 'molds.menu'|trans],
+                                    ['ngpp_gmsagc_contacts', 'contacts.menu'|trans],
+                                    ['ngpp_gmsagc_relations', 'invoices.menu'|trans],
+                                    ['ngpp_gmsagc_users', 'users.menu'|trans]] %}
+                <a class="brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
                 <ul class="nav">
                 {% for item in navigation %}
-                    <li{% if item[0] == app.request.get('_route') %} class="active"{% endif%}>
+                    {% if item[0] == app.request.get('_route')[:item[0]|length] %}
+                        <li class="active">
+                    {% else %}
+                        <li>
+                    {% endif%}
                         <a href="{{ path(item[0]) }}">{{item[1]}}</a>
                     </li>
                 {% endfor %}
-                </ul>-->
-                
-                <a class="brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
+                </ul>
+                <!--<a class="brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
                 <ul class="nav">
                     <li>
                         <a href="{{ path('ngpp_gmsagc_orders') }}">
@@ -57,24 +63,7 @@
                             {{ 'users.menu'|trans }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ path('ngpp_gmsagc_expenses') }}">
-                            {{ 'expenses.menu'|trans }}
-                        </a>
-                    </li>
-                    <!--
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{ 'stats.menu'|trans }}<b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">{{ 'report.menu'|trans }}</a>
-                            </li>
-                        </ul>
-                    </li>
-                    -->
-                </ul>
+                </ul>-->
                 <ul class="nav pull-right">
                     <li class="divider-vertical"></li>
                     <li class="pull-right">
