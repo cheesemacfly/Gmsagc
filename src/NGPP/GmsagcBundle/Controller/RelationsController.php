@@ -90,19 +90,17 @@ class RelationsController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
         
         $form = $this->createForm(new InvoicesType(), $relation);
+        $form->handleRequest();
+        
+        if ($form->isValid()) {
 
-        if ($this->getRequest()->isMethod('POST')) {
-            
-            if ($form->bind($this->getRequest())->isValid()) {
-                
-                $em->persist($relation);
-                $em->flush();
+            $em->persist($relation);
+            $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('invoices.saved'));
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('invoices.saved'));
 
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
-            }
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
         }
         
         return $this->render('NGPPGmsagcBundle:Relations:save.html.twig',

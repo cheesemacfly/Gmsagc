@@ -34,43 +34,41 @@ class ContactsController extends Controller
                 $contact : new Contacts();
         
         $form = $this->createForm(new ContactsType(), $contact);
+        $form->handleRequest();
 
-        if ($this->getRequest()->isMethod('POST')) {
-            
-            //Hanldes delete of addresses
-            $originalAddresses = array();
-            // Create an array of the current Addresses objects in the database
+        //Hanldes delete of addresses
+        $originalAddresses = array();
+        // Create an array of the current Addresses objects in the database
+        foreach ($contact->getAddresses() as $address) {
+            $originalAddresses[] = $address;
+        }
+
+        if ($form->isValid()) {
+
+            // filter $originalAddresses to contain Addresses no longer present
             foreach ($contact->getAddresses() as $address) {
-                $originalAddresses[] = $address;
-            }
-            
-            if ($form->bind($this->getRequest())->isValid()) {
-                
-                // filter $originalAddresses to contain Addresses no longer present
-                foreach ($contact->getAddresses() as $address) {
-                    foreach ($originalAddresses as $key => $toDel) {
-                        if ($toDel->getId() === $address->getId()) {
-                            unset($originalAddresses[$key]);
-                        }
+                foreach ($originalAddresses as $key => $toDel) {
+                    if ($toDel->getId() === $address->getId()) {
+                        unset($originalAddresses[$key]);
                     }
                 }
-
-                // remove the relationship between the Addresses and the Contact
-                foreach ($originalAddresses as $address) {
-                    // remove the Address from the Contact
-                    $contact->getAddresses()->removeElement($address);
-                    // delete the Address entirely
-                    $em->remove($address);
-                }
-                
-                $em->persist($contact);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('contacts.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_contacts'));
             }
+
+            // remove the relationship between the Addresses and the Contact
+            foreach ($originalAddresses as $address) {
+                // remove the Address from the Contact
+                $contact->getAddresses()->removeElement($address);
+                // delete the Address entirely
+                $em->remove($address);
+            }
+
+            $em->persist($contact);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('contacts.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_contacts'));
         }
         
         return $this->render('NGPPGmsagcBundle:Contacts:save.html.twig',

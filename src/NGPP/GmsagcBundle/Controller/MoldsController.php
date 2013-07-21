@@ -34,19 +34,17 @@ class MoldsController extends Controller
                 $mold : new Molds($em->getRepository('NGPPGmsagcBundle:Molds')->getNewId());
                         
         $form = $this->createForm(new MoldsType(), $mold);
+        $form->handleRequest();
+        
+        if ($form->isValid()) {
 
-        if ($this->getRequest()->isMethod('POST')) {
-            
-            if ($form->bind($this->getRequest())->isValid()) {
-                
-                $em->persist($mold);
-                $em->flush();
+            $em->persist($mold);
+            $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('molds.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_molds'));
-            }
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('molds.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_molds'));
         }
         
         return $this->render('NGPPGmsagcBundle:Molds:save.html.twig',

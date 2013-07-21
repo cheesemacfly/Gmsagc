@@ -38,19 +38,17 @@ class ExpensesController extends Controller
         $expense = new Expenses($order);
         
         $form = $this->createForm(new ExpensesType(), $expense);
+        $form->handleRequest();
+        
+        if ($form->isValid()) {
 
-        if ($this->getRequest()->isMethod('POST')) {
-            
-            if ($form->bind($this->getRequest())->isValid()) {
-                            
-                $em->persist($expense);
-                $em->flush();
+            $em->persist($expense);
+            $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('expenses.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses', ['order_id' => $order_id]));
-            }
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('expenses.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses', ['order_id' => $order_id]));
         }
         
         return $this->render('NGPPGmsagcBundle:Expenses:save.html.twig',
@@ -66,19 +64,17 @@ class ExpensesController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
         
         $form = $this->createForm(new ExpensesType(), $expense);
-
-        if ($this->getRequest()->isMethod('POST')) {
+        $form->handleRequest();
             
-            if ($form->bind($this->getRequest())->isValid()) {
-                            
-                $em->persist($expense);
-                $em->flush();
+        if ($form->isValid()) {
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('expenses.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses'));
-            }
+            $em->persist($expense);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('expenses.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses'));
         }
         
         return $this->render('NGPPGmsagcBundle:Expenses:save.html.twig',

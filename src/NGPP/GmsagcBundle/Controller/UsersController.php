@@ -61,26 +61,24 @@ class UsersController extends Controller
                 $user : new Users();
         
         $form = $this->createForm(new UsersType(), $user);
+        $form->handleRequest();
 
-        if ($this->getRequest()->isMethod('POST')) {
-            
-            if ($form->bind($this->getRequest())->isValid()) {
-                
-                //Encode password only when creating user
-                if($user->getId() === null)
-                {
-                    $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-                    $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
-                }
-                
-                $em->persist($user);
-                $em->flush();
+        if ($form->isValid()) {
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('users.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
+            //Encode password only when creating user
+            if($user->getId() === null)
+            {
+                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
             }
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('users.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
         }
         
         return $this->render('NGPPGmsagcBundle:Users:save.html.twig',
@@ -95,22 +93,20 @@ class UsersController extends Controller
         if ($user){
             
             $form = $this->createForm(new UsersPasswordEditType(), $user);
+            $form->handleRequest();
             
-            if ($this->getRequest()->isMethod('POST')) {
+            if ($form->isValid()) {
 
-                if ($form->bind($this->getRequest())->isValid()) {
+                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
 
-                    $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-                    $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
+                $em->persist($user);
+                $em->flush();
 
-                    $em->persist($user);
-                    $em->flush();
+                $this->get('session')->getFlashBag()->add('success',
+                    $this->get('translator')->trans('users.saved'));
 
-                    $this->get('session')->getFlashBag()->add('success',
-                        $this->get('translator')->trans('users.saved'));
-
-                    return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
-                }
+                return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
             }
         }
         else        

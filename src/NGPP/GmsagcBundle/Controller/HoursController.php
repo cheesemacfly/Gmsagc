@@ -49,35 +49,33 @@ class HoursController extends Controller
         }
         
         $form = $this->createForm(new CalendarType(), $calendar);
-        
-        if ($this->getRequest()->isMethod('POST')) {
-            
-            if ($form->bind($this->getRequest())->isValid()) {
-                
-                //persist only usefull hours
-                foreach($calendar->hours as $hour)
-                {
-                    $time = $hour->getTime();
-                    is_null($time) ?: $em->persist($hour);
-                }
-                $em->flush();
+        $form->handleRequest();
 
-                $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('hours.saved'));
-                
-                return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', array(
-                                                                                'order_id' => $order->getId(),
-                                                                                'week' => $week,
-                                                                                'year' => $year)));
+        if ($form->isValid()) {
+
+            //persist only usefull hours
+            foreach($calendar->hours as $hour)
+            {
+                $time = $hour->getTime();
+                is_null($time) ?: $em->persist($hour);
             }
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success',
+                $this->get('translator')->trans('hours.saved'));
+
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', 
+                                                        array('order_id' => $order->getId(),
+                                                                'week' => $week,
+                                                                'year' => $year)));
         }
         
-        return $this->render('NGPPGmsagcBundle:Hours:index.html.twig', array(
-                                'form' => $form->createView(),
-                                'order' => $order,
-                                'users' => $users,
-                                'week' => $week,
-                                'year' => $year));
+        return $this->render('NGPPGmsagcBundle:Hours:index.html.twig',
+                                array('form' => $form->createView(),
+                                        'order' => $order,
+                                        'users' => $users,
+                                        'week' => $week,
+                                        'year' => $year));
     }
 }
     
