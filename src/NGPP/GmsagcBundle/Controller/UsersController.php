@@ -3,13 +3,22 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
 use \NGPP\GmsagcBundle\Entity\Users;
 use \NGPP\GmsagcBundle\Form\Type\UsersType;
 use \NGPP\GmsagcBundle\Form\Type\UsersPasswordEditType;
 
+/**
+ * @Route("/users")
+ */
 class UsersController extends Controller
 {
+    /**
+     * @Route("/login", name="login")
+     * @Template
+     */
     public function loginAction()
     {
         $request = $this->getRequest();
@@ -25,16 +34,17 @@ class UsersController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render(
-            'NGPPGmsagcBundle:Users:login.html.twig',
-            array(
+        return array(
                 // last username entered by the user
                 'last_username' => $session->get(SecurityContext::LAST_USERNAME),
                 'error'         => $error,
-            )
         );
     }
     
+    /**
+     * @Route("/{page}", name="ngpp_gmsagc_users", requirements={"page" = "\d+"}, defaults={"page" = null})
+     * @Template
+     */
     public function indexAction($page = null)
     {
         //Use default value if user not logged in
@@ -49,9 +59,13 @@ class UsersController extends Controller
         $users = $repo->getList($criteria, $max_items, $offset);
         $pages = ceil($repo->getTotal($criteria) / $max_items);
         
-        return $this->render('NGPPGmsagcBundle:Users:index.html.twig', array('users' => $users, 'pages' => $pages));
+        return array('users' => $users, 'pages' => $pages);
     }
     
+    /**
+     * @Route("/save/{id}", name="ngpp_gmsagc_users_save", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Template
+     */
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -61,7 +75,7 @@ class UsersController extends Controller
                 $user : new Users();
         
         $form = $this->createForm(new UsersType(), $user);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
 
@@ -81,10 +95,13 @@ class UsersController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
         }
         
-        return $this->render('NGPPGmsagcBundle:Users:save.html.twig',
-                array('form' => $form->createView()));
+        return array('form' => $form->createView());
     }
     
+    /**
+     * @Route("/password/{id}", name="ngpp_gmsagc_users_password", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Template
+     */
     public function passwordAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -93,7 +110,7 @@ class UsersController extends Controller
         if ($user){
             
             $form = $this->createForm(new UsersPasswordEditType(), $user);
-            $form->handleRequest();
+            $form->handleRequest($this->getRequest());
             
             if ($form->isValid()) {
 
@@ -112,10 +129,12 @@ class UsersController extends Controller
         else        
             return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
         
-        return $this->render('NGPPGmsagcBundle:Users:password.html.twig',
-                array('form' => $form->createView()));
+        return array('form' => $form->createView());
     }
     
+    /**
+     * @Route("/delete/{id}", name="ngpp_gmsagc_users_delete", requirements={"id" = "\d+"})
+     */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();

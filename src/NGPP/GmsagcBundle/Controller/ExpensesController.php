@@ -3,11 +3,22 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use \NGPP\GmsagcBundle\Entity\Expenses;
-use \NGPP\GmsagcBundle\Form\Type\ExpensesType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use NGPP\GmsagcBundle\Entity\Expenses;
+use NGPP\GmsagcBundle\Entity\Orders;
+use NGPP\GmsagcBundle\Form\Type\ExpensesType;
 
+/**
+ * @Route("/expenses")
+ */
 class ExpensesController extends Controller
 {
+    /**
+     * @Route("/{order_id}", name="ngpp_gmsagc_expenses", requirements={"order_id" = "\d+"})
+     * @Template
+     */
     public function indexAction($order_id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -19,26 +30,22 @@ class ExpensesController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
         }
         
-        return $this->render('NGPPGmsagcBundle:Expenses:index.html.twig',
-                array('expenses' => $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Expenses')->findByOrder($order->getId()),
-                      'order' => $order));
+        return array('expenses' => $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Expenses')->findByOrder($order->getId()),
+                      'order' => $order);
     }
     
-    public function createAction($order_id)
+    /**
+     * @Route("/create/{order_id}", name="ngpp_gmsagc_expenses_create", requirements={"order_id" = "\d+"})
+     * @ParamConverter("order", class="NGPPGmsagcBundle:Orders", options={"id" = "order_id"})
+     * @Template("NGPPGmsagcBundle:Expenses:save.html.twig")
+     */
+    public function createAction(Orders $order)
     {
         $em = $this->getDoctrine()->getManager();
         
-        if(is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($order_id)))
-        {
-            $this->get('session')->getFlashBag()->add('error',
-                    $this->get('translator')->trans('expenses.noorder'));
-            return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses', ['order_id' => $order_id]));
-        }
-        
         $expense = new Expenses($order);
-        
         $form = $this->createForm(new ExpensesType(), $expense);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
         
         if ($form->isValid()) {
 
@@ -48,23 +55,22 @@ class ExpensesController extends Controller
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('expenses.saved'));
 
-            return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses', ['order_id' => $order_id]));
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses', ['order_id' => $order->getId()]));
         }
         
-        return $this->render('NGPPGmsagcBundle:Expenses:save.html.twig',
-                array('form' => $form->createView(),
-                      'order_id' => $order_id));
+        return array('form' => $form->createView(), 'order_id' => $order->getId());
     }
     
-    public function editAction($id)
+    /**
+     * @Route("/edit/{id}", name="ngpp_gmsagc_expenses_edit", requirements={"id" = "\d+"})
+     * @Template("NGPPGmsagcBundle:Expenses:save.html.twig")
+     */
+    public function editAction(Expenses $expense)
     {        
         $em = $this->getDoctrine()->getManager();
         
-        if(is_null($expense = $em->getRepository('NGPPGmsagcBundle:Expenses')->find($id)))
-            return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
-        
         $form = $this->createForm(new ExpensesType(), $expense);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
             
         if ($form->isValid()) {
 
@@ -77,11 +83,12 @@ class ExpensesController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_expenses'));
         }
         
-        return $this->render('NGPPGmsagcBundle:Expenses:save.html.twig',
-                array('form' => $form->createView(),
-                      'order_id' => $expense->getOrderId()));
+        return array('form' => $form->createView(), 'order_id' => $expense->getOrderId());
     }
     
+    /**
+     * @Route("/delete/{id}", name="ngpp_gmsagc_expenses_delete", requirements={"id" = "\d+"})
+     */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();

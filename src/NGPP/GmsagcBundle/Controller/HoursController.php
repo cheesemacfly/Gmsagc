@@ -3,17 +3,27 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \NGPP\GmsagcBundle\Entity\Hours;
 use \NGPP\GmsagcBundle\Form\Type\CalendarType;
 
+/**
+ * @Route("/hours")
+ */
 class HoursController extends Controller
 {
+    /**
+     * @Route("/hours/{order_id}/{week}/{year}", name="ngpp_gmsagc_hours",
+     *  requirements={"order_id" = "\d+", "week" = "^0[1-9]|[1-4][0-9]|5[0-3]$", "year" = "^(20|19)[0-9]{2}$"},
+     *  defaults={"week" = null, "year" = null})
+     * @Template
+     */
     public function indexAction($order_id, $week = null, $year = null)
     {
         //Sanitize week and year
-        $week = preg_match('/0[1-9]|[1-4][0-9]|5[0-3]/', $week) ? $week : date('W');
-        $year = preg_match('/[0-9]{4}/', $year) ? $year : date('Y');
+        $week = !is_null($week) ? $week : date('W');
+        $year = !is_null($year) ? $year : date('Y');
 
         $start_day = new \DateTime($year . 'W' . $week);
         
@@ -49,7 +59,7 @@ class HoursController extends Controller
         }
         
         $form = $this->createForm(new CalendarType(), $calendar);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
 
         if ($form->isValid()) {
 
@@ -70,12 +80,7 @@ class HoursController extends Controller
                                                                 'year' => $year)));
         }
         
-        return $this->render('NGPPGmsagcBundle:Hours:index.html.twig',
-                                array('form' => $form->createView(),
-                                        'order' => $order,
-                                        'users' => $users,
-                                        'week' => $week,
-                                        'year' => $year));
+        return array('form' => $form->createView(), 'order' => $order, 'users' => $users, 'week' => $week, 'year' => $year);
     }
 }
     

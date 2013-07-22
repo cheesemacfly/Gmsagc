@@ -3,11 +3,20 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \NGPP\GmsagcBundle\Entity\Relations;
 use \NGPP\GmsagcBundle\Entity\Orders;
 
+/**
+ * @Route("/orders")
+ */
 class OrdersController extends Controller
 {
+    /**
+     * @Route("/{page}", name="ngpp_gmsagc_orders", requirements={"page" = "\d+"}, defaults={"page" = null})
+     * @Template
+     */
     public function indexAction($page = null)
     {
         //Use default value if user not logged in
@@ -22,9 +31,13 @@ class OrdersController extends Controller
         $orders = $repo->getList($criteria, $max_items, $offset);
         $pages = ceil($repo->getTotal($criteria) / $max_items);
         
-        return $this->render('NGPPGmsagcBundle:Orders:index.html.twig', array('orders' => $orders, 'pages' => $pages));
+        return array('orders' => $orders, 'pages' => $pages);
     }
     
+    /**
+     * @Route("/save/{id}", name="ngpp_gmsagc_orders_save", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Template
+     */
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -67,19 +80,12 @@ class OrdersController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
         }
         
-        return $this->render('NGPPGmsagcBundle:Orders:save.html.twig',
-                array('form' => $form->createView()));
+        return array('form' => $form->createView());
     }
     
-    public function ajaxsaveAction()
-    {
-        $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), new Orders());
-        $form->handleRequest($this->getRequest());
-        
-        return $this->render('NGPPGmsagcBundle:Orders:save.html.twig',
-                array('form' => $form->createView()));
-    }
-    
+    /**
+     * @Route("/delete/{id}", name="ngpp_gmsagc_orders_delete", requirements={"id" = "\d+"})
+     */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -102,5 +108,17 @@ class OrdersController extends Controller
                     $this->get('translator')->trans('orders.nodeleted'));
         
         return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
+    }
+    
+    /**
+     * @Route("/ajax/save", name="ngpp_gmsagc_ajax_orders_save")
+     * @Template("NGPPGmsagcBundle:Orders:save.html.twig")
+     */
+    public function ajaxsaveAction()
+    {
+        $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), new Orders());
+        $form->handleRequest($this->getRequest());
+        
+        return array('form' => $form->createView());
     }
 }

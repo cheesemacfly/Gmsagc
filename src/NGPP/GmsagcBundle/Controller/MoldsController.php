@@ -3,11 +3,20 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \NGPP\GmsagcBundle\Entity\Molds;
 use \NGPP\GmsagcBundle\Form\Type\MoldsType;
 
+/**
+ * @Route("/molds")
+ */
 class MoldsController extends Controller
 {
+    /**
+     * @Route("/{page}", name="ngpp_gmsagc_molds", requirements={"page" = "\d+"}, defaults={"page" = null})
+     * @Template
+     */
     public function indexAction($page = null)
     {
         //Use default value if user not logged in
@@ -22,9 +31,13 @@ class MoldsController extends Controller
         $molds = $repo->getList($criteria, $max_items, $offset);
         $pages = ceil($repo->getTotal($criteria) / $max_items);
         
-        return $this->render('NGPPGmsagcBundle:Molds:index.html.twig', array('molds' => $molds, 'pages' => $pages));
+        return array('molds' => $molds, 'pages' => $pages);
     }
     
+    /**
+     * @Route("/save/{id}", name="ngpp_gmsagc_molds_save", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Template
+     */
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -34,7 +47,7 @@ class MoldsController extends Controller
                 $mold : new Molds($em->getRepository('NGPPGmsagcBundle:Molds')->getNewId());
                         
         $form = $this->createForm(new MoldsType(), $mold);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
         
         if ($form->isValid()) {
 
@@ -47,10 +60,12 @@ class MoldsController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_molds'));
         }
         
-        return $this->render('NGPPGmsagcBundle:Molds:save.html.twig',
-                array('form' => $form->createView()));
+        return array('form' => $form->createView());
     }
     
+    /**
+     * @Route("/delete/{id}", name="ngpp_gmsagc_molds_delete", requirements={"id" = "\d+"})
+     */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();

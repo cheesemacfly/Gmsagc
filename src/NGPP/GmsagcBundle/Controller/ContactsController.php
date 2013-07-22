@@ -3,11 +3,20 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \NGPP\GmsagcBundle\Entity\Contacts;
 use \NGPP\GmsagcBundle\Form\Type\ContactsType;
 
+/**
+ * @Route("/contacts")
+ */
 class ContactsController extends Controller
 {
+    /**
+     * @Route("/{page}", name="ngpp_gmsagc_contacts", requirements={"page" = "\d+"}, defaults={"page" = null})
+     * @Template
+     */
     public function indexAction($page = null)
     {
         //Use default value if user not logged in
@@ -22,9 +31,13 @@ class ContactsController extends Controller
         $contacts = $repo->getList($criteria, $max_items, $offset);
         $pages = ceil($repo->getTotal($criteria) / $max_items);
         
-        return $this->render('NGPPGmsagcBundle:Contacts:index.html.twig', array('contacts' => $contacts, 'pages' => $pages));
+        return array('contacts' => $contacts, 'pages' => $pages);
     }
     
+    /**
+     * @Route("/save/{id}", name="ngpp_gmsagc_contacts_save", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Template
+     */
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -34,7 +47,7 @@ class ContactsController extends Controller
                 $contact : new Contacts();
         
         $form = $this->createForm(new ContactsType(), $contact);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
 
         //Hanldes delete of addresses
         $originalAddresses = array();
@@ -71,10 +84,12 @@ class ContactsController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_contacts'));
         }
         
-        return $this->render('NGPPGmsagcBundle:Contacts:save.html.twig',
-                array('form' => $form->createView()));
+        return array('form' => $form->createView());
     }
     
+    /**
+     * @Route("/delete/{id}", name="ngpp_gmsagc_contacts_delete", requirements={"id" = "\d+"})
+     */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();

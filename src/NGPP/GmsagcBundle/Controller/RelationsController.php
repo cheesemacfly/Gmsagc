@@ -3,10 +3,21 @@
 namespace NGPP\GmsagcBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use NGPP\GmsagcBundle\Form\Type\InvoicesType;
 
+/**
+ * @Route("/invoices")
+ */
 class RelationsController extends Controller
 {
+    /**
+     * @Route("/{year}/{month}", name="ngpp_gmsagc_relations", 
+     * requirements={"year" = "^(20|19)[0-9]{2}$", "month" = "^(0?[1-9]|1[012])$"}, 
+     * defaults={"year" = null, "month" = null})
+     * @Template
+     */
     public function indexAction($year = null, $month = null)
     {
         // Year in Invoices are counted from July to June instead of January to December.
@@ -74,12 +85,13 @@ class RelationsController extends Controller
             }            
         }
         
-        return $this->render('NGPPGmsagcBundle:Relations:index.html.twig',
-                array('relations' => $relations,
-                    'dates' => $dates,
-                    'toInvoice' => is_null($year)));
+        return array('relations' => $relations, 'dates' => $dates, 'toInvoice' => is_null($year));
     }
     
+    /**
+     * @Route("/save/{id}", name="ngpp_gmsagc_relations_save", requirements={"id" = "\d+"}, defaults={"id" = null})
+     * @Template
+     */
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -90,7 +102,7 @@ class RelationsController extends Controller
             return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
         
         $form = $this->createForm(new InvoicesType(), $relation);
-        $form->handleRequest();
+        $form->handleRequest($this->getRequest());
         
         if ($form->isValid()) {
 
@@ -105,25 +117,5 @@ class RelationsController extends Controller
         
         return $this->render('NGPPGmsagcBundle:Relations:save.html.twig',
                 array('form' => $form->createView()));
-    }
-    
-    public function deleteAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $relation = $em->getRepository('NGPPGmsagcBundle:Relations')->find($id);
-
-        if ($relation)
-        {            
-            $em->remove($relation);
-            $em->flush();
-            
-            $this->get('session')->getFlashBag()->add('success',
-                    $this->get('translator')->trans('invoices.deleted'));
-        }
-        else
-            $this->get('session')->getFlashBag()->add('error',
-                    $this->get('translator')->trans('invoices.nodeleted'));
-        
-        return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
     }
 }
