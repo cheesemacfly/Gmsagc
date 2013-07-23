@@ -31,7 +31,7 @@ class RelationsController extends Controller
         }
         else if(is_null($month))
         {
-            $startDate = new \DateTime($year . '-07-01');
+            $startDate = new \DateTime($year . '-06-01');
             $endDate = clone $startDate;
             $endDate->add(new \DateInterval('P1Y'));
             
@@ -51,7 +51,7 @@ class RelationsController extends Controller
             $firstInvoiced->modify('first day of this month');
             $cursorDate = new \DateTime('first day of this month');
             
-            //Magic trick to get the invoices dates (years starting on July)
+            //Magic trick to get the invoices dates (years starting on June)
             while($cursorDate >= $firstInvoiced)
             {
                 $iMonth = $cursorDate->format('n');
