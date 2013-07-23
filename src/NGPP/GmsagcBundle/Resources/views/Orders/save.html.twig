@@ -1,13 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block content %}
-    <form id="ordersForm"
-        {% if form.vars.value.id %}
-            action="{{ path('ngpp_gmsagc_orders_save', {'id': form.vars.value.id}) }}"
-        {% else %}
-            action="{{ path('ngpp_gmsagc_orders_save') }}"
-        {% endif %}
-        method="post" {{ form_enctype(form) }}>
+    <form id="ordersForm" action="{{app.request.requestUri}}" method="post" {{ form_enctype(form) }}>
         <fieldset>
           <legend>{{ 'orders.save'|trans }}</legend>
             {% for relation in form.relations %}
