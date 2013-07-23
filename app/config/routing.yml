@@ -1,6 +1,11 @@
-ngpp_gmsagc:
-    resource: "@NGPPGmsagcBundle/Resources/config/routing.yml"
-    prefix:   /
+ngpp:
+    resource: "@NGPPGmsagcBundle/Controller"
+    type:     annotation
+
+login_check:
+    pattern:   /login_check
+logout:
+    path:   /logout
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
