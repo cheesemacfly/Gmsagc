@@ -17,7 +17,7 @@ class MoldsRepository extends EntityRepository
         
         try
         {
-            $result = $query->getQuery()->getSingleScalarResult();
+            $result = $query->getQuery()->getSingleScalarResult() + 1;
         }
         catch(\Doctrine\ORM\NoResultException $e)
         {

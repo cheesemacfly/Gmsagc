@@ -18,6 +18,7 @@ class Molds
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -59,7 +60,7 @@ class Molds
     /**
      * Constructor
      */
-    public function __construct($id = 1)
+    public function __construct($id = null)
     {
         $this->id = $id;
         $this->orders = new ArrayCollection();
