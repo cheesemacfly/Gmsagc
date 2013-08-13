@@ -501,4 +501,14 @@ class Orders
     {
         return $this->relations;
     }
+    
+    /**
+     * Get hours
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getHours()
+    {
+        return $this->hours;
+    }
 }

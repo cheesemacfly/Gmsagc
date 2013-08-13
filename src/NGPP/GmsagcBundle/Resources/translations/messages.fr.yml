@@ -96,8 +96,14 @@ hours:
   deleted: Les heures ont été supprimées
   nodeleted: Les heure n'ont pas été supprimées
   
+reports:
+  menu: Rapport
+  
 #Generic
 currency: '&euro;'
+Total: Total
+Cost: Coût
+Result: Résultat
 
 #Orders
 Oral: Orale
@@ -149,3 +155,7 @@ Observation: Commentaire
 Created: Créé le
 Contact: Contact
 Provider: Fournisseur
+
+#Hours
+Day: Jour
+Time: Temps

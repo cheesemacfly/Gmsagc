@@ -24,7 +24,15 @@ class RelationsRepository extends EntityRepository
         return $result;
     }
     
-    public function getList($type, $startDate = null, $endDate = null)
+    /**
+     * Get the list of invoices (invoiced and invoice not null) between 2 dates
+     * 
+     * @param int $type
+     * @param date $startDate
+     * @param date $endDate
+     * @return type
+     */
+    public function getInvoices($type, $startDate = null, $endDate = null)
     {
         $query = $this->createQueryBuilder('r')
                 ->where('r.type = :type')
@@ -43,6 +51,28 @@ class RelationsRepository extends EntityRepository
         }
         
         $query->orderBy('r.invoiced', 'DESC');
+        
+        return $query->getQuery()->getResult();
+    }
+    
+    /**
+     * Get the list of relations to build up the reports
+     * 
+     * @param int $type
+     * @param int $mold_id
+     * @return type
+     */
+    public function getReports($type, $mold_id)
+    {
+        $query = $this->createQueryBuilder('r')
+                ->join('r.order', 'o')
+                ->where('r.type = :type')
+                ->setParameter('type', $type)
+                ->andWhere('o.mold = :mold_id')
+                ->setParameter('mold_id', $mold_id)
+                ->andWhere('r.invoiced IS NOT NULL')
+                ->andWhere('r.invoice IS NOT NULL')
+                ->orderBy('r.invoiced', 'DESC');
         
         return $query->getQuery()->getResult();
     }

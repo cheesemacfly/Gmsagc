@@ -27,7 +27,7 @@ class RelationsController extends Controller
         
         if(is_null($year))
         {
-            $relations = $repo->getList($customerType['id']);
+            $relations = $repo->getInvoices($customerType['id']);
         }
         else if(is_null($month))
         {
@@ -35,7 +35,7 @@ class RelationsController extends Controller
             $endDate = clone $startDate;
             $endDate->add(new \DateInterval('P1Y'));
             
-            $relations = $repo->getList($customerType['id'], $startDate, $endDate);
+            $relations = $repo->getInvoices($customerType['id'], $startDate, $endDate);
         }
         else
         {
@@ -43,7 +43,7 @@ class RelationsController extends Controller
             $endDate = clone $startDate;
             $endDate->add(new \DateInterval('P1M'));
             
-            $relations = $repo->getList($customerType['id'], $startDate, $endDate);
+            $relations = $repo->getInvoices($customerType['id'], $startDate, $endDate);
         }
         
         if(!is_null($firstInvoiced = $repo->getFirstInvoiced()))

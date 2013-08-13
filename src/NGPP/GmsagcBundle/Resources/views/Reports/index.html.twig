@@ -1,0 +1,119 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    {% if relations is iterable and relations|length > 0 %}
+        {% for relation in relations %}
+            <fieldset>
+                <legend>
+                    <div class="btn-group">
+                        <a class="btn" href="{{ path('ngpp_gmsagc_orders_save', {'id': relation.order.id}) }}">
+                            {{ 'orders.menu'|trans }} {{relation.order.id}}
+                        </a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_orders_save', {'id': relation.order.id}) }}">
+                                    <i class="icon-edit"></i> {{ 'action.edit'|trans }}
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_hours', {'order_id': relation.order.id}) }}">
+                                    <i class="icon-calendar"></i> {{ 'hours.menu'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_expenses', {'order_id': relation.order.id}) }}">
+                                    <i class="icon-plus"></i> {{ 'expenses.menu'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </legend>
+                <dl class="dl-horizontal">
+                    <dt>{{ 'Action'|trans }}</dt>
+                    <dd>{{ relation.order.action.name }}</dd>
+                    <dt>{{ 'Customer'|trans }}</dt>
+                    <dd>{{ relation.contact.name }}</dd>
+                    <dt>{{ 'Invoiced'|trans }}</dt>
+                    <dd>{{ relation.invoiced|date('d/m/Y') }}</dd>
+                </dl>
+            </fieldset>
+
+            <div class="row">
+                {% set total = 0 %}
+                {% if relation.order.expenses is iterable and relation.order.expenses|length > 0 %}
+                    <div class="span6">
+                        {{ 'expenses.menu'|trans }}:
+                        <table class="table table-bordered table-condensed">
+                            <tr>
+                                <th>{{ 'Description'|trans }}</th>
+                                <th>{{ 'Price'|trans }}</th>
+                            </tr>
+                            {% set localTotal = 0 %}
+                            {% for expense in relation.order.expenses %}
+                                <tr>
+                                    <td>{{expense.description}}</td>
+                                    <td>{{'%01.2f'|format(expense.price)}} {{ 'currency'|trans|raw }}</td>
+                                </tr>
+                                {% set localTotal = localTotal + expense.price %}
+                            {% endfor %}
+                            {% set total = total + localTotal %}
+                                <tr class="info">
+                                    <td>Total</td>
+                                    <td>{{'%01.2f'|format(localTotal)}} {{ 'currency'|trans|raw }}</td>
+                                </tr>
+                        </table>
+                    </div>
+                {% endif %}
+                {% if relation.order.hours is iterable and relation.order.hours|length > 0 %}
+                    <div class="span6">
+                        {{ 'hours.menu'|trans }}:
+                        <table class="table table-bordered table-condensed">
+                            <tr>
+                                <th>{{ 'Name'|trans }}</th>
+                                <th>{{ 'Day'|trans }}</th>
+                                <th>{{ 'Time'|trans }}</th>
+                            </tr>
+                            {% set localTotal = 0 %}
+                            {% for hour in relation.order.hours %}
+                                <tr>
+                                    <td>{{hour.user.username}}</td>
+                                    <td>{{hour.day|date('d/m/Y')}}</td>
+                                    <td>{{hour.time|date('H:i')}}</td>
+                                </tr>
+                                {% set localTotal = localTotal + (hour.user.rate * (hour.time|date('H') + (hour.time|date('i') / 60))) %}
+                            {% endfor %}
+                            {% set total = total + localTotal %}
+                                <tr class="info">
+                                    <td>Total</td>
+                                    <td colspan="2">{{'%01.2f'|format(localTotal)}} {{ 'currency'|trans|raw }}</td>
+                                </tr>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row">
+                <div class="span4 offset4">
+                    <table class="table table-bordered table-condensed">
+                        <tr>
+                            <th>{{'Quote'|trans}}</th>
+                            <td>{{'%01.2f'|format(relation.order.quote)}} {{ 'currency'|trans|raw }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{'Cost'|trans}}</th>
+                            <td>{{'%01.2f'|format(total)}} {{ 'currency'|trans|raw }}</td>
+                        </tr>
+                        {% set result = relation.order.quote - total %}
+                        <tr class="{{result > 0 ? 'success' : 'error'}}">
+                            <th>{{'Result'|trans}}</th>
+                            <td>{{'%01.2f'|format(result)}} {{ 'currency'|trans|raw }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+    {% endif %}
+{% endblock %}
