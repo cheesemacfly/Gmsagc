@@ -107,6 +107,11 @@ class UsersController extends Controller
      */
     public function passwordAction($id = null)
     {
+        if(is_null($id) && is_null($this->getUser()))
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));            
+        
+        $id = is_null($id) ? $this->getUser()->getId() : $id;
+            
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('NGPPGmsagcBundle:Users')->find($id);
 
@@ -130,7 +135,7 @@ class UsersController extends Controller
             }
         }
         else        
-            return $this->redirect($this->generateUrl('ngpp_gmsagc_users'));
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
         
         return array('form' => $form->createView());
     }

@@ -39,15 +39,27 @@
                 <ul class="nav pull-right">
                     <li class="divider-vertical"></li>
                     <li class="pull-right">
-                        {% if app.user %}
-                            <a href="{{ path('logout') }}">
-                                <i class="icon-off icon-white"></i> {{ 'action.logout'|trans }}
-                            </a>
-                        {% else %}
-                            <a href="{{ path('login') }}">
-                                <i class="icon-user icon-white"></i> {{ 'action.login'|trans }}
-                            </a>
-                        {% endif %}
+                        <div class="btn-group">
+                            {% if app.user %}
+                                <a class="btn btn-inverse" href="{{ path('logout') }}">
+                                    <i class="icon-off icon-white"></i> {{ 'action.logout'|trans }}
+                                </a>
+                                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('ngpp_gmsagc_users_password') }}">
+                                            <i class="icon-edit icon-white"></i> {{ 'password.edit'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            {% else %}
+                                <a class="btn btn-inverse" href="{{ path('login') }}">
+                                    <i class="icon-user icon-white"></i> {{ 'action.login'|trans }}
+                                </a>
+                            {% endif %}
+                        </div>
                     </li>
                 </ul>
             </div>
