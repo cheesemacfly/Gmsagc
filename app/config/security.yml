@@ -10,11 +10,11 @@ security:
             iterations:       1
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN:       [ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
     providers:
-        administrators:
+        users_provider:
             entity: { class: NGPPGmsagcBundle:Users, property: username }
 
     firewalls:
@@ -22,25 +22,15 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        secured_area:
-            pattern:    ^/
+        default:
+            provider: users_provider
+            pattern: ^/
             anonymous: ~
-            form_login: ~
+            form_login:
+              login_path: /users/login
             logout: ~
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # { path: ^/, roles: ROLE_USER }
+        - { path: ^/users/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/, roles: ROLE_USER }
         #- { path: /save|create|delete/i, roles: ROLE_ADMIN }
-        #
-        # You must uncomment the two following rules to restrict access to paths
-        # starting with the /_internal prefix to only localhost
-        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
-        #- { path: ^/_internal/secure, roles: ROLE_NO_ACCESS }
