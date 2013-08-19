@@ -58,9 +58,9 @@ class UsersController extends Controller
         
         $offset = is_null($page) ? null : $max_items * ($page - 1);
         $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
-        
-        $users = $repo->getList($criteria, $max_items, $offset);
-        $pages = ceil($repo->getTotal($criteria) / $max_items);
+
+        $users = $repo->getPaginator($criteria, $max_items, $offset);
+        $pages = ceil(count($users) / $max_items);
         
         return array('users' => $users, 'pages' => $pages);
     }

@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class UsersRepository extends EntityRepository implements UserProviderInterface
 {
@@ -85,60 +86,17 @@ class UsersRepository extends EntityRepository implements UserProviderInterface
     }
     
     /**
-     * Returns the total number of items depending on the selection
+     * Returns a paginator object built with the input parameters
      * 
-     * @param type $criteria
-     * @return int
-     */
-    public function getTotal($criteria = null)
-    {
-        $query = $this->createQueryBuilder('u')->select('COUNT(u.id)');
-
-        $this->setCriteria($query, $criteria); 
-        
-        try
-        {
-            $result = $query->getQuery()->getSingleScalarResult();
-        }
-        catch(\Doctrine\ORM\NoResultException $e)
-        {
-            $logger = $this->get('logger');
-            $logger->err(sprintf('NoResultException in UsersRepository::getTotal with criteria %s', $criteria));
-            
-            return 0;
-        }
-        
-        return $result;        
-    }
-    
-    /**
-     * Returns an array of Users
-     * 
-     * @param type $criteria
+     * @param string $criteria
      * @param int $limit
      * @param int $offset
-     * @return type
+     * @return \Doctrine\ORM\Tools\Pagination\Paginator
      */
-    public function getList($criteria = null, $limit = null, $offset = null)
-    {
+    public function getPaginator($criteria = null, $limit = null, $offset = null)
+    {        
         $query = $this->createQueryBuilder('u');
-
-        $this->setCriteria($query, $criteria);        
-        $query->setMaxResults($limit);
-        $query->setFirstResult($offset);
         
-        return $query->getQuery()->getResult();
-    }
-    
-    /**
-     * Add where conditions for the Users request
-     * 
-     * @param type $query
-     * @param type $criteria
-     * @return type
-     */
-    private function setCriteria($query, $criteria)
-    {
         if(!is_null($criteria))
         {
             $query->where('u.username LIKE :criteria')
@@ -151,5 +109,9 @@ class UsersRepository extends EntityRepository implements UserProviderInterface
                     ->setParameter('criteria', $criteria);
             }
         }
+        
+        $query->setFirstResult($offset)->setMaxResults($limit);
+        
+        return new Paginator($query);
     }
 }

@@ -28,8 +28,8 @@ class OrdersController extends Controller
         $offset = is_null($page) ? null : $max_items * ($page - 1);
         $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
         
-        $orders = $repo->getList($criteria, $max_items, $offset);
-        $pages = ceil($repo->getTotal($criteria) / $max_items);
+        $orders = $repo->getPaginator($criteria, $max_items, $offset);
+        $pages = ceil(count($orders) / $max_items);
         
         return array('orders' => $orders, 'pages' => $pages);
     }

@@ -27,9 +27,9 @@ class MoldsController extends Controller
         
         $offset = is_null($page) ? null : $max_items * ($page - 1);
         $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
-        
-        $molds = $repo->getList($criteria, $max_items, $offset);
-        $pages = ceil($repo->getTotal($criteria) / $max_items);
+
+        $molds = $repo->getPaginator($criteria, $max_items, $offset);
+        $pages = ceil(count($molds) / $max_items);
         
         return array('molds' => $molds, 'pages' => $pages);
     }

@@ -1,5 +1,6 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
 {% set currentQuery = app.request.query.all %}
-<form class="form-search" action="" method="get">
+<form class="form-search" action="{{ path(currentRoute) }}" method="get">
     <div class="input-append">
         {% if currentQuery['f'] is defined %}
             <input type="text" class="span2 search-query" name="f" value="{{ currentQuery['f'] }}">
