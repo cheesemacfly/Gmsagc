@@ -27,12 +27,21 @@
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
                 <td>
-                    <a href="{{ path('ngpp_gmsagc_users_save', {'id': user.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
-                    </a>
-                    <a href="{{ path('ngpp_gmsagc_users_password', {'id': user.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'password.edit'|trans }}
-                    </a>
+                    <div class="btn-group">
+                        <a href="{{ path('ngpp_gmsagc_users_save', {'id': user.id}) }}" class="btn btn-warning">
+                            <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                        </a>
+                        <a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_users_password', {'id': user.id}) }}">
+                                    <i class="icon-edit"></i> {{ 'password.edit'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% endfor %}

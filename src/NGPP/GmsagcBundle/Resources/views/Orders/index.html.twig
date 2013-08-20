@@ -37,15 +37,26 @@
                 <td>{{ order.quote }} {{ 'currency'|trans|raw }}</td>
                 <td>{{ order.action.name }}</td>
                 <td>
-                    <a href="{{ path('ngpp_gmsagc_orders_save', {'id': order.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
-                    </a>
-                    <a href="{{ path('ngpp_gmsagc_hours', {'order_id': order.id}) }}" class="btn btn-info">
-                        <i class="icon-calendar icon-white"></i> {{ 'hours.menu'|trans }}
-                    </a>
-                    <a href="{{ path('ngpp_gmsagc_expenses', {'order_id': order.id}) }}" class="btn btn-info">
-                        <i class="icon-plus icon-white"></i> {{ 'expenses.menu'|trans }}
-                    </a>
+                    <div class="btn-group">
+                        <a href="{{ path('ngpp_gmsagc_orders_save', {'id': order.id}) }}" class="btn btn-warning">
+                            <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                        </a>
+                        <a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_hours', {'order_id': order.id}) }}">
+                                    <i class="icon-calendar"></i> {{ 'hours.menu'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('ngpp_gmsagc_expenses', {'order_id': order.id}) }}">
+                                    <i class="icon-plus"></i> {{ 'expenses.menu'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
