@@ -116,7 +116,7 @@ class OrdersController extends Controller
     
     /**
      * @Route("/ajax/save", name="ngpp_gmsagc_ajax_orders_save")
-     * @Template("NGPPGmsagcBundle:Orders:save.html.twig")
+     * @Template("NGPPGmsagcBundle:Orders:Partial/mold.html.twig")
      */
     public function ajaxsaveAction()
     {
