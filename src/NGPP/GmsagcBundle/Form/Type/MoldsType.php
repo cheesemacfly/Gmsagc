@@ -6,8 +6,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use NGPP\GmsagcBundle\Form\EventListener\SaveMoldsListener;
+
 class MoldsType extends AbstractType
-{    
+{
+    private $SaveMoldsListener;
+    
+    function __construct(SaveMoldsListener $SaveMoldsListener)
+    {
+        $this->SaveMoldsListener = $SaveMoldsListener;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -17,6 +25,8 @@ class MoldsType extends AbstractType
             ->add('place', 'places')
             ->add('shell')
         ;
+        
+        $builder->addEventSubscriber($this->SaveMoldsListener);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

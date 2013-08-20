@@ -60,9 +60,8 @@ class Molds
     /**
      * Constructor
      */
-    public function __construct($id = null)
+    public function __construct()
     {
-        $this->id = $id;
         $this->orders = new ArrayCollection();
     }
 

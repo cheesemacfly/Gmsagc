@@ -14,9 +14,17 @@ services:
         arguments: ["@ngpp_gmsagc.form.save_orders_listener"]
         tags:
             - { name: form.type, alias: ngpp_gmsagc_orders_save }
+    ngpp_gmsagc.form.molds:
+        class: NGPP\GmsagcBundle\Form\Type\MoldsType
+        arguments: ["@ngpp_gmsagc.form.save_molds_listener"]
+        tags:
+            - { name: form.type, alias: ngpp_gmsagc_molds_save }
     ngpp_gmsagc.form.save_orders_listener:
         class: NGPP\GmsagcBundle\Form\EventListener\SaveOrdersListener
-        arguments: ["@form.factory", "@service_container"]
+        arguments: ["@service_container"]
+    ngpp_gmsagc.form.save_molds_listener:
+        class: NGPP\GmsagcBundle\Form\EventListener\SaveMoldsListener
+        arguments: ["@doctrine.orm.entity_manager"]
     ngpp_gmsagc.form.type.places:
         class: NGPP\GmsagcBundle\Form\Type\PlacesType
         arguments: 

@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \NGPP\GmsagcBundle\Entity\Relations;
 use \NGPP\GmsagcBundle\Entity\Orders;
+use \NGPP\GmsagcBundle\Entity\Molds;
 
 /**
  * @Route("/orders")
@@ -45,6 +46,9 @@ class OrdersController extends Controller
         if(is_null($id) || is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)))
         {
             $order = new Orders();
+            
+            //Create a new Molds by default
+            $order->setMold(new Molds());
             
             $customer_relation = new Relations();
             $customer_type_id = $this->container->getParameter('ngpp_gmsagc.types')['customer'];

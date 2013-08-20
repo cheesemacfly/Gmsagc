@@ -44,9 +44,9 @@ class MoldsController extends Controller
         
         //Determine if editing or creating
         $mold = !is_null($id) && !is_null($mold = $em->getRepository('NGPPGmsagcBundle:Molds')->find($id)) ? 
-                $mold : new Molds($em->getRepository('NGPPGmsagcBundle:Molds')->getNewId());
+                $mold : new Molds();
                         
-        $form = $this->createForm(new MoldsType(), $mold);
+        $form = $this->createForm($this->get('ngpp_gmsagc.form.molds'), $mold);
         $form->handleRequest($this->getRequest());
         
         if ($form->isValid()) {

@@ -1,32 +1,24 @@
 <?php
 namespace NGPP\GmsagcBundle\Form\EventListener;
 
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use NGPP\GmsagcBundle\Form\Type\MoldsType;
+use NGPP\GmsagcBundle\Entity\Molds;
 
 class SaveOrdersListener implements EventSubscriberInterface
-{
-    /**
-     * @var FormFactoryInterface
-     */
-    private $factory;
-    
+{    
     /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @param factory FormFactoryInterface
+     * @param container ContainerInterface
      */
-    public function __construct(FormFactoryInterface $factory, ContainerInterface $container)
+    public function __construct(ContainerInterface $container)
     {
-        $this->factory = $factory;
         $this->container = $container;
     }
 
@@ -40,7 +32,7 @@ class SaveOrdersListener implements EventSubscriberInterface
 
     public function preSetData(FormEvent $event)
     {
-        $action = $event->getData()->getAction();
+        $action = is_null($data = $event->getData()) ? null : $data->getAction();
         $builder = $event->getForm();
 
         //Does not allow change of the action when editing
@@ -58,9 +50,9 @@ class SaveOrdersListener implements EventSubscriberInterface
         $this->addMoldChoiceOrForm($builder, $action_id);
     }
     
-    protected function addActionMenu($builder, $new)
+    protected function addActionMenu($builder, $isNew)
     {
-        if($new)
+        if($isNew)
             $builder->add('action', 'entity', array('property' => 'name', 'class' => 'NGPPGmsagcBundle:Actions'));
         else
             $builder->add('action', 'entity', array('property' => 'name', 'disabled' => true, 'class' => 'NGPPGmsagcBundle:Actions'));
@@ -73,11 +65,15 @@ class SaveOrdersListener implements EventSubscriberInterface
             case $this->container->getParameter('ngpp_gmsagc.actions')['modification']['id']:
             case $this->container->getParameter('ngpp_gmsagc.actions')['molding']['id']:
             case $this->container->getParameter('ngpp_gmsagc.actions')['reparation']['id']:
-                $builder->add('mold', 'entity', array('property' => 'name', 'class' => 'NGPPGmsagcBundle:Molds'));
+                $builder->add('mold',
+                        'entity', 
+                        array('property' => 'name', 'class' => 'NGPPGmsagcBundle:Molds'));
                 break;
             //Allow Molds creation by default
             default:
-                $builder->add('mold', new MoldsType(), array('data_class' => 'NGPP\GmsagcBundle\Entity\Molds'));
+                $builder->add('mold',
+                        $this->container->get('ngpp_gmsagc.form.molds'), 
+                        array('data_class' => 'NGPP\GmsagcBundle\Entity\Molds'));
         }
     }
 }
