@@ -38,6 +38,7 @@ orders:
   saved: La commande a été sauvegardée
   deleted: La commande a été supprimée
   nodeleted: La commande n'a pas été supprimée
+  week.trial: Liste des commandes en essai dans la semaine
   
 molds:
   menu: Moules

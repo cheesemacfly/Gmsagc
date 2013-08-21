@@ -22,8 +22,8 @@ class HoursController extends Controller
     public function indexAction($order_id, $week = null, $year = null)
     {
         //Sanitize week and year
-        $week = !is_null($week) ? $week : date('W');
-        $year = !is_null($year) ? $year : date('Y');
+        $week = sprintf('%02d', !is_null($week) ? $week : date('W'));
+        $year = sprintf('%04d', !is_null($year) ? $year : date('Y'));
 
         $start_day = new \DateTime($year . 'W' . $week);
         

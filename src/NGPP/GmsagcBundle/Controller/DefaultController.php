@@ -14,6 +14,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $orders = $em->getRepository('NGPPGmsagcBundle:Orders')->getWeekTrialList();
+
+        return array('orders' => $orders);
     }
 }

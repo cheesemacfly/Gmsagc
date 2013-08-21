@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    {% if relations is iterable and relations|length > 0 %}
+    {% if relations is defined and relations %}
         {% for relation in relations %}
             <fieldset>
                 <legend>
