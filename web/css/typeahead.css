@@ -2,8 +2,12 @@
   margin-bottom: 0;
 }
 
+.tt-hint{
+    visibility: hidden;
+}
+
 .tt-dropdown-menu {
-  min-width: 160px;
+  min-width: 250px;
   margin-top: 2px;
   padding: 5px 0;
   background-color: #fff;

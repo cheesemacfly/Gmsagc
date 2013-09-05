@@ -1,16 +1,16 @@
 // Autocomplete for press and materials
 $('#ngpp_gmsagcbundle_orderstype_press').typeahead({
     name: 'ngpp_gmsagcbundle_orderstype_press_list',
-    prefetch: { 
+    prefetch: {
         url: Routing.generate('ngpp_gmsagc_ajax_press_list'),
         ttl: 3600 
     }
 });
 $('#ngpp_gmsagcbundle_orderstype_material').typeahead({
     name: 'ngpp_gmsagcbundle_orderstype_materials_list',
-    prefetch: { 
-        url: Routing.generate('ngpp_gmsagc_ajax_materials_list'), 
-        ttl: 3600 
+    prefetch: {
+        url: Routing.generate('ngpp_gmsagc_ajax_materials_list'),
+        ttl: 3600
     }
 });
 
