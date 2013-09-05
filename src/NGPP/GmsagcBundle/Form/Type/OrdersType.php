@@ -19,7 +19,13 @@ class OrdersType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('relations', 'collection', array('type' => new RelationsType()));
+        $builder->add('relations',
+                'collection', 
+                array(
+                    'type' => new RelationsType(),
+                    'label' => false,
+                    'property_path' => 'relations'
+                    ));
         $builder
             ->add('oral', null, array('widget' => 'single_text'))
             ->add('written', null, array('widget' => 'single_text'))

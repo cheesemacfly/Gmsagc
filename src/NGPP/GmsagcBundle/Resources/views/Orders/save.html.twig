@@ -1,26 +1,38 @@
 {% extends "::base.html.twig" %}
 
+{% form_theme form 'NGPPGmsagcBundle:_Shared:form_theme.html.twig' %}
+
 {% block content %}
-    <form id="ordersForm" action="{{app.request.requestUri}}" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'role' : 'form'}}) }}
         <fieldset>
-          <legend>{{ 'orders.save'|trans }}</legend>
+            <legend>{{ 'orders.save'|trans }}</legend>
             {% for relation in form.relations %}
-                {{ relation.vars.value.type.name|capitalize }} : {{ form_widget(relation) }}
+            <div>
+                <label class="col-lg-1 control-label" for="ngpp_gmsagcbundle_orderstype_oral">
+                    {{ relation.vars.value.type.name|capitalize }}
+                </label>
+                <div>
+                    {{ form_widget(relation) }}
+                </div>
+            </div>
             {% endfor %}
             {{ form_widget(form) }}
             <br>
-            <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
-            <a href="{{ path('ngpp_gmsagc_orders') }}" class="btn">
-                {{ 'action.cancel'|trans }}
-            </a>
-            {% if form.vars.value.id %}
-                <a href="{{ path('ngpp_gmsagc_orders_delete', {'id': form.vars.value.id}) }}"
-                   class="btn btn-danger"
-                   onclick="return confirm('{{ 'message.confirm.delete'|trans|e('js') }}')">
-                    <i class="icon-remove icon-white"></i>
-                    {{ 'action.delete'|trans }}
-                </a>
-        {% endif %}
+            <div class="form-group">
+                <div class="col-lg-offset-1 col-lg-10">
+                    <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
+                    <a href="{{ path('ngpp_gmsagc_orders') }}" class="btn btn-default">
+                        {{ 'action.cancel'|trans }}
+                    </a>
+                    {% if form.vars.value.id %}
+                        <a href="{{ path('ngpp_gmsagc_orders_delete', {'id': form.vars.value.id}) }}"
+                           class="btn btn-danger"
+                           onclick="return confirm('{{ 'message.confirm.delete'|trans|e('js') }}');">
+                            {{ 'action.delete'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

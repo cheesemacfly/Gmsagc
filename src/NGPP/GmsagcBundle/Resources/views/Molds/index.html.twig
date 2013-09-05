@@ -1,18 +1,17 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>
     <div class="row">
-        <div class="span6">
+        <div class="col-lg-4">
             <a href="{{ path('ngpp_gmsagc_molds_save') }}" class="btn btn-success">
-                <i class="icon-plus icon-white"></i> {{ 'molds.add'|trans }}
+                <span class="glyphicon glyphicon-plus"></span> {{ 'molds.add'|trans }}
             </a>
         </div>
-        <div class="span6">
+        <div class="col-lg-4">
             {% include 'NGPPGmsagcBundle:_Shared:search.html.twig' %}
         </div>
     </div> 
-    <br><br>
+    <br>
     {% if molds is defined and molds %}
         <table class="table table-hover">
             <tr>
@@ -33,15 +32,15 @@
                 <td>
                     <div class="btn-group">
                         <a href="{{ path('ngpp_gmsagc_molds_save', {'id': mold.id}) }}" class="btn btn-warning">
-                            <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                            <span class="glyphicon glyphicon-edit"></span> {{ 'action.edit'|trans }}
                         </a>
-                        <a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" href="#">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
-                        </a>
+                        </button>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="{{ path('ngpp_gmsagc_reports', {'mold_id': mold.id}) }}">
-                                    <i class="icon-list-alt"></i> {{ 'reports.menu'|trans }}
+                                    <span class="glyphicon glyphicon-list-alt"></span> {{ 'reports.menu'|trans }}
                                 </a>
                             </li>
                         </ul>
@@ -52,6 +51,6 @@
         </table>
         {% include 'NGPPGmsagcBundle:_Shared:pagination.html.twig' %}
     {% else %}
-        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+        <h2 class="text-muted">{{ 'message.nothing'|trans }}</h2>
     {% endif %}
 {% endblock %}

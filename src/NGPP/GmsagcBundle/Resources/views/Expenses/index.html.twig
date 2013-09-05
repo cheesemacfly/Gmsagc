@@ -1,14 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>
     <div class="row">
-        <div class="span3">
+        <div class="col-lg-2">
             <a href="{{ path('ngpp_gmsagc_expenses_create', {'order_id' : order.id}) }}" class="btn btn-success">
-                <i class="icon-plus icon-white"></i> {{ 'expenses.add'|trans }}
+                <span class="glyphicon glyphicon-plus"></span> {{ 'expenses.add'|trans }}
             </a>
         </div>
-        <div class="span9">
+        <div class="col-lg-8">
             <div class="well">
                 <p class="text-center">
                     <strong>{{ 'Order'|trans }}</strong> : {{order.id}}
@@ -22,7 +21,7 @@
             </div>
         </div>
     </div>
-    <br><br>
+    <br>
     {% if expenses is defined and expenses %}
         <table class="table table-hover">
             <tr>
@@ -40,13 +39,13 @@
                 <td>{{ expense.contact.name }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_expenses_edit', {'id': expense.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                        <span class="glyphicon glyphicon-edit"></span> {{ 'action.edit'|trans }}
                     </a>
                 </td>
             </tr>
         {% endfor %}
         </table>
     {% else %}
-        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+        <h2 class="text-muted">{{ 'message.nothing'|trans }}</h2>
     {% endif %}
 {% endblock %}

@@ -1,13 +1,13 @@
 {% set currentRoute = app.request.attributes.get('_route') %}
 {% if dates is defined and dates is iterable %}
-    <div class="accordion" id="accordion2">
+    <div class="panel-group" id="accordion">
         {% for iYear, oYear in dates %}
-            <div class="accordion-group">
-                <div class="accordion-heading">
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <ul class="nav nav-pills">
                         <li>
-                            <a data-toggle="collapse" data-parent="#accordion2" href="#{{ iYear }}">
-                                <i class="icon-chevron-down"></i>
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{ iYear }}">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
                             </a>
                         </li>
                         {% if 'active' in oYear|keys and oYear.active %}
@@ -22,11 +22,11 @@
                     </ul>
                 </div>
                 {% if 'active' in oYear.months|keys and oYear.months.active %}
-                    <div id="{{ iYear }}" class="accordion-body collapse in">
+                    <div id="{{ iYear }}" class="panel-collapse collapse in">
                 {% else %}
-                    <div id="{{ iYear }}" class="accordion-body collapse">
+                    <div id="{{ iYear }}" class="panel-collapse collapse">
                 {% endif %}
-                    <div class="accordion-inner">
+                    <div class="panel-body">
                         <ul class="nav nav-pills nav-stacked">
                             {% for iMonth, oMonth in oYear.months.data %}
                                 {% if 'active' in oMonth|keys and oMonth.active %}

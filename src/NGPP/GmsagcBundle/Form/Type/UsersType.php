@@ -22,7 +22,7 @@ class UsersType extends AbstractType
             ->add('groups', 'entity', array('property' => 'name',
                 'expanded' => true,
                 'multiple' => true,
-                'class' => 'NGPPGmsagcBundle:Groups',
+                'class' => 'NGPPGmsagcBundle:Groups'
                 ))
         ;
         

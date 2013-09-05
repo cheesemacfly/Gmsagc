@@ -1,9 +1,17 @@
 {% extends '::base.html.twig' %}
 
+{% form_theme form _self %}
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
 {% block content %}
     {% set start_day = form.hours[0].vars.value.day %}
-    <br>    
-    <form action="{{ path('ngpp_gmsagc_hours', {'order_id': order.id, 'week' : week, 'year' : year}) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         <table class="table table-hover">
             <tr>
                 <th>
@@ -22,7 +30,7 @@
                     {% set next_year = next_week == 1 ? next_year + 1 : next_year %}
                     <a href="{{ path('ngpp_gmsagc_hours', {'order_id': order.id, 'week' : next_week, 'year' : next_year}) }}" >
                         {{ 'action.week.after'|trans }}
-                    </a>                    
+                    </a>
                 </th>
             </tr>
         {% for user in users %}
@@ -30,7 +38,7 @@
                 <td>{{ user.username }}</td>
                 {% for hour in form.hours %}
                     {% if hour.vars.value.user.id == user.id %}
-                        <td>{{ form_row(hour.time) }}</td>
+                        <td>{{ form_widget(hour.time) }}</td>
                     {% endif %}
                 {% endfor %}
                 <td></td>
@@ -40,8 +48,8 @@
         {{ form_rest(form) }}
         <br>
         <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
-        <a href="{{ path('ngpp_gmsagc_home') }}" class="btn">
+        <a href="{{ path('ngpp_gmsagc_home') }}" class="btn btn-default">
             {{ 'action.cancel'|trans }}
         </a>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

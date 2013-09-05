@@ -6,25 +6,25 @@
             <fieldset>
                 <legend>
                     <div class="btn-group">
-                        <a class="btn" href="{{ path('ngpp_gmsagc_orders_save', {'id': relation.order.id}) }}">
+                        <a class="btn btn-default" href="{{ path('ngpp_gmsagc_orders_save', {'id': relation.order.id}) }}">
                             {{ 'orders.menu'|trans }} {{relation.order.id}}
                         </a>
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="{{ path('ngpp_gmsagc_orders_save', {'id': relation.order.id}) }}">
-                                    <i class="icon-edit"></i> {{ 'action.edit'|trans }}
+                                    <span class="glyphicon glyphicon-edit"></span> {{ 'action.edit'|trans }}
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="{{ path('ngpp_gmsagc_hours', {'order_id': relation.order.id}) }}">
-                                    <i class="icon-calendar"></i> {{ 'hours.menu'|trans }}
+                                    <span class="glyphicon glyphicon-calendar"></span> {{ 'hours.menu'|trans }}
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ path('ngpp_gmsagc_expenses', {'order_id': relation.order.id}) }}">
-                                    <i class="icon-plus"></i> {{ 'expenses.menu'|trans }}
+                                    <span class="glyphicon glyphicon-plus"></span> {{ 'expenses.menu'|trans }}
                                 </a>
                             </li>
                         </ul>
@@ -39,11 +39,10 @@
                     <dd>{{ relation.invoiced|date('d/m/Y') }}</dd>
                 </dl>
             </fieldset>
-
             <div class="row">
                 {% set total = 0 %}
                 {% if relation.order.expenses is iterable and relation.order.expenses|length > 0 %}
-                    <div class="span6">
+                    <div class="col-lg-6">
                         {{ 'expenses.menu'|trans }}:
                         <table class="table table-bordered table-condensed">
                             <tr>
@@ -67,7 +66,7 @@
                     </div>
                 {% endif %}
                 {% if relation.order.hours is iterable and relation.order.hours|length > 0 %}
-                    <div class="span6">
+                    <div class="col-lg-6">
                         {{ 'hours.menu'|trans }}:
                         <table class="table table-bordered table-condensed">
                             <tr>
@@ -94,7 +93,7 @@
                 {% endif %}
             </div>
             <div class="row">
-                <div class="span4 offset4">
+                <div class="col-lg-4 col-lg-offset-4">
                     <table class="table table-bordered table-condensed">
                         <tr>
                             <th>{{'Quote'|trans}}</th>
@@ -105,7 +104,7 @@
                             <td>{{'%01.2f'|format(total)}} {{ 'currency'|trans|raw }}</td>
                         </tr>
                         {% set result = relation.order.quote - total %}
-                        <tr class="{{result > 0 ? 'success' : 'error'}}">
+                        <tr class="{{result > 0 ? 'success' : 'danger'}}">
                             <th>{{'Result'|trans}}</th>
                             <td>{{'%01.2f'|format(result)}} {{ 'currency'|trans|raw }}</td>
                         </tr>
@@ -114,6 +113,6 @@
             </div>
         {% endfor %}
     {% else %}
-        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+        <h2 class="text-muted">{{ 'message.nothing'|trans }}</h2>
     {% endif %}
 {% endblock %}

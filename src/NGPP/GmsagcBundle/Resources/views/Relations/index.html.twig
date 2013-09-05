@@ -1,12 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>
     <div class="row-fluid">
-        <div class="span2">
+        <div class="col-lg-2">
             {% include 'NGPPGmsagcBundle:Relations:navigation.html.twig' %}
         </div>
-        <div class="span10">
+        <div class="col-lg-10">
             {% if relations is defined and relations %}
                 {% if toInvoice is defined and toInvoice %}
                     <h3>
@@ -31,14 +30,14 @@
                         <td>{{ relation.invoiced ? relation.invoiced|date('m/d/Y') : '-' }}</td>
                         <td>
                             <a href="{{ path('ngpp_gmsagc_relations_save', {'id': relation.id}) }}" class="btn btn-warning">
-                                <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                                <span class="glyphicon glyphicon-edit"></span> {{ 'action.edit'|trans }}
                             </a>
                         </td>
                     </tr>
                 {% endfor %}
                 </table>
             {% else %}
-                <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+                <h2 class="text-muted">{{ 'message.nothing'|trans }}</h2>
             {% endif %}
         </div>
     </div>

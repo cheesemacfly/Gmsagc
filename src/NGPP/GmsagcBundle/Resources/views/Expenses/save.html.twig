@@ -1,29 +1,28 @@
 {% extends "::base.html.twig" %}
 
+{% form_theme form 'NGPPGmsagcBundle:_Shared:form_theme.html.twig' %}
+
 {% block content %}
-    <form
-        {% if form.vars.value.id %}
-            action="{{ path('ngpp_gmsagc_expenses_edit', {'id': form.vars.value.id}) }}"
-        {% elseif form.vars.value.orderid %}
-            action="{{ path('ngpp_gmsagc_expenses_create', {'order_id': form.vars.value.orderid}) }}"
-        {% endif %}
-        method="post" {{ form_enctype(form) }}>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal', 'role' : 'form'}}) }}
         <fieldset>
           <legend>{{ 'expenses.save'|trans }}</legend>
             {{ form_widget(form) }}
             <br>
-            <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
-            <a href="{{ path('ngpp_gmsagc_expenses', {'order_id' : order_id}) }}" class="btn">
-                {{ 'action.cancel'|trans }}
-            </a>
-            {% if form.vars.value.id %}
-                <a href="{{ path('ngpp_gmsagc_expenses_delete', {'id': form.vars.value.id}) }}"
-                   class="btn btn-danger"
-                   onclick="return confirm('{{ 'message.confirm.delete'|trans|e('js') }}')">
-                    <i class="icon-remove icon-white"></i>
-                    {{ 'action.delete'|trans }}
-                </a>
-        {% endif %}
+            <div class="form-group">
+                <div class="col-lg-offset-1 col-lg-10">
+                    <input type="submit" class="btn btn-success" value="{{ 'action.save'|trans }}"/>
+                    <a href="{{ path('ngpp_gmsagc_expenses', {'order_id' : order_id}) }}" class="btn btn-default">
+                        {{ 'action.cancel'|trans }}
+                    </a>
+                    {% if form.vars.value.id %}
+                        <a href="{{ path('ngpp_gmsagc_expenses_delete', {'id': form.vars.value.id}) }}"
+                           class="btn btn-danger"
+                           onclick="return confirm('{{ 'message.confirm.delete'|trans|e('js') }}');">
+                            {{ 'action.delete'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

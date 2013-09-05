@@ -14,9 +14,9 @@ class PressController extends Controller
     /**
      * @Route("/list/{name}/{limit}", name="ngpp_gmsagc_ajax_press_list", 
      * requirements={"limit" = "\d+"}, 
-     * defaults={"name" = null, "limit" = 10})
+     * defaults={"name" = null, "limit" = null})
      */
-    public function listAction($name = null, $limit = 10)
+    public function listAction($name = null, $limit = null)
     {
         $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Press');
         $pressList = $repo->getList($name, $limit);

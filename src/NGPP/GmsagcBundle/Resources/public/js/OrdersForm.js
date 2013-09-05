@@ -1,17 +1,16 @@
 // Autocomplete for press and materials
 $('#ngpp_gmsagcbundle_orderstype_press').typeahead({
-    source: function (query, process) {
-        $.get(Routing.generate('ngpp_gmsagc_ajax_press_list', { name: query }), function (data) {
-            process(data);
-        });
+    name: 'ngpp_gmsagcbundle_orderstype_press_list',
+    prefetch: { 
+        url: Routing.generate('ngpp_gmsagc_ajax_press_list'),
+        ttl: 3600 
     }
 });
-
 $('#ngpp_gmsagcbundle_orderstype_material').typeahead({
-    source: function (query, process) {
-        $.get(Routing.generate('ngpp_gmsagc_ajax_materials_list', { name: query }), function (data) {
-            process(data);
-        });
+    name: 'ngpp_gmsagcbundle_orderstype_materials_list',
+    prefetch: { 
+        url: Routing.generate('ngpp_gmsagc_ajax_materials_list'), 
+        ttl: 3600 
     }
 });
 

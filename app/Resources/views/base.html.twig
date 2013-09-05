@@ -7,7 +7,6 @@
         {% block stylesheets %}{% endblock %}        
         {% stylesheets 
             'css/*'
-            'bootstrap/css/*'
             'css/smoothness/*'
             filter='cssrewrite, ?yui_css'
         %}
@@ -17,15 +16,17 @@
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
     </head>
     <body>
-        <nav class="navbar navbar-static-top navbar-inverse">
-            <div class="navbar-inner">                
-                {% set navigation = [['ngpp_gmsagc_orders', 'orders.menu'|trans],
-                                    ['ngpp_gmsagc_molds', 'molds.menu'|trans],
-                                    ['ngpp_gmsagc_contacts', 'contacts.menu'|trans],
-                                    ['ngpp_gmsagc_relations', 'invoices.menu'|trans],
-                                    ['ngpp_gmsagc_users', 'users.menu'|trans]] %}
-                <a class="brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
-                <ul class="nav">
+        {% set navigation = [['ngpp_gmsagc_orders', 'orders.menu'|trans],
+                            ['ngpp_gmsagc_molds', 'molds.menu'|trans],
+                            ['ngpp_gmsagc_contacts', 'contacts.menu'|trans],
+                            ['ngpp_gmsagc_relations', 'invoices.menu'|trans],
+                            ['ngpp_gmsagc_users', 'users.menu'|trans]] %}
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
                 {% for item in navigation %}
                     {% if item[0] == app.request.get('_route')[:item[0]|length] %}
                         <li class="active">
@@ -36,62 +37,61 @@
                     </li>
                 {% endfor %}
                 </ul>
-                <ul class="nav pull-right">
-                    <li class="divider-vertical"></li>
-                    <li class="pull-right">
-                        <div class="btn-group">
-                            {% if app.user %}
-                                <a class="btn btn-inverse" href="{{ path('logout') }}">
-                                    <i class="icon-off icon-white"></i> {{ 'action.logout'|trans }}
-                                </a>
-                                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ path('ngpp_gmsagc_users_password') }}">
-                                            <i class="icon-edit"></i> {{ 'password.edit'|trans }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            {% else %}
-                                <a class="btn" href="{{ path('login') }}">
-                                    <i class="icon-user icon-white"></i> {{ 'action.login'|trans }}
-                                </a>
-                            {% endif %}
-                        </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        {% if app.user %}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {{app.user.username}} <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ path('ngpp_gmsagc_users_password') }}">
+                                        <span class="glyphicon glyphicon-edit"></span> {{ 'password.edit'|trans }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('logout') }}">
+                                        <span class="glyphicon glyphicon-log-out"></span> {{ 'action.logout'|trans }}
+                                    </a>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <a class="btn" href="{{ path('login') }}">
+                                <span class="glyphicon glyphicon-log-in"></span> {{ 'action.login'|trans }}
+                            </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
         </nav>
         <div id="content">
             {% if app.session.flashbag.has('success') %}
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {% for flashMessage in app.session.flashbag.get('success') %}
                         {{ flashMessage }}
                     {% endfor %}
                 </div>
             {% endif %}
             {% if app.session.flashbag.has('notice') %}
-                <div class="alert alert-info">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {% for flashMessage in app.session.flashbag.get('notice') %}
                         {{ flashMessage }}
                     {% endfor %}
                 </div>
             {% endif %}
             {% if app.session.flashbag.has('warning') %}
-                <div class="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {% for flashMessage in app.session.flashbag.get('warning') %}
                             {{ flashMessage }}
                     {% endfor %}
                 </div>
             {% endif %}
             {% if app.session.flashbag.has('error') %}
-                <div class="alert alert-error">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div class="alert alert-error alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {% for flashMessage in app.session.flashbag.get('error') %}
                         {{ flashMessage }}
                     {% endfor %}
@@ -105,8 +105,8 @@
         <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
         {% javascripts 
+           'js/jquery-1*'
            'js/*'
-           'bootstrap/js/bootstrap.js'
             '@NGPPGmsagcBundle/Resources/public/js/*'
            filter='?yui_js'
         %}

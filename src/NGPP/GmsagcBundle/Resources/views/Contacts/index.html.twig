@@ -1,18 +1,17 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    <br>
     <div class="row">
-        <div class="span6">
+        <div class="col-lg-4">
             <a href="{{ path('ngpp_gmsagc_contacts_save') }}" class="btn btn-success">
-                <i class="icon-plus icon-white"></i> {{ 'contacts.add'|trans }}
+                <span class="glyphicon glyphicon-plus"></span> {{ 'contacts.add'|trans }}
             </a>
         </div>
-        <div class="span6">
+        <div class="col-lg-4">
             {% include 'NGPPGmsagcBundle:_Shared:search.html.twig' %}
         </div>
     </div>
-    <br><br>
+    <br>
     {% if contacts is defined and contacts %}
         <table class="table table-hover">
             <tr>
@@ -30,7 +29,7 @@
                 <td>{{ contact.phone }}</td>
                 <td>
                     <a href="{{ path('ngpp_gmsagc_contacts_save', {'id': contact.id}) }}" class="btn btn-warning">
-                        <i class="icon-edit icon-white"></i> {{ 'action.edit'|trans }}
+                        <span class="glyphicon glyphicon-edit"></span> {{ 'action.edit'|trans }}
                     </a>
                 </td>
             </tr>
@@ -38,6 +37,6 @@
         </table>
         {% include 'NGPPGmsagcBundle:_Shared:pagination.html.twig' %}
     {% else %}
-        <h2 class="muted">{{ 'message.nothing'|trans }}</h2>
+        <h2 class="text-muted">{{ 'message.nothing'|trans }}</h2>
     {% endif %}
 {% endblock %}

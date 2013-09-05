@@ -19,7 +19,7 @@ class PressRepository extends EntityRepository
      * @param int $limit
      * @return Array
      */
-    public function getList($name = null, $limit = 10)
+    public function getList($name = null, $limit = null)
     {
         $result = $this->createQueryBuilder('p')
                         ->where('p.name LIKE :name')
