@@ -9,5 +9,7 @@ It is built on top of the Symfony PHP framework using Doctrine2 as a database la
 
 ## Screenshots
 
-![Orders](https://bitbucket.org/cheesemacfly/gmsagc/downloads/orders.jpeg)
-![Hours](https://bitbucket.org/cheesemacfly/gmsagc/downloads/hours.jpeg)
+![Orders](https://bitbucket.org/cheesemacfly/gmsagc/downloads/orders.png)
+![Hours](https://bitbucket.org/cheesemacfly/gmsagc/downloads/contacts.png)
+![Hours](https://bitbucket.org/cheesemacfly/gmsagc/downloads/molds.png)
+![Hours](https://bitbucket.org/cheesemacfly/gmsagc/downloads/hours.png)
