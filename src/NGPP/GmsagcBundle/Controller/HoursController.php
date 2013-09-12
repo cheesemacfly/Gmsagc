@@ -14,7 +14,7 @@ use \NGPP\GmsagcBundle\Form\Type\CalendarType;
 class HoursController extends Controller
 {
     /**
-     * @Route("/hours/{order_id}/{week}/{year}", name="ngpp_gmsagc_hours",
+     * @Route("/{order_id}/{week}/{year}", name="ngpp_gmsagc_hours",
      *  requirements={"order_id" = "\d+", "week" = "^0[1-9]|[1-4][0-9]|5[0-3]$", "year" = "^(20|19)[0-9]{2}$"},
      *  defaults={"week" = null, "year" = null})
      * @Template
