@@ -4,8 +4,8 @@
         <meta charset="UTF-8" />
         {% block meta %}{% endblock %}
         <title>{% block title %}Gmsagc{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}        
-        {% stylesheets 
+        {% block stylesheets %}{% endblock %}
+        {% stylesheets
             'css/*'
             'css/smoothness/*'
             filter='cssrewrite, ?yui_css'
@@ -90,7 +90,7 @@
                 </div>
             {% endif %}
             {% if app.session.flashbag.has('error') %}
-                <div class="alert alert-error alert-dismissable">
+                <div class="alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {% for flashMessage in app.session.flashbag.get('error') %}
                         {{ flashMessage }}
@@ -104,7 +104,7 @@
         </footer>
         <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-        {% javascripts 
+        {% javascripts
            'js/jquery-1*'
            'js/*'
             '@NGPPGmsagcBundle/Resources/public/js/*'
