@@ -6,20 +6,27 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
+use NGPP\GmsagcBundle\Form\Type\MoldsType;
 
 class SaveOrdersListener implements EventSubscriberInterface
 {
-    /**
-     * @var ContainerInterface
+    /*
+     * array $actions
      */
-    private $container;
+    private $actions;
+
+    /*
+     * MoldsType $moldsType
+     */
+    private $moldsType;
 
     /**
      * @param container ContainerInterface
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(array $actions, MoldsType $moldsType)
     {
-        $this->container = $container;
+        $this->actions = $actions;
+        $this->moldsType = $moldsType;
     }
 
     public static function getSubscribedEvents()
@@ -62,9 +69,9 @@ class SaveOrdersListener implements EventSubscriberInterface
     {
         switch($action_id)
         {
-            case $this->container->getParameter('ngpp_gmsagc.actions')['modification']['id']:
-            case $this->container->getParameter('ngpp_gmsagc.actions')['molding']['id']:
-            case $this->container->getParameter('ngpp_gmsagc.actions')['reparation']['id']:
+            case $this->actions['modification']['id']:
+            case $this->actions['molding']['id']:
+            case $this->actions['reparation']['id']:
                 $form->add('mold',
                         'entity',
                         array('property' => 'name', 'class' => 'NGPPGmsagcBundle:Molds'));
@@ -72,7 +79,7 @@ class SaveOrdersListener implements EventSubscriberInterface
             //Allow Molds creation by default
             default:
                 $form->add('mold',
-                        $this->container->get('ngpp_gmsagc.form.molds'),
+                        $this->moldsType,
                         array('data_class' => 'NGPP\GmsagcBundle\Entity\Molds'));
         }
     }
