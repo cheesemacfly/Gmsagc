@@ -16,87 +16,9 @@
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
     </head>
     <body>
-        {% set navigation = [['ngpp_gmsagc_orders', 'orders.menu'|trans],
-                            ['ngpp_gmsagc_molds', 'molds.menu'|trans],
-                            ['ngpp_gmsagc_contacts', 'contacts.menu'|trans],
-                            ['ngpp_gmsagc_relations', 'invoices.menu'|trans],
-                            ['ngpp_gmsagc_users', 'users.menu'|trans]] %}
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{{ path('ngpp_gmsagc_home') }}">Gmsagc</a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                {% for item in navigation %}
-                    {% if item[0] == app.request.get('_route')[:item[0]|length] %}
-                        <li class="active">
-                    {% else %}
-                        <li>
-                    {% endif%}
-                        <a href="{{ path(item[0]) }}">{{item[1]}}</a>
-                    </li>
-                {% endfor %}
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        {% if app.user %}
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {{app.user.username}} <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ path('ngpp_gmsagc_users_password') }}">
-                                        <span class="glyphicon glyphicon-edit"></span> {{ 'password.edit'|trans }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('logout') }}">
-                                        <span class="glyphicon glyphicon-log-out"></span> {{ 'action.logout'|trans }}
-                                    </a>
-                                </li>
-                            </ul>
-                        {% else %}
-                            <a class="btn" href="{{ path('login') }}">
-                                <span class="glyphicon glyphicon-log-in"></span> {{ 'action.login'|trans }}
-                            </a>
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        {% include 'navigation.html.twig' %}
         <div id="content">
-            {% if app.session.flashbag.has('success') %}
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {% for flashMessage in app.session.flashbag.get('success') %}
-                        {{ flashMessage }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% if app.session.flashbag.has('notice') %}
-                <div class="alert alert-info alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {% for flashMessage in app.session.flashbag.get('notice') %}
-                        {{ flashMessage }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% if app.session.flashbag.has('warning') %}
-                <div class="alert alert-warning alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {% for flashMessage in app.session.flashbag.get('warning') %}
-                            {{ flashMessage }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% if app.session.flashbag.has('error') %}
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {% for flashMessage in app.session.flashbag.get('error') %}
-                        {{ flashMessage }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+            {% include 'alerts.html.twig' %}
             {% block content %}{% endblock %}
         </div>
         <footer>
