@@ -15,7 +15,7 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ['127.0.0.1'] # a list of proxy IPs you trust
-    session:         ~
+    session:         { name: "gmsagc" }
 
 # Twig Configuration
 twig:

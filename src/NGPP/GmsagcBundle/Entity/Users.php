@@ -48,33 +48,33 @@ class Users implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="decimal", precision=6, scale=2, nullable=true)
      */
     private $rate;
-    
+
     /**
      * @ORM\Column(name="is_active", type="boolean")
      * @Assert\Type(type="boolean")
      */
     private $isActive;
-    
+
     /**
      * @ORM\Column(type="integer")
      * @Assert\Range(min=10, max=100)
      */
     private $resultsPerPage;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Groups", inversedBy="users")
      * @ORM\JoinTable(name="Users_Groups")
      *
      */
     private $groups;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Hours", mappedBy="user")
      */
     protected $hours;
 
     public function __construct()
-    {        
+    {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->groups = new ArrayCollection();
@@ -88,7 +88,7 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->id;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -96,14 +96,14 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->username;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setUsername($username)
     {
         $this->username = $username;
-        
+
         return $this;
     }
 
@@ -122,17 +122,17 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->password;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setPassword($password)
     {
         $this->password = $password;
-        
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -140,17 +140,17 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->email;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setEmail($email = null)
     {
         $this->email = $email;
-        
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -158,21 +158,21 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->rate;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setRate($rate = null)
     {
         $this->rate = $rate;
-        
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
-    public function getIsActive()
+    public function isActive()
     {
         return $this->isActive;
     }
@@ -180,14 +180,14 @@ class Users implements AdvancedUserInterface, \Serializable
     /**
      * @inheritDoc
      */
-    public function setIsActive($isActive)
+    public function setActive($isActive)
     {
         $this->isActive = $isActive;
-        
+
         return $this;
     }
-    
-    
+
+
     /**
      * @inheritDoc
      */
@@ -195,17 +195,17 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->resultsPerPage;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setResultsPerPage($resultsPerPage)
     {
         $this->resultsPerPage = $resultsPerPage;
-        
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -213,17 +213,17 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->groups;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setGroups($groups)
     {
         $this->groups = $groups;
-        
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -231,27 +231,27 @@ class Users implements AdvancedUserInterface, \Serializable
     {
         return $this->groups->toArray();
     }
-    
+
     /**
      * @inheritDoc
      */
     public function setRoles($groups)
     {
         $this->groups = $groups;
-        
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
     public function addRole(\NGPP\GmsagcBundle\Entity\Groups $group)
     {
         $this->groups[] = $group;
-    
+
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -286,7 +286,7 @@ class Users implements AdvancedUserInterface, \Serializable
             $this->id,
         ) = unserialize($serialized);
     }
-    
+
     public function isAccountNonExpired()
     {
         return true;

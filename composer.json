@@ -1,6 +1,14 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "name": "NGPP/Gmsagc",
+    "description": "This application is a orders management system build for the metallurgy environnement.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolas Guelpa",
+            "email": "nicolas@guelpa.me",
+            "homepage": "http://nicolas.guelpa.me"
+        }
+    ],
     "autoload": {
         "psr-0": { "": "src/" }
     },

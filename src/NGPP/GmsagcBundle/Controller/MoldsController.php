@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use \NGPP\GmsagcBundle\Entity\Molds;
-use \NGPP\GmsagcBundle\Form\Type\MoldsType;
 
 /**
  * @Route("/molds")
@@ -20,20 +19,20 @@ class MoldsController extends Controller
     public function indexAction($page = null)
     {
         //Use default value if user not logged in
-        $max_items = !is_null($this->getUser()) ? 
+        $max_items = !is_null($this->getUser()) ?
                 $this->getUser()->getResultsPerPage() : $this->container->getParameter('ngpp_gmsagc.results_per_page');
-        
+
         $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Molds');
-        
+
         $offset = is_null($page) ? null : $max_items * ($page - 1);
         $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
 
         $molds = $repo->getPaginator($criteria, $max_items, $offset);
         $pages = ceil(count($molds) / $max_items);
-        
+
         return array('molds' => $molds, 'pages' => $pages);
     }
-    
+
     /**
      * @Route("/save/{id}", name="ngpp_gmsagc_molds_save", requirements={"id" = "\d+"}, defaults={"id" = null})
      * @Template
@@ -41,14 +40,14 @@ class MoldsController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         //Determine if editing or creating
-        $mold = !is_null($id) && !is_null($mold = $em->getRepository('NGPPGmsagcBundle:Molds')->find($id)) ? 
+        $mold = !is_null($id) && !is_null($mold = $em->getRepository('NGPPGmsagcBundle:Molds')->find($id)) ?
                 $mold : new Molds();
-                        
+
         $form = $this->createForm($this->get('ngpp_gmsagc.form.molds'), $mold);
         $form->handleRequest($this->getRequest());
-        
+
         if ($form->isValid()) {
 
             $em->persist($mold);
@@ -59,10 +58,10 @@ class MoldsController extends Controller
 
             return $this->redirect($this->generateUrl('ngpp_gmsagc_molds'));
         }
-        
+
         return array('form' => $form->createView());
     }
-    
+
     /**
      * @Route("/delete/{id}", name="ngpp_gmsagc_molds_delete", requirements={"id" = "\d+"})
      */
@@ -75,14 +74,14 @@ class MoldsController extends Controller
         {
             $em->remove($mold);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('molds.deleted'));
         }
         else
             $this->get('session')->getFlashBag()->add('error',
                     $this->get('translator')->trans('molds.nodeleted'));
-        
+
         return $this->redirect($this->generateUrl('ngpp_gmsagc_molds'));
     }
 }

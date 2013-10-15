@@ -5,8 +5,8 @@ namespace NGPP\GmsagcBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use \NGPP\GmsagcBundle\Entity\Hours;
-use \NGPP\GmsagcBundle\Form\Type\CalendarType;
+use NGPP\GmsagcBundle\Entity\Hours;
+use NGPP\GmsagcBundle\Form\Type\CalendarType;
 
 /**
  * @Route("/hours")
@@ -26,20 +26,22 @@ class HoursController extends Controller
         $year = sprintf('%04d', !is_null($year) ? $year : date('Y'));
 
         $start_day = new \DateTime($year . 'W' . $week);
-        
+
         $em = $this->getDoctrine()->getManager();
-        
+
         if(count($users = $em->getRepository('NGPPGmsagcBundle:Users')->getEmployees()) < 1)
             return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
-        
+
         if(is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->findOneById($order_id)))
             return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
-        
-        $calendar = new Calendar();
-        
+
+        //PHP doesn't have anonymous types...
+        $calendar = new \stdClass();
+        $calendar->hours = array();
+
         //Load hours from database or create object if it doesn't exist
         foreach ($users as $user)
-        {            
+        {
             for ($i = 0; $i < 5; $i++)
             {
                 $dolly = clone $start_day;
@@ -48,16 +50,16 @@ class HoursController extends Controller
                 if (is_null($hour = $em->getRepository('NGPPGmsagcBundle:Hours')->getHour($user->getId(), $order->getId(), $dolly)))
                 {
                     $hour = new Hours();
-                
+
                     $hour->setDay($dolly);
                     $hour->setUser($user);
                     $hour->setOrder($order);
                 }
-                
+
                 $calendar->hours[] = $hour;
             }
         }
-        
+
         $form = $this->createForm(new CalendarType(), $calendar);
         $form->handleRequest($this->getRequest());
 
@@ -74,25 +76,12 @@ class HoursController extends Controller
             $this->get('session')->getFlashBag()->add('success',
                 $this->get('translator')->trans('hours.saved'));
 
-            return $this->redirect($this->generateUrl('ngpp_gmsagc_hours', 
+            return $this->redirect($this->generateUrl('ngpp_gmsagc_hours',
                                                         array('order_id' => $order->getId(),
                                                                 'week' => $week,
                                                                 'year' => $year)));
         }
-        
-        return array('form' => $form->createView(), 'order' => $order, 'users' => $users, 'week' => $week, 'year' => $year);
-    }
-}
-    
-/**
-* The only goal of this class is to be able to provide an object to the form type
-*/
-class Calendar
-{
-    public $hours;
 
-    public function __construct()
-    {
-        $this->hours = array();
+        return array('form' => $form->createView(), 'order' => $order, 'users' => $users, 'week' => $week, 'year' => $year);
     }
 }
