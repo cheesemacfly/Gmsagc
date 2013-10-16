@@ -4,7 +4,6 @@ namespace NGPP\GmsagcBundle\Form\EventListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
 use NGPP\GmsagcBundle\Form\Type\MoldsType;
 
