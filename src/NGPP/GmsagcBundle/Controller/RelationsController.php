@@ -13,8 +13,8 @@ use NGPP\GmsagcBundle\Form\Type\InvoicesType;
 class RelationsController extends Controller
 {
     /**
-     * @Route("/{year}/{month}", name="ngpp_gmsagc_relations", 
-     * requirements={"year" = "^(20|19)[0-9]{2}$", "month" = "^(0?[1-9]|1[012])$"}, 
+     * @Route("/{year}/{month}", name="ngpp_gmsagc_relations",
+     * requirements={"year" = "^(20|19)[0-9]{2}$", "month" = "^(0?[1-9]|1[012])$"},
      * defaults={"year" = null, "month" = null})
      * @Template
      */
@@ -24,7 +24,7 @@ class RelationsController extends Controller
         $repo = $this->getDoctrine()->getRepository('NGPPGmsagcBundle:Relations');
         $customerType = $this->container->getParameter('ngpp_gmsagc.types')['customer'];
         $relations = $dates = array();
-        
+
         if(is_null($year))
         {
             $relations = $repo->getInvoices($customerType['id']);
@@ -34,7 +34,7 @@ class RelationsController extends Controller
             $startDate = new \DateTime($year . '-06-01');
             $endDate = clone $startDate;
             $endDate->add(new \DateInterval('P1Y'));
-            
+
             $relations = $repo->getInvoices($customerType['id'], $startDate, $endDate);
         }
         else
@@ -42,15 +42,15 @@ class RelationsController extends Controller
             $startDate = new \DateTime($year . '-' . $month . '-01');
             $endDate = clone $startDate;
             $endDate->add(new \DateInterval('P1M'));
-            
+
             $relations = $repo->getInvoices($customerType['id'], $startDate, $endDate);
         }
-        
+
         if(!is_null($firstInvoiced = $repo->getFirstInvoiced()))
         {
             $firstInvoiced->modify('first day of this month');
             $cursorDate = new \DateTime('first day of this month');
-            
+
             //Magic trick to get the invoices dates (years starting on June)
             while($cursorDate >= $firstInvoiced)
             {
@@ -68,7 +68,7 @@ class RelationsController extends Controller
                     else
                         $dates[$iYear] = ['name' => $sYear, 'months' => array()];
                 }
-                
+
                 if(!array_key_exists($iMonth, $dates[$iYear]['months']))
                 {
                     if($month == $iMonth && $year == $iRealYear)
@@ -79,15 +79,15 @@ class RelationsController extends Controller
                     else
                         $dates[$iYear]['months']['data'][$iMonth] = ['name' => $sMonth, 'year' => $iRealYear];
                 }
-                
+
                 //Move to previous month
                 $cursorDate->sub(new \DateInterval('P1M'));
-            }            
+            }
         }
-        
+
         return array('relations' => $relations, 'dates' => $dates, 'toInvoice' => is_null($year));
     }
-    
+
     /**
      * @Route("/save/{id}", name="ngpp_gmsagc_relations_save", requirements={"id" = "\d+"}, defaults={"id" = null})
      * @Template
@@ -95,27 +95,22 @@ class RelationsController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-
         $relation = !is_null($id) ? $em->getRepository('NGPPGmsagcBundle:Relations')->find($id) : null;
-        
+
         if(is_null($relation))
             return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
-        
+
         $form = $this->createForm(new InvoicesType(), $relation);
         $form->handleRequest($this->getRequest());
-        
-        if ($form->isValid()) {
 
+        if ($form->isValid()) {
             $em->persist($relation);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success',
-                $this->get('translator')->trans('invoices.saved'));
-
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('invoices.saved'));
             return $this->redirect($this->generateUrl('ngpp_gmsagc_relations'));
         }
-        
-        return $this->render('NGPPGmsagcBundle:Relations:save.html.twig',
-                array('form' => $form->createView()));
+
+        return $this->render('NGPPGmsagcBundle:Relations:save.html.twig', array('form' => $form->createView()));
     }
 }
