@@ -5,26 +5,26 @@ namespace NGPP\GmsagcBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use NGPP\GmsagcBundle\Form\DataTransformer\MaterialToTextTransformer;
-use Doctrine\Common\Persistence\ObjectManager;
+use NGPP\GmsagcBundle\Entity\MaterialsRepository;
 
 class MaterialSelectorType extends AbstractType
 {
     /**
-     * @var ObjectManager
+     * @var MaterialsRepository
      */
-    private $om;
+    private $repo;
 
     /**
-     * @param ObjectManager $om
+     * @param MaterialsRepository $om
      */
-    public function __construct(ObjectManager $om)
+    public function __construct(MaterialsRepository $repo)
     {
-        $this->om = $om;
+        $this->repo = $repo;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new MaterialToTextTransformer($this->om);
+        $transformer = new MaterialToTextTransformer($this->repo);
         $builder->addModelTransformer($transformer);
     }
 

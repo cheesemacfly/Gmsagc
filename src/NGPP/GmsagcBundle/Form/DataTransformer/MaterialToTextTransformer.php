@@ -3,22 +3,22 @@
 namespace NGPP\GmsagcBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\ORM\EntityManager;
+use NGPP\GmsagcBundle\Entity\MaterialsRepository;
 use NGPP\GmsagcBundle\Entity\Materials;
 
 class MaterialToTextTransformer implements DataTransformerInterface
 {
     /**
-     * @var EntityManager
+     * @var MaterialsRepository
      */
-    private $em;
+    private $repo;
 
     /**
-     * @param EntityManager $em
+     * @param MaterialsRepository $repo
      */
-    public function __construct(EntityManager $em)
+    public function __construct(MaterialsRepository $repo)
     {
-        $this->em = $em;
+        $this->repo = $repo;
     }
 
     /**
@@ -48,11 +48,7 @@ class MaterialToTextTransformer implements DataTransformerInterface
         if (!$text) {
             return null;
         }
-
-        $material = $this->em
-            ->getRepository('NGPPGmsagcBundle:Materials')
-            ->findOneByName($text)
-        ;
+        $material = $this->repo->findOneByName($text);
 
         if (null === $material) {
             $material = new Materials();

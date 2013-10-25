@@ -3,22 +3,22 @@
 namespace NGPP\GmsagcBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\ORM\EntityManager;
+use NGPP\GmsagcBundle\Entity\PressRepository;
 use NGPP\GmsagcBundle\Entity\Press;
 
 class PressToTextTransformer implements DataTransformerInterface
 {
     /**
-     * @var EntityManager
+     * @var PressRepository
      */
-    private $em;
+    private $repo;
 
     /**
-     * @param EntityManager $em
+     * @param PressRepository $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(PressRepository $repo)
     {
-        $this->em = $em;
+        $this->repo = $repo;
     }
 
     /**
@@ -48,11 +48,7 @@ class PressToTextTransformer implements DataTransformerInterface
         if (!$text) {
             return null;
         }
-
-        $press = $this->em
-            ->getRepository('NGPPGmsagcBundle:Press')
-            ->findOneByName($text)
-        ;
+        $press = $this->repo->findOneByName($text);
 
         if (null === $press) {
             $press = new Press();

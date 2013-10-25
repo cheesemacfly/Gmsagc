@@ -2,8 +2,9 @@
 
 namespace NGPP\GmsagcBundle\Lib;
 
-use Doctrine\ORM\EntityManager;
+use NGPP\GmsagcBundle\Entity\HoursRepository;
 use NGPP\GmsagcBundle\Entity\Hours;
+use NGPP\GmsagcBundle\Entity\Orders;
 
 /**
  * Calendar class for the hours controller support
@@ -13,9 +14,9 @@ use NGPP\GmsagcBundle\Entity\Hours;
 class Calendar {
 
     /**
-     * @var EntityManager
+     * @var HoursRepository
      */
-    private $em;
+    private $repo;
 
     /**
      * @var Array
@@ -24,12 +25,12 @@ class Calendar {
 
     /**
      *
-     * @param EntityManager $em
+     * @param HoursRepository $repo
      */
-    public function __construct(EntityManager $em)
+    public function __construct(HoursRepository $repo)
     {
         $this->hours = [];
-        $this->em = $em;
+        $this->repo = $repo;
     }
 
     /**
@@ -37,8 +38,9 @@ class Calendar {
      *
      * @param Users $user
      * @param Orders $order
+     * @param Datetime $start_day
      */
-    public function populate($users, $order, $start_day)
+    public function populate(array $users, Orders $order, \DateTime $start_day)
     {
         foreach ($users as $user)
         {
@@ -47,7 +49,7 @@ class Calendar {
                 $dolly = clone $start_day;
                 $dolly->add(new \DateInterval('P' . $i . 'D'));
 
-                if (is_null($hour = $this->em->getRepository('NGPPGmsagcBundle:Hours')->getHour($user->getId(), $order->getId(), $dolly)))
+                if (is_null($hour = $this->repo->getHour($user->getId(), $order->getId(), $dolly)))
                 {
                     $hour = new Hours();
 
@@ -73,7 +75,7 @@ class Calendar {
 
     /**
      * Set hours
-     * 
+     *
      * @param array $hours
      * @return array
      */

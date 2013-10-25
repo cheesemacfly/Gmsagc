@@ -21,20 +21,20 @@ class OrdersController extends Controller
     public function indexAction($page = null)
     {
         //Use default value if user not logged in
-        $max_items = !is_null($this->getUser()) ? 
+        $max_items = !is_null($this->getUser()) ?
                 $this->getUser()->getResultsPerPage() : $this->container->getParameter('ngpp_gmsagc.results_per_page');
-        
+
         $repo = $this->getDoctrine()->getManager()->getRepository('NGPPGmsagcBundle:Orders');
-        
+
         $offset = is_null($page) ? null : $max_items * ($page - 1);
         $criteria = is_null($this->getRequest()->get('f')) ? null : $this->getRequest()->get('f');
-        
+
         $orders = $repo->getPaginator($criteria, $max_items, $offset);
         $pages = ceil(count($orders) / $max_items);
-        
+
         return array('orders' => $orders, 'pages' => $pages);
     }
-    
+
     /**
      * @Route("/save/{id}", name="ngpp_gmsagc_orders_save", requirements={"id" = "\d+"}, defaults={"id" = null})
      * @Template
@@ -42,28 +42,28 @@ class OrdersController extends Controller
     public function saveAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         if(is_null($id) || is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->find($id)))
         {
             $order = new Orders();
-            
+
             //Create a new Molds by default
             $order->setMold(new Molds());
-            
+
             $customer_relation = new Relations();
             $customer_type_id = $this->container->getParameter('ngpp_gmsagc.types')['customer'];
             $customer_relation->setType($em->getRepository('NGPPGmsagcBundle:Types')->findOneById($customer_type_id));
             $order->addRelations($customer_relation);
-            
+
             $owner_relation = new Relations();
             $owner_type_id = $this->container->getParameter('ngpp_gmsagc.types')['owner'];
             $owner_relation->setType($em->getRepository('NGPPGmsagcBundle:Types')->findOneById($owner_type_id));
             $order->addRelations($owner_relation);
         }
-        
+
         $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), $order);
         $form->handleRequest($this->getRequest());
-            
+
         if ($form->isValid()) {
 
             $em->persist($order);
@@ -83,10 +83,10 @@ class OrdersController extends Controller
 
             return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
         }
-        
+
         return array('form' => $form->createView());
     }
-    
+
     /**
      * @Route("/delete/{id}", name="ngpp_gmsagc_orders_delete", requirements={"id" = "\d+"})
      */
@@ -100,20 +100,20 @@ class OrdersController extends Controller
             foreach ($order->getRelations() as $relation) {
                 $em->remove($relation);
             }
-            
+
             $em->remove($order);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('success',
                     $this->get('translator')->trans('orders.deleted'));
         }
         else
             $this->get('session')->getFlashBag()->add('error',
                     $this->get('translator')->trans('orders.nodeleted'));
-        
+
         return $this->redirect($this->generateUrl('ngpp_gmsagc_orders'));
     }
-    
+
     /**
      * @Route("/ajax/save", name="ngpp_gmsagc_ajax_orders_save")
      * @Template("NGPPGmsagcBundle:Orders:Partial/mold.html.twig")
@@ -122,7 +122,7 @@ class OrdersController extends Controller
     {
         $form = $this->createForm($this->get('ngpp_gmsagc.form.orders'), new Orders());
         $form->handleRequest($this->getRequest());
-        
+
         return array('form' => $form->createView());
     }
 }

@@ -4,21 +4,21 @@ namespace NGPP\GmsagcBundle\Form\EventListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Doctrine\ORM\EntityManager;
+use NGPP\GmsagcBundle\Entity\MoldsRepository;
 
 class SaveMoldsListener implements EventSubscriberInterface
 {
     /**
-     * @var EntityManager
+     * @var MoldsRepository
      */
-    private $em;
-    
+    private $repo;
+
     /**
-     * @param em EntityManager
+     * @param repo MoldsRepository
      */
-    public function __construct(EntityManager $em)
+    public function __construct(MoldsRepository $repo)
     {
-        $this->em = $em;
+        $this->repo = $repo;
     }
     public static function getSubscribedEvents()
     {
@@ -33,7 +33,7 @@ class SaveMoldsListener implements EventSubscriberInterface
         //Not editing an entity
         if(!is_null($mold) && is_null($mold->getId()))
         {
-            $newMoldId = $this->em->getRepository('NGPPGmsagcBundle:Molds')->getNewId();
+            $newMoldId = $this->repo->getNewId();
             $mold->setId($newMoldId);
         }
     }

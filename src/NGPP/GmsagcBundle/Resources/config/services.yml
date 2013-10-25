@@ -1,12 +1,30 @@
 services:
+    ngpp_gmsagc.repo.materials:
+        class: Doctrine\ORM\EntityRepository
+        factory_service:  doctrine.orm.entity_manager
+        factory_method:   getRepository
+        arguments:
+            - NGPPGmsagcBundle:Materials
+    ngpp_gmsagc.repo.press:
+        class: Doctrine\ORM\EntityRepository
+        factory_service:  doctrine.orm.entity_manager
+        factory_method:   getRepository
+        arguments:
+            - NGPPGmsagcBundle:Press
+    ngpp_gmsagc.repo.molds:
+        class: Doctrine\ORM\EntityRepository
+        factory_service:  doctrine.orm.entity_manager
+        factory_method:   getRepository
+        arguments:
+            - NGPPGmsagcBundle:Molds
     ngpp_gmsagc.type.press_selector:
         class: NGPP\GmsagcBundle\Form\Type\PressSelectorType
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@ngpp_gmsagc.repo.press"]
         tags:
             - { name: form.type, alias: press_selector }
     ngpp_gmsagc.type.material_selector:
         class: NGPP\GmsagcBundle\Form\Type\MaterialSelectorType
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@ngpp_gmsagc.repo.materials"]
         tags:
             - { name: form.type, alias: material_selector }
     ngpp_gmsagc.form.orders:
@@ -24,7 +42,7 @@ services:
         arguments: [%ngpp_gmsagc.actions%, "@ngpp_gmsagc.form.molds"]
     ngpp_gmsagc.form.save_molds_listener:
         class: NGPP\GmsagcBundle\Form\EventListener\SaveMoldsListener
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@ngpp_gmsagc.repo.molds"]
     ngpp_gmsagc.form.type.places:
         class: NGPP\GmsagcBundle\Form\Type\PlacesType
         arguments:

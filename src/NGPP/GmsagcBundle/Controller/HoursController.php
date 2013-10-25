@@ -34,13 +34,14 @@ class HoursController extends Controller
         if(is_null($order = $em->getRepository('NGPPGmsagcBundle:Orders')->findOneById($order_id)))
             return $this->redirect($this->generateUrl('ngpp_gmsagc_home'));
 
-        $calendar = new Calendar($em);
+        $calendar = new Calendar($em->getRepository('NGPPGmsagcBundle:Hours'));
         $calendar->populate($users, $order, $start_day);
 
         $form = $this->createForm(new CalendarType(), $calendar);
         $form->handleRequest($this->getRequest());
 
-        if ($form->isValid()) {
+        if ($form->isValid())
+        {
             //persist only usefull hours
             foreach($calendar->getHours() as $hour)
             {

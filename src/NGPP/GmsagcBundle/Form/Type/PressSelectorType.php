@@ -5,26 +5,26 @@ namespace NGPP\GmsagcBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use NGPP\GmsagcBundle\Form\DataTransformer\PressToTextTransformer;
-use Doctrine\Common\Persistence\ObjectManager;
+use NGPP\GmsagcBundle\Entity\PressRepository;
 
 class PressSelectorType extends AbstractType
 {
     /**
-     * @var ObjectManager
+     * @var PressRepository
      */
-    private $om;
+    private $repo;
 
     /**
-     * @param ObjectManager $om
+     * @param PressRepository $repo
      */
-    public function __construct(ObjectManager $om)
+    public function __construct(PressRepository $repo)
     {
-        $this->om = $om;
+        $this->repo = $repo;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new PressToTextTransformer($this->om);
+        $transformer = new PressToTextTransformer($this->repo);
         $builder->addModelTransformer($transformer);
     }
 
